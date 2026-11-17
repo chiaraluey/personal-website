@@ -69,6 +69,7 @@ const PLACES = [
   { id: 'johnson', name: 'Johnson Museum', desc: 'Art & design: Chiara Malia, my jewelry brand', href: 'jewelry.html', pos: [-30, -36], ly: 15 },
 ];
 const BLOCK = [];
+const SIGNS = { tower: 'CORNELL', uris: 'WORK', goldwin: 'ABOUT ME', duffield: 'PROJECTS & RESEARCH', bailey: 'PRESS', straight: 'SERVICE', johnson: 'CHIARA MALIA' };
 
 // ---------- terrain mesh ----------
 const SIZE = 300, SEG = 240;
@@ -289,6 +290,7 @@ const me = new THREE.Group();
   mesh(new THREE.BoxGeometry(0.22, 0.08, 0.05), M('#ffffff'), 0, 1.25, 0.42, me);
   me.userData.arms = [-1, 1].map(s => { const a = new THREE.Group(); a.position.set(s * 0.52, 1.45, 0); me.add(a); mesh(new THREE.CapsuleGeometry(0.12, 0.55, 4, 8), navy, 0, -0.35, 0, a); mesh(new THREE.CylinderGeometry(0.135, 0.135, 0.12, 10), M('#7fa4d8'), 0, -0.12, 0, a); return a; });
 }
+const body = new THREE.Group(); body.position.y = 1; [...me.children].forEach(c => { c.position.y -= 1; body.add(c); }); me.add(body);
 me.position.set(-4, H(-4, 4), 4); me.rotation.y = Math.PI;
 scene.add(me);
 const ring = new THREE.Mesh(new THREE.RingGeometry(0.5, 0.65, 32), new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0 }));
@@ -302,6 +304,15 @@ PLACES.forEach(p => {
   const b = document.createElement('button'); b.textContent = p.desc.split(':')[0].split('·')[0].trim(); b.title = p.name; b.onclick = () => travel(p); $('#places').appendChild(b);
 });
 
+// big floating signs + quests
+const sprites = [];
+PLACES.forEach(p => {
+  const txt = SIGNS[p.id], c = document.createElement('canvas'), x = c.getContext('2d'); x.font = '600 64px Geist, Inter, sans-serif'; const w = Math.ceil(x.measureText(txt).width) + 90; c.width = w; c.height = 120;
+  x.font = '600 64px Geist, Inter, sans-serif'; x.fillStyle = 'rgba(20,20,22,.82)'; x.beginPath(); x.roundRect(4, 4, w - 8, 112, 56); x.fill(); x.fillStyle = p.id === 'tower' ? '#ff6b5f' : '#ffffff'; x.textBaseline = 'middle'; x.fillText(txt, 45, 64);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, transparent: true })); sp.renderOrder = 10; sp.scale.set(w / 120 * 2.2, 2.2, 1); sp.position.copy(p.top).add(new THREE.Vector3(0, 2.5, 0)); sp.userData.y = sp.position.y; scene.add(sp); sprites.push(sp);
+  const li = document.createElement('li'); li.innerHTML = `<i></i>${SIGNS[p.id] === 'CORNELL' ? 'Cornell' : SIGNS[p.id].charAt(0) + SIGNS[p.id].slice(1).toLowerCase()}`; $('#quests').appendChild(li); p.q = li;
+});
 // ---------- controls ----------
 const keys = {};
 let target = null, yaw = 0, pitch = 0.4, dist = 17, active = null, started = false;
@@ -340,7 +351,11 @@ function sfx(type) {
   if (type === 'win') [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, n + i * 0.1, 0.5));
   if (type === 'bell') [659, 587, 523, 392, 0, 392, 587, 659, 523].forEach((f, i) => { if (f) { tone(f, n + i * 0.42, 2.2, 'sine', 0.2); tone(f * 2.76, n + i * 0.42, 0.9, 'sine', 0.04); tone(f * 0.5, n + i * 0.42, 2.6, 'sine', 0.06); } });
 }
-function jump() { if (!grounded) return; vy = 9.2; grounded = false; start(); sfx('jump'); }
+let jumpsLeft = 0, flipT = -1, combo = 1, comboTimer = 0;
+function pop(text, big) { const v = me.position.clone().setY(me.position.y + 3).project(camera), el = document.createElement('span'); el.className = 'pop' + (big ? ' big' : ''); el.textContent = text; el.style.left = (v.x * 0.5 + 0.5) * innerWidth + 'px'; el.style.top = (-v.y * 0.5 + 0.5) * innerHeight + 'px'; $('#pops').appendChild(el); setTimeout(() => el.remove(), 1200); }
+function score(n, label) { const g = n * combo; points += g; hud(); pop(`${label} +${g}${combo > 1 ? ` ×${combo}` : ''}`, combo > 2); combo = Math.min(combo + 1, 8); comboTimer = 2.5; $('#combo').textContent = combo > 1 ? `combo ×${combo}` : ''; }
+function jump() { start(); if (grounded) { vy = 9.2; grounded = false; jumpsLeft = 1; sfx('jump'); } else if (jumpsLeft > 0) { vy = 9.8; jumpsLeft = 0; flipT = 0; sfx('jump'); } }
+function onLand() { if (flipT >= 0) { flipT = -1; body.rotation.x = 0; pop('sloppy landing'); } }
 $('#jumpBtn').addEventListener('pointerdown', e => { e.preventDefault(); jump(); });
 const muteBtn = $('#muteBtn'), setMute = () => { muteBtn.textContent = muted ? 'sound off' : 'sound on'; muteBtn.classList.toggle('off', muted); };
 muteBtn.onclick = () => { muted = !muted; localStorage.setItem('muted', muted ? '1' : '0'); setMute(); }; setMute();
@@ -369,6 +384,18 @@ const tokens = [];
   $('#coinTotal').textContent = tokens.length;
 }
 
+// trampolines + hoops on the quad
+const TRAMPS = [[-16, -6], [10, -6], [-16, 13], [10, 13]].map(([x, z], i) => {
+  const y = H(x, z), g = new THREE.Group(); g.position.set(x, y, z); scene.add(g);
+  mesh(new THREE.TorusGeometry(1.5, 0.14, 8, 32), M('#2b2f36', { metalness: 0.4 }), 0, 0.55, 0, g).rotation.x = Math.PI / 2;
+  const m = mesh(new THREE.CylinderGeometry(1.4, 1.4, 0.08, 32), M(i % 2 ? '#b31b1b' : '#2a5bd7', { roughness: 0.5 }), 0, 0.55, 0, g);
+  for (let k = 0; k < 4; k++) mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.55, 6), M('#2b2f36'), Math.cos(k * 1.57) * 1.4, 0.27, Math.sin(k * 1.57) * 1.4, g);
+  return { x, z, y, m };
+});
+const HOOPS = [[-16, -6, 9], [10, -6, 10], [-16, 13, 9.5], [10, 13, 10.5], [-4, 3, 7], [-4, -2, 11]].map(([x, z, hh]) => {
+  const m = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.12, 10, 40), new THREE.MeshStandardMaterial({ color: '#ffcf4a', emissive: '#ffb400', emissiveIntensity: 0.6, metalness: 0.6, roughness: 0.3 }));
+  m.position.set(x, H(x, z) + hh, z); scene.add(m); return { m, cd: 0 };
+});
 // ---------- day / night ----------
 const day = { top: '#8fc0e8', bottom: '#f6ead8', water: '#5f9fc2', hemi: 0.85, sun: 2.5, sunC: '#ffe7c4', exp: 1.05 };
 const night = { top: '#0a1230', bottom: '#2a3658', water: '#183a57', hemi: 0.2, sun: 0.4, sunC: '#a9c1ff', exp: 0.6 };
@@ -408,17 +435,23 @@ function frame() {
   else if (target) { dir.set(target.x - me.position.x, 0, target.z - me.position.z); if (dir.length() < 0.4) { target = null; dir.set(0, 0, 0); } else dir.normalize(); }
   const moving = dir.lengthSq() > 0;
   if (moving) {
-    const nx = me.position.x + dir.x * 9 * dt, nz = me.position.z + dir.z * 9 * dt, nh = walkH(nx, nz);
+    const spd = keys.shift ? 15 : 9, nx = me.position.x + dir.x * spd * dt, nz = me.position.z + dir.z * spd * dt, nh = walkH(nx, nz);
     const climbOk = nh - me.position.y < 1.2 || !grounded;
     if (nh > LAKE + 0.4 && climbOk && !blocked(nx, nz, 0.45) && Math.hypot(nx * 0.8, nz) < 104) { me.position.x = nx; me.position.z = nz; } else target = null;
     const ang = Math.atan2(dir.x, dir.z); let da = ang - me.rotation.y; da = Math.atan2(Math.sin(da), Math.cos(da)); me.rotation.y += da * Math.min(1, dt * 10);
     walk += dt * 11;
   } else walk *= 0.9;
   const gy = walkH(me.position.x, me.position.z);
-  if (!grounded || me.position.y > gy + 0.3) { grounded = false; vy -= 24 * dt; me.position.y += vy * dt; if (me.position.y <= gy) { me.position.y = gy; vy = 0; grounded = true; } }
+  if (!grounded || me.position.y > gy + 0.3) { grounded = false; vy -= 24 * dt; me.position.y += vy * dt; if (me.position.y <= gy) { me.position.y = gy; vy = 0; grounded = true; onLand(); } }
   else me.position.y = gy + Math.abs(Math.sin(walk)) * 0.12 * (moving ? 1 : 0);
   me.userData.arms.forEach((a, i) => a.rotation.x = grounded ? Math.sin(walk + i * Math.PI) * (moving ? 0.7 : 0.05) : -2.4);
   ring.material.opacity *= 0.96;
+  if (flipT >= 0) { flipT += dt / 0.55; body.rotation.x = -Math.min(flipT, 1) * Math.PI * 2; if (flipT >= 1) { flipT = -1; body.rotation.x = 0; score(2, 'FLIP!'); burst(me.position.clone().setY(me.position.y + 1), '#9fd3ff', 14); } }
+  comboTimer -= dt; if (comboTimer <= 0 && combo > 1) { combo = 1; $('#combo').textContent = ''; }
+  TRAMPS.forEach(tp => { if (Math.hypot(me.position.x - tp.x, me.position.z - tp.z) < 1.7 && me.position.y < tp.y + 0.6 && vy <= 0) { vy = 17; grounded = false; jumpsLeft = 1; me.position.y = tp.y + 0.62; tp.m.scale.y = 0.4; sfx('jump'); sfx('coin'); } tp.m.scale.y += (1 - tp.m.scale.y) * Math.min(1, dt * 8); });
+  HOOPS.forEach(h => { h.m.rotation.y += dt * 0.8; if (h.cd > 0) { h.cd -= dt; h.m.visible = h.cd <= 0; return; } if (me.position.distanceTo(h.m.position) < 1.9 || v3.copy(me.position).setY(me.position.y + 1).distanceTo(h.m.position) < 1.6) { h.cd = 8; h.m.visible = false; score(5, 'HOOP!'); burst(h.m.position, '#ffd27a', 40); } });
+  sprites.forEach((sp, i) => sp.position.y = sp.userData.y + Math.sin(t * 1.5 + i) * 0.3);
+  PLACES.forEach(pl => { if (!pl.visited && Math.hypot(me.position.x - pl.door[0], me.position.z - pl.door[1]) < 5.5) { pl.visited = true; pl.q.classList.add('done'); points += 10; hud(); toast(`Found ${pl.name}! +10 · press Enter to open`); sfx('win'); if (PLACES.every(q => q.visited)) setTimeout(() => toast('Campus tour complete! +50'), 2900), points += 50; } });
   // camera
   intro += ((started ? 0 : 1) - intro) * Math.min(1, dt * 1.4);
   const d = dist + intro * 75, p = pitch + intro * 0.38, y = yaw + intro * (0.6 + t * 0.04);
