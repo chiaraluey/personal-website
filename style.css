@@ -223,3 +223,18 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--acc)}
 }
 @media (max-width:560px){.stats{grid-template-columns:1fr}.gallery{columns:1}.projects{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.char{transform:none}}
+/* volunteer */
+.vol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem}
+.vol{position:relative;padding:2rem;border:1px solid var(--line);border-radius:22px;background:var(--card);overflow:hidden;transition:border-color .3s}
+.vol::before{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--acc2) 12%,transparent),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
+.vol:hover{border-color:color-mix(in srgb,var(--acc2) 50%,transparent)}.vol:hover::before{opacity:1}
+.vol .yr{color:var(--acc2)}.vol h3{font-family:var(--serif);font-weight:400;font-size:1.9rem;line-height:1.05;margin:1.2rem 0 .6rem}.vol p{color:var(--mute);font-size:.95rem}
+.vol-link{display:inline-block;margin-top:1.2rem;color:var(--fg);border-bottom:1px solid var(--acc2)}
+/* github + posters */
+.gh-more{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:1.2rem;padding:1.6rem 2rem;border-radius:22px;border:1px dashed var(--line);font-family:var(--serif);font-size:1.8rem;transition:background .4s,color .4s}
+.gh-more:hover{background:var(--fg);color:var(--bg)}
+.proj-poster{margin:-2rem -2rem 0;height:180px;overflow:hidden;border-bottom:1px solid var(--line)}
+.proj-poster img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1s var(--ease)}
+.proj:hover .proj-poster img{transform:scale(1.06)}
+.proj.has-poster h3{margin-top:1.5rem}
+.modal-poster{width:100%;border-radius:14px;margin:1rem 0;border:1px solid var(--line)}
