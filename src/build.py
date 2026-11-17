@@ -1,10 +1,10 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '10'
+V = '13'
 E = html.escape
 
-NAV = [('index.html', 'Island'), ('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry')]
+NAV = [('index.html', 'Island'), ('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry')]
 SOCIALS = [('LinkedIn', 'https://www.linkedin.com/in/chiara-luey'), ('GitHub', 'https://github.com/chiaraluey'), ('YouTube', 'https://www.youtube.com/@ChiaraLuey'), ('Instagram', 'https://www.instagram.com/chiara_luey')]
 
 THEME_BOOT = "<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t})()</script>"
@@ -47,6 +47,8 @@ def page(slug, title, desc, body, scripts=''):
 <div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
 <div class="toast" id="toast">Copied</div>
+<div class="aura" aria-hidden="true"></div><div class="cur" id="cur" aria-hidden="true"><span></span></div>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 {scripts}<script src="site.js?v={V}"></script>
 </body>
 </html>
@@ -73,7 +75,7 @@ def head(title, sub):
 # ---------- home ----------
 INDEX = [
     ('work.html', 'Work', 'Cornell VC, WestLight, Stanford, PlateTale', 'assets/pce-team.jpg'),
-    ('projects.html', 'Projects', 'Research posters, papers and code', 'assets/ac-poster.jpg'),
+    ('projects.html', 'Projects & Research', 'Research posters, papers and code', 'assets/ac-poster.jpg'),
     ('press.html', 'Press', 'TEDx, podcasts and articles', 'assets/yt-tedx.jpg'),
     ('service.html', 'Service', 'Energizing Youth, the UN youth group, honors', 'assets/classroom.jpg'),
     ('jewelry.html', 'Jewelry', 'Chiara Malia, my jewelry brand', 'assets/cm-1.jpg'),
@@ -108,13 +110,13 @@ RESEARCH = [
     ('Crystal Springs Uplands School', 'High school · 4.12 GPA', '2019 — 2026', 'Distinguished Award in Science. President of STEM Invention Studio: mentored 20+ members, grew membership 50% and ran a research symposium with 15 guest judges. Elected to Student Government for 6 years, including Co-President; led 30+ events, from a $50K prom to Social Justice Week.', 'csus.png', 'https://www.csus.org'),
 ]
 work = head('Work', 'Where I’ve worked, researched and learned. Every row links to the organization.') + f'''
-<section class="group"><h2 class="g-t reveal">At Cornell</h2>{rows(CORNELL)}</section>
-<section class="group"><h2 class="g-t reveal">Experience</h2>{rows(EXPERIENCE)}</section>
-<section class="group"><h2 class="g-t reveal">Research & school</h2>{rows(RESEARCH)}</section>
+<section class="group" id="cornell"><h2 class="g-t reveal">At Cornell</h2>{rows(CORNELL)}</section>
+<section class="group" id="experience"><h2 class="g-t reveal">Experience</h2>{rows(EXPERIENCE)}</section>
+<section class="group" id="research"><h2 class="g-t reveal">Research & school</h2>{rows(RESEARCH)}</section>
 <p class="more reveal"><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">Full history on LinkedIn ↗</a></p>'''
 
 # ---------- projects ----------
-projects = head('Projects', 'Science-fair research, a published paper and things I’ve built. Click one for posters and details.') + '''
+projects = head('Projects &amp; Research', 'Science-fair research, a published paper and things I’ve built. Click one for posters and details.') + '''
 <div class="filters reveal"><button class="f on" data-f="all">All</button><button class="f" data-f="research">Research</button><button class="f" data-f="energy">Energy</button><button class="f" data-f="web">Web</button></div>
 <div class="tiles" id="tiles"></div>
 <p class="more reveal"><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">More on GitHub ↗</a></p>'''
@@ -166,7 +168,7 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
 PAGES = [
     ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
     ('work.html', 'Work · Chiara Luey', 'Experience at Cornell Venture Capital, WestLight Energy, Stanford and more.', work, ''),
-    ('projects.html', 'Projects · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),
+    ('projects.html', 'Projects & Research · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),
     ('press.html', 'Press · Chiara Luey', 'TEDx talk, podcasts and articles.', press, ''),
     ('service.html', 'Service · Chiara Luey', 'Volunteering and honors.', service, ''),
     ('jewelry.html', 'Chiara Malia · Chiara Luey', 'Chiara Malia, a jewelry brand by Chiara Luey.', jewelry, ''),

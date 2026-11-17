@@ -8,12 +8,12 @@
 <script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=10">
+<link rel="stylesheet" href="site.css?v=13">
 </head>
 <body class="p-about">
 <header class="hdr">
   <a class="brand" href="index.html">chiara luey</a>
-  <nav class="nav"><a href="index.html">Island</a><a href="about.html" aria-current="page">About</a><a href="work.html">Work</a><a href="projects.html">Projects</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
+  <nav class="nav"><a href="index.html">Island</a><a href="about.html" aria-current="page">About</a><a href="work.html">Work</a><a href="projects.html">Projects & Research</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
   <button class="theme" id="theme" aria-label="Toggle dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
 </header>
 <main class="main">
@@ -23,7 +23,7 @@
     <h1 class="home-name" data-split>I’m Chiara Luey.</h1>
     <p class="lead reveal">A freshman at Cornell studying Environmental Engineering. I love energy and economics: how clean power gets invented, paid for and brought to the people who need it most.</p>
     <p class="now reveal"><span class="pulse"></span>Most recently: Judges’ Choice at Cornell’s Local AI Hackathon</p>
-    <ul class="index"><li class="reveal"><a href="work.html" data-img="assets/pce-team.jpg"><span class="ix-t">Work</span><span class="ix-d">Cornell VC, WestLight, Stanford, PlateTale</span><i>→</i></a></li><li class="reveal"><a href="projects.html" data-img="assets/ac-poster.jpg"><span class="ix-t">Projects</span><span class="ix-d">Research posters, papers and code</span><i>→</i></a></li><li class="reveal"><a href="press.html" data-img="assets/yt-tedx.jpg"><span class="ix-t">Press</span><span class="ix-d">TEDx, podcasts and articles</span><i>→</i></a></li><li class="reveal"><a href="service.html" data-img="assets/classroom.jpg"><span class="ix-t">Service</span><span class="ix-d">Energizing Youth, the UN youth group, honors</span><i>→</i></a></li><li class="reveal"><a href="jewelry.html" data-img="assets/cm-1.jpg"><span class="ix-t">Jewelry</span><span class="ix-d">Chiara Malia, my jewelry brand</span><i>→</i></a></li></ul>
+    <ul class="index"><li class="reveal"><a href="work.html" data-img="assets/pce-team.jpg"><span class="ix-t">Work</span><span class="ix-d">Cornell VC, WestLight, Stanford, PlateTale</span><i>→</i></a></li><li class="reveal"><a href="projects.html" data-img="assets/ac-poster.jpg"><span class="ix-t">Projects & Research</span><span class="ix-d">Research posters, papers and code</span><i>→</i></a></li><li class="reveal"><a href="press.html" data-img="assets/yt-tedx.jpg"><span class="ix-t">Press</span><span class="ix-d">TEDx, podcasts and articles</span><i>→</i></a></li><li class="reveal"><a href="service.html" data-img="assets/classroom.jpg"><span class="ix-t">Service</span><span class="ix-d">Energizing Youth, the UN youth group, honors</span><i>→</i></a></li><li class="reveal"><a href="jewelry.html" data-img="assets/cm-1.jpg"><span class="ix-t">Jewelry</span><span class="ix-d">Chiara Malia, my jewelry brand</span><i>→</i></a></li></ul>
   </div>
   <figure class="home-photo"><img src="assets/portrait.jpg" alt="Chiara Luey"></figure>
 </section>
@@ -36,6 +36,8 @@
 <div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
 <div class="toast" id="toast">Copied</div>
-<script src="site.js?v=10"></script>
+<div class="aura" aria-hidden="true"></div><div class="cur" id="cur" aria-hidden="true"><span></span></div>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="site.js?v=13"></script>
 </body>
 </html>

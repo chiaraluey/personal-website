@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chiara Luey</title>
-<meta name="description" content="Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics. Explore my island.">
+<meta name="description" content="Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics. Explore my corner of Cornell.">
 <meta property="og:title" content="Chiara Luey"><meta property="og:image" content="assets/portrait.jpg">
 <script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(matchMedia('(prefers-reduced-motion: reduce)').matches)location.replace('about.html')})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="world.css?v=12">
+<link rel="stylesheet" href="world.css?v=14">
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
@@ -17,23 +17,27 @@
 
 <header class="w-hdr">
   <a class="w-brand" href="index.html">chiara luey</a>
-  <nav class="w-nav"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
+  <nav class="w-nav"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects &amp; Research</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
   <button class="w-theme" id="theme" aria-label="Toggle day and night"><svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
 </header>
 
 <section class="intro" id="intro">
   <p class="intro-hi">Hi! Nice to meet you.</p>
   <h1 class="intro-name">I’m Chiara Luey.</h1>
-  <p class="intro-lead">Freshman at Cornell who loves energy and economics. This is my island: walk around and visit the places that make me, me.</p>
+  <p class="intro-lead">Freshman at Cornell who loves energy and economics. Welcome to my corner of campus: walk the Arts Quad and step into each building to see what I’ve been up to.</p>
   <div class="intro-cta"><button class="w-btn" id="startBtn">Start exploring</button><a class="w-link" href="about.html">or read the classic site →</a></div>
-  <p class="intro-keys">WASD / arrows or click to walk · drag to look · scroll to zoom</p>
+  <p class="intro-keys">Collect the Big Red tokens, cross the gorge bridge, and ring the McGraw chimes.</p>
 </section>
 
-<div class="prompt" id="prompt"><div><strong id="pTitle"></strong><span id="pDesc"></span></div><a class="w-btn" id="pOpen" href="#">Open <kbd>↵</kbd></a></div>
-<nav class="places" id="places" aria-label="Fast travel"><span>Go to</span></nav>
+<div class="hud"><div class="score" id="score"><span class="c-ic"></span><b id="coins">0</b><span class="of">/<span id="coinTotal">30</span></span><span class="sep"></span><span class="star">★</span><b id="pts">0</b></div><button class="mute" id="muteBtn">sound on</button></div>
+<div class="keys-chip"><kbd>WASD</kbd> move <kbd>Space</kbd> jump <kbd>click</kbd> walk <kbd>drag</kbd> look <kbd>↵</kbd> enter</div>
+<button class="jump-btn" id="jumpBtn" aria-label="Jump">↑</button>
+<div class="w-toast" id="wToast"></div>
+<div class="prompt" id="prompt"><div><strong id="pTitle"></strong><span id="pDesc"></span></div><button class="w-btn ghost" id="pAct">Ring the chimes <kbd>C</kbd></button><a class="w-btn" id="pOpen" href="#">Open <kbd>↵</kbd></a></div>
+<nav class="places" id="places" aria-label="Fast travel"><span>Campus</span></nav>
 
-<div class="loader" id="loader"><div class="loader-in"><span>building the island</span><div class="bar"><i id="loadBar"></i></div></div></div>
+<div class="loader" id="loader"><div class="loader-in"><span>walking up Libe Slope</span><div class="bar"><i id="loadBar"></i></div></div></div>
 <noscript><meta http-equiv="refresh" content="0;url=about.html"></noscript>
-<script type="module" src="world.js?v=11"></script>
+<script type="module" src="world.js?v=14"></script>
 </body>
 </html>

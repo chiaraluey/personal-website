@@ -51,3 +51,26 @@ if(tiles&&window.PROJECTS){
 $$('[data-copy]').forEach(b=>b.addEventListener('click',()=>{navigator.clipboard?.writeText(b.dataset.copy);const t=$('#toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1600)}));
 
 watch();
+
+// ---------- v13: motion layer ----------
+const fine=matchMedia('(pointer:fine)').matches;
+// smooth scroll
+if(window.Lenis&&!reduce){const lenis=new Lenis({lerp:.1,smoothWheel:true});const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)};requestAnimationFrame(raf);
+  if(location.hash){const el=document.querySelector(location.hash);if(el)setTimeout(()=>lenis.scrollTo(el,{offset:-90}),300)}
+  window.addEventListener('scroll',()=>document.dispatchEvent(new Event('lscroll')),{passive:true})}
+// cursor with label + aura
+if(fine&&!reduce){
+  const cur=$('#cur'),lab=$('span',cur),aura=$('.aura');let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y,ax=x,ay=y;
+  addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY;document.body.classList.add('has-cur')});
+  const tick=()=>{cx+=(x-cx)*.22;cy+=(y-cy)*.22;ax+=(x-ax)*.05;ay+=(y-ay)*.05;cur.style.transform=`translate(${cx}px,${cy}px)`;aura.style.transform=`translate(${ax}px,${ay}px)`;requestAnimationFrame(tick)};tick();
+  document.addEventListener('mouseover',e=>{const t=e.target.closest('a,button,[data-yt],[data-full]');cur.classList.toggle('big',!!t);if(t){lab.textContent=t.matches('[data-yt]')?'play':t.matches('.tile')?'open':t.matches('[data-full]')?'view':(t.target==='_blank'?'visit ↗':t.matches('.theme')?'':'')}else lab.textContent=''});
+}
+// magnetic buttons
+if(fine&&!reduce)$$('.btn,.f,.theme,.copy').forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`});b.addEventListener('mouseleave',()=>b.style.transform='')});
+// 3D tilt + sheen on tiles, videos, photos
+if(fine&&!reduce)document.addEventListener('mousemove',e=>{const t=e.target.closest('.tile,.vid,.ph');$$('.tilting').forEach(o=>{if(o!==t){o.classList.remove('tilting');o.style.transform=''}});if(!t)return;const r=t.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;t.classList.add('tilting');t.style.setProperty('--sx',px*100+'%');t.style.setProperty('--sy',py*100+'%');t.style.transform=`perspective(900px) rotateX(${(.5-py)*7}deg) rotateY(${(px-.5)*9}deg) translateY(-4px)`});
+// timeline line draws with scroll
+const lines=$$('.rows');const drawLines=()=>lines.forEach(l=>{const r=l.getBoundingClientRect();l.style.setProperty('--p',Math.min(Math.max((innerHeight*.75-r.top)/r.height,0),1))});
+addEventListener('scroll',drawLines,{passive:true});drawLines();
+// re-watch tiles rendered by JS
+watch();
