@@ -49,7 +49,7 @@ $$('[data-count]').forEach(el=>cio.observe(el));
 
 /* ---------- projects ---------- */
 const grid=$('#projectGrid');
-grid.innerHTML=PROJECTS.map((p,i)=>`<button class="proj reveal tilt${p.poster?' has-poster':''}" data-i="${i}" data-cat="${p.cat.join(' ')}">${p.poster?`<div class="proj-poster"><img src="${p.poster}" alt="" loading="lazy"></div>`:''}<div class="proj-top"${p.poster?' style="margin-top:1.4rem"':''}><span class="proj-ico">${String(i+1).padStart(2,"0")}</span><span class="mono">${p.yr}</span></div><span class="open">↗</span><h3>${p.t}</h3><p>${p.d}</p><div class="metric">${p.m}</div><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></button>`).join('');
+grid.innerHTML=PROJECTS.map((p,i)=>`<button class="proj reveal${p.poster?' has-poster':''}" data-i="${i}" data-cat="${p.cat.join(' ')}">${p.poster?`<div class="proj-poster"><img src="${p.poster}" alt="" loading="lazy"></div>`:''}<div class="proj-top"${p.poster?' style="margin-top:1.4rem"':''}><span class="proj-ico">${String(i+1).padStart(2,"0")}</span><span class="mono">${p.yr}</span></div><span class="open">↗</span><h3>${p.t}</h3><p>${p.d}</p><div class="metric">${p.m}</div><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></button>`).join('');
 $$('.filter').forEach(b=>b.addEventListener('click',()=>{$$('.filter').forEach(f=>f.classList.remove('active'));b.classList.add('active');const f=b.dataset.filter;grid.classList.toggle('filtered',f!=='all');
  $$('.proj').forEach((p,i)=>{const show=f==='all'||p.dataset.cat.includes(f);p.classList.toggle('hide',!show);if(show){p.classList.remove('in');p.style.setProperty('--d',0);requestAnimationFrame(()=>requestAnimationFrame(()=>p.classList.add('in')))}})}));
 const modal=$('#projModal');
@@ -70,7 +70,7 @@ const go=h=>()=>document.querySelector(h).scrollIntoView({behavior:'smooth'});
 const ACTIONS=[
  {l:'Impact',k:'section',f:go('#impact')},{l:'Experience',k:'section',f:go('#work')},{l:'Projects',k:'section',f:go('#projects')},{l:'Volunteering',k:'section',f:go('#volunteer')},{l:'Chiara Malia jewelry',k:'section',f:go('#studio')},{l:'Media & press',k:'section',f:go('#media')},{l:'Contact',k:'section',f:go('#contact')},
  {l:'Watch TEDx — Circles',k:'video',f:()=>playYT('wiUsqBOQTuw')},{l:'Watch award video',k:'video',f:()=>playYT('C1NDCvmvOU0')},{l:'Watch CO₂ → ethanol research',k:'video',f:()=>playYT('pEp48JJ8qF8')},
- {l:'Copy email',k:'action',f:()=>copyEmail()},{l:'Toggle light / dark',k:'action',f:()=>toggleTheme()},
+ {l:'Copy email',k:'action',f:()=>copyEmail()},
  {l:'LinkedIn',k:'link',f:()=>window.open('https://www.linkedin.com/in/chiara-luey')},{l:'GitHub',k:'link',f:()=>window.open('https://github.com/chiaraluey')},{l:'Globe Anew podcast',k:'link',f:()=>window.open('https://globeanew.net/episodes/chiara-luey-climate-movement-before-college')},{l:'Energizing Youth',k:'link',f:()=>window.open('https://energizingyouth.org')},
  ...PROJECTS.map((p,i)=>({l:p.t,k:'project',f:()=>{go('#projects')();setTimeout(()=>$(`.proj[data-i="${i}"]`).click(),500)}}))];
 function render(){const q=inp.value.toLowerCase();items=ACTIONS.filter(a=>(a.l+' '+a.k).toLowerCase().includes(q));sel=Math.min(sel,Math.max(items.length-1,0));
