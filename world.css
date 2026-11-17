@@ -64,3 +64,4 @@ html.theming::view-transition-old(root),html.theming::view-transition-new(root){
  .places{top:auto;bottom:6.5rem;flex-direction:row;flex-wrap:wrap;right:1rem;max-width:none}.places span{display:none}
  .prompt{bottom:1rem}
 }
+body:not(.playing) .prompt{transform:translate(-50%,160%)!important}
