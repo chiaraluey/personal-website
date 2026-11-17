@@ -113,3 +113,7 @@ body:not(.playing) .prompt{transform:translate(-50%,160%)!important}
 .quests li.done i{background:#2fa36b;border-color:#2fa36b}
 .quests li.done i::after{content:'✓';color:#fff;font-size:.6rem;font-style:normal}
 @media (max-width:760px){.quests{display:none}}
+.quests,.hud,.places,.keys-chip{pointer-events:none}
+.playing .hud,.playing .places{pointer-events:auto}
+.mute,.places button{pointer-events:auto}
+body:not(.playing) .mute,body:not(.playing) .places button{pointer-events:none}
