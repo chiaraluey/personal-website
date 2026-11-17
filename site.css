@@ -81,7 +81,7 @@ a.row:hover .logo{transform:rotate(-6deg) scale(1.05)}
 .arr{font-style:normal;font-size:.8rem;color:var(--mute);opacity:0;transform:translate(-4px,4px);transition:all .4s var(--ease)}
 a:hover .arr{opacity:1;transform:none}
 .row-role{font-size:.92rem;color:color-mix(in srgb,var(--fg) 75%,var(--bg))}
-.row-desc{font-size:.88rem;color:var(--mute);margin-top:.25rem;max-width:44rem}
+.row-desc{font-size:.9rem;line-height:1.6;color:var(--mute);margin-top:.45rem;max-width:46rem}
 .row-date{font:.78rem var(--mono);color:var(--mute);white-space:nowrap;padding-top:.15rem}
 
 /* projects */

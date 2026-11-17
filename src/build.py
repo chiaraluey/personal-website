@@ -4,7 +4,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 V = '10'
 E = html.escape
 
-NAV = [('index.html', 'Home'), ('work.html', 'Work'), ('projects.html', 'Projects'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry')]
+NAV = [('index.html', 'Island'), ('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry')]
 SOCIALS = [('LinkedIn', 'https://www.linkedin.com/in/chiara-luey'), ('GitHub', 'https://github.com/chiaraluey'), ('YouTube', 'https://www.youtube.com/@ChiaraLuey'), ('Instagram', 'https://www.instagram.com/chiara_luey')]
 
 THEME_BOOT = "<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t})()</script>"
@@ -16,7 +16,7 @@ def ext(url):
 
 def page(slug, title, desc, body, scripts=''):
     cur = ' aria-current="page"'
-    nav = ''.join(f'<a href="{h}"{cur if h == slug else ""}>{n}</a>' for h, n in NAV[1:])
+    nav = ''.join(f'<a href="{h}"{cur if h == slug else ""}>{n}</a>' for h, n in NAV)
     soc = ''.join(f'<a href="{u}"{ext(u)}>{n}</a>' for n, u in SOCIALS)
     return f'''<!doctype html>
 <html lang="en">
@@ -91,21 +91,21 @@ home = f'''<section class="home">
 
 # ---------- work ----------
 CORNELL = [
-    ('Cornell University', 'B.S. Environmental Engineering', '2026 — 2030', 'Ithaca, NY.', 'cornell-seal.svg', 'https://www.cornell.edu'),
-    ('Cornell Venture Capital', 'New Member Education · Fall ’26 class', '2026 — now', 'Investment theses on seed and Series A AI-infrastructure startups. Working with Cognition AI.', 'cvc.svg', 'https://cornellvc.com'),
-    ('Energy Transition Club', 'Member', '2026 — now', 'Undergraduate org training leaders in the energy transition.', 'etc.png', 'https://www.cornelletc.org'),
+    ('Cornell University', 'B.S. Environmental Engineering', '2026 — 2030', 'Ithaca, NY. Coursework and certificates in quantitative modeling (Wharton) and modelling and measuring the energy transition (Politecnico di Milano).', 'cornell-seal.svg', 'https://www.cornell.edu'),
+    ('Cornell Venture Capital', 'New Member Education · Fall ’26 class', '2026 — now', 'Learning to source and evaluate early-stage startups. Writing investment theses on seed and Series A AI-infrastructure companies, including Hatchet, Atomic, Frenos, ZeroDrift and Build, and working with Cognition AI.', 'cvc.svg', 'https://cornellvc.com'),
+    ('Energy Transition Club', 'Member', '2026 — now', 'Undergraduate organization preparing members to lead in the energy transition through New Member Education, analytical project teams (energy storage, grid modernization, carbon capture, climate policy and more), site visits and speaker sessions.', 'etc.png', 'https://www.cornelletc.org'),
 ]
 EXPERIENCE = [
-    ('PlateTale', 'Operations & Growth Intern', 'Jun — Aug 2026', 'Took an AI food-tech startup from 0 to 1; secured 3 VC sponsors and hosted a 20-founder dinner club.', 'platetale.png', 'https://platetale.com'),
-    ('WestLight Energy', 'Clean Energy Advisor · former intern', 'Mar 2025 — now', 'Electric-First campaigns passed in 4 school districts, mobilizing 9,000+ students.', 'westlight-mark.png', 'https://www.westlightenergy.org'),
-    ('Shields Mobility', 'Research Analyst', 'Jun 2025 — Apr 2026', 'Sourced and scored 300+ EV fleet-charging sites across California.', None, 'https://www.shieldsmobility.com'),
-    ('RE-volv', 'Analyst', 'Apr 2025 — Mar 2026', 'Built and pitched a solar financing proposal for a Bay Area nonprofit.', 'revolv-color.png', 'https://re-volv.org'),
-    ('Stanford University · Chemistry', 'Research Intern', 'Jun — Jul 2025', 'Computational molecular physics and energy storage, Waymouth and Rotskoff labs.', 'stanford-s.svg', 'https://chemistry.stanford.edu'),
-    ('Elytra Robotics', 'Market Researcher', 'Feb — Aug 2025', 'Mapped trash hot spots for autonomous waste collection; startup later acquired.', 'elytra.png', 'https://elytrarobotics.com'),
+    ('PlateTale', 'Operations & Growth Intern', 'Jun — Aug 2026', 'Helped take an AI food-tech startup from 0 to 1 by building chef and customer partnerships, reaching out to 100+ prospective customers and VC-backed startups, and refining its AI taste model. Secured 3 VC sponsors and hosted the flagship dinner club, convening 20 founders from Stanford, Berkeley, MIT and YC-backed companies.', 'platetale.png', 'https://platetale.com'),
+    ('WestLight Energy', 'Clean Energy Advisor · former intern', 'Mar 2025 — now', 'Manage a $50K electrification grant, mentor interns and expand K–12 outreach to 360+ students across the Peninsula. Co-led Electric-First campaigns that passed clean-energy resolutions in 4 school districts, mobilizing 9,000+ students and cutting an estimated 2M+ kg of CO₂ a year. Represented Peninsula Clean Energy at regional energy events and guest-spoke to 400+ students.', 'westlight-mark.png', 'https://www.westlightenergy.org'),
+    ('Shields Mobility', 'Research Analyst', 'Jun 2025 — Apr 2026', 'Sourced and scored 300+ EV commercial-fleet charging sites across California, identifying high-potential acquisitions and tracking incentive programs to steer investment toward underserved infrastructure. Built an ArcGIS site to visualize and sort properties.', None, 'https://www.shieldsmobility.com'),
+    ('RE-volv', 'Analyst', 'Apr 2025 — Mar 2026', 'Built and pitched a solar financing proposal for a church, modeling 30%+ federal incentives, 20-year project economics and projected energy savings. Collaborated with Peninsula Clean Energy to expand nonprofit solar across the Bay Area.', 'revolv-color.png', 'https://re-volv.org'),
+    ('Stanford University · Chemistry', 'Research Intern', 'Jun — Jul 2025', 'Assisted graduate-student projects in computational molecular physics and energy storage in the Waymouth and Rotskoff labs.', 'stanford-s.svg', 'https://chemistry.stanford.edu'),
+    ('Elytra Robotics', 'Market Researcher', 'Feb — Aug 2025', 'Merged 2 public datasets and used spatial clustering and predictive modeling to map trash hot spots for autonomous waste collection. Supported Elytra, a 10-person robotics-infrastructure startup later acquired by a hardware company serving Generalist and Dyna.', 'elytra.png', 'https://elytrarobotics.com'),
 ]
 RESEARCH = [
-    ('Independent research', 'Sustainability & materials science', '2022 — 2026', 'CO₂-to-ethanol MOF catalysts (published) and refrigerant-free thermoelectric A/C.', None, 'projects.html'),
-    ('Crystal Springs Uplands School', 'High school · 4.12 GPA', '2019 — 2026', 'Distinguished Award in Science. STEM Invention Studio president, Student Government co-president.', 'csus.png', 'https://www.csus.org'),
+    ('Independent research', 'Sustainability & materials science', '2022 — 2026', 'Simulated copper–MOF catalytic pathways that turn vehicle CO₂ into ethanol, reaching 91% Faradaic efficiency, and published a paper with mentors from MIT, Stanford and Washington State. Prototyped an LTC3108-based air conditioner that cools without refrigerants. Presented at ICAE (UN Bangkok), Columbia Junior Science Journal, MIT THINK, JSHS and the California Science & Engineering Fair.', None, 'projects.html'),
+    ('Crystal Springs Uplands School', 'High school · 4.12 GPA', '2019 — 2026', 'Distinguished Award in Science. President of STEM Invention Studio: mentored 20+ members, grew membership 50% and ran a research symposium with 15 guest judges. Elected to Student Government for 6 years, including Co-President; led 30+ events, from a $50K prom to Social Justice Week.', 'csus.png', 'https://www.csus.org'),
 ]
 work = head('Work', 'Where I’ve worked, researched and learned. Every row links to the organization.') + f'''
 <section class="group"><h2 class="g-t reveal">At Cornell</h2>{rows(CORNELL)}</section>
@@ -164,7 +164,7 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
 </div>'''
 
 PAGES = [
-    ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
+    ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
     ('work.html', 'Work · Chiara Luey', 'Experience at Cornell Venture Capital, WestLight Energy, Stanford and more.', work, ''),
     ('projects.html', 'Projects · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),
     ('press.html', 'Press · Chiara Luey', 'TEDx talk, podcasts and articles.', press, ''),
