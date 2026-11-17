@@ -109,39 +109,19 @@ if(matchMedia('(pointer:fine)').matches&&!reduce){
 }
 
 /* ---------- scroll: progress, nav hide, timeline fill, active link, parallax ---------- */
-/* ---------- live wire + horizontal experience ---------- */
-$$('.vol-track').forEach(t=>t.insertAdjacentHTML('beforeend',t.innerHTML.replace(/<article class="vol/g,'<article aria-hidden="true" class="vol')));
-const work=$('#work'),pin=$('.hs-pin'),track=$('.timeline'),hMQ=matchMedia('(min-width:901px)');let hDist=0;
-function layoutH(){const on=hMQ.matches&&!reduce;work.classList.toggle('is-h',on);track.style.transform='';work.style.height='';$('#tlFill').style.transform='';
- if(on){const cs=getComputedStyle(pin);hDist=Math.max(track.scrollWidth-(pin.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)),0);work.style.height=(innerHeight+hDist)+'px'}}
-function hScroll(r){const f=$('#tlFill');if(work.classList.contains('is-h')){const p=Math.min(Math.max(-work.getBoundingClientRect().top/(hDist||1),0),1);track.style.transform=`translateX(${-p*hDist}px)`;f.style.transform=`scaleX(${p})`}
- else f.style.transform=`scaleY(${Math.min(Math.max((innerHeight*.6-r.top)/r.height,0),1)})`}
-const mainEl=$('main'),NS='http://www.w3.org/2000/svg',wire=document.createElementNS(NS,'svg');wire.id='wire';wire.setAttribute('aria-hidden','true');
-wire.innerHTML='<path class="wire-bg"/><path class="wire-glow"/><path class="wire-live"/><g class="wire-nodes"></g><circle class="spark" r="4"/>';mainEl.prepend(wire);
-const [wBg,wGlow,wLive]=wire.querySelectorAll('path'),wNodes=wire.querySelector('.wire-nodes'),spark=wire.querySelector('.spark');
-let samples=[],wTotal=0,nodes=[];
-function buildWire(){const W=mainEl.clientWidth,H=mainEl.scrollHeight,mt=mainEl.getBoundingClientRect().top+scrollY,m=Math.max(W*.015,8);
- wire.setAttribute('viewBox',`0 0 ${W} ${H}`);wire.style.height=H+'px';
- const secs=$$('main > section.section'),top=s=>s.getBoundingClientRect().top+scrollY-mt;
- let px=W/2,d=`M${px},${top(secs[0])-220}`;nodes=[];
- secs.forEach((s,i)=>{const t=top(s),x=i%2?W-m:m,ny=t+175;d+=` L${px},${t-110} C${px},${t} ${x},${t} ${x},${t+110} L${x},${ny}`;nodes.push({x,y:ny,s});px=x});
- d+=` L${px},${H-140}`;[wBg,wGlow,wLive].forEach(p=>p.setAttribute('d',d));
- wTotal=wLive.getTotalLength();[wGlow,wLive].forEach(p=>p.style.strokeDasharray=wTotal);samples=[];
- for(let l=0;l<=wTotal;l+=6){const p=wLive.getPointAtLength(l);samples.push([l,p.x,p.y])}
- wNodes.innerHTML=nodes.map(n=>`<circle class="wire-ring" cx="${n.x}" cy="${n.y}" r="6"/><circle class="wire-node" cx="${n.x}" cy="${n.y}" r="6"/>`).join('');onWire()}
-function onWire(){if(!samples.length)return;const ty=scrollY+innerHeight*.6-(mainEl.getBoundingClientRect().top+scrollY);
- let lo=0,hi=samples.length-1;while(lo<hi){const mid=(lo+hi+1)>>1;if(samples[mid][2]<=ty)lo=mid;else hi=mid-1}
- const [l,x,y]=samples[lo];[wGlow,wLive].forEach(p=>p.style.strokeDashoffset=wTotal-l);spark.setAttribute('cx',x);spark.setAttribute('cy',y);spark.style.opacity=ty<samples[0][2]?0:1;
- const els=wNodes.children;nodes.forEach((n,i)=>{const lit=n.y<=ty;els[2*i].classList.toggle('lit',lit);els[2*i+1].classList.toggle('lit',lit);n.s.classList.toggle('powered',lit)});
- const pct=Math.round(Math.min(scrollY/(document.documentElement.scrollHeight-innerHeight),1)*100);$('#battFill').style.width=pct+'%';$('#battPct').textContent=pct+'%'}
-layoutH();buildWire();
-let rT;const relayout=()=>{clearTimeout(rT);rT=setTimeout(()=>{layoutH();buildWire();onScroll()},150)};
-addEventListener('resize',relayout);addEventListener('load',relayout);new ResizeObserver(()=>{clearTimeout(rT);rT=setTimeout(()=>{buildWire();onScroll()},150)}).observe(mainEl);
+/* ---------- stickers: drag ---------- */
+$$('.sticker').forEach(el=>{let sx,sy,ox=0,oy=0,moved=false;
+ el.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY;moved=false;el.setPointerCapture(e.pointerId);el.classList.add('dragging')});
+ el.addEventListener('pointermove',e=>{if(!el.classList.contains('dragging'))return;const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.abs(dx)+Math.abs(dy)>4)moved=true;el.style.setProperty('--dx',ox+dx+'px');el.style.setProperty('--dy',oy+dy+'px')});
+ el.addEventListener('pointerup',e=>{if(!el.classList.contains('dragging'))return;el.classList.remove('dragging');ox+=e.clientX-sx;oy+=e.clientY-sy});
+ el.addEventListener('click',e=>{if(moved)e.preventDefault()})});
+/* ---------- heading word reveal ---------- */
+$$('.section-head h2').forEach(h=>{let i=0;const out=[];h.childNodes.forEach(n=>{if(n.nodeType===3)n.textContent.split(/(\s+)/).forEach(t=>{if(!t)return;out.push(/^\s+$/.test(t)?t:`<span class="w" style="--i:${i++}"><span>${t}</span></span>`)});else out.push(`<span class="w" style="--i:${i++}"><span>${n.outerHTML}</span></span>`)});h.innerHTML=out.join('')});
 
 let lastY=0;const nav=$('#nav'),prog=$('#progress'),tl=$('.timeline'),fill=$('#tlFill'),links=$$('.nav-links a'),secs=links.map(a=>$(a.getAttribute('href')));
 function onScroll(){const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;prog.style.transform=`scaleX(${y/h})`;
  nav.classList.toggle('hide',y>lastY&&y>400&&!$('.open'));lastY=y;
- const r=tl.getBoundingClientRect();hScroll(r);onWire();
+ const r=tl.getBoundingClientRect();fill.style.transform=`scaleY(${Math.min(Math.max((innerHeight*.6-r.top)/r.height,0),1)})`;
  let cur=-1;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*.4)cur=i});links.forEach((l,i)=>l.classList.toggle('active',i===cur));
  if(!reduce){$('.hero-visual').style.translate=`0 ${y*.15}px`;$('.float-img').style.translate=`0 ${(r.top*0)+(-$('.about').getBoundingClientRect().top*.08)}px`}}
 addEventListener('scroll',onScroll,{passive:true});onScroll();

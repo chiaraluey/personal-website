@@ -11,7 +11,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%23d4ff3a' stroke-width='10'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <div class="loader" id="loader"><div class="loader-ring"></div><span class="mono">charging<span class="dots"></span></span></div>
@@ -25,7 +25,6 @@
     <a href="#impact">Impact</a><a href="#media">Press</a><a href="#work">Experience</a><a href="#projects">Projects</a><a href="#volunteer">Volunteer</a><a href="#studio">Jewelry</a><a href="#contact">Contact</a>
   </nav>
   <div class="nav-actions">
-    <div class="batt mono" title="Charge: how far you’ve scrolled"><span class="batt-cell"><i id="battFill"></i></span><b id="battPct">0%</b></div>
     <button class="kbd-btn" id="cmdOpen" aria-label="Open command menu"><span class="mono">⌘K</span></button>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle theme"><span class="sun">☀</span><span class="moon">☾</span></button>
   </div>
@@ -37,20 +36,18 @@
   <canvas id="grid"></canvas>
   <div class="hero-inner">
     <div class="hero-copy">
-      <p class="eyebrow mono reveal"><span class="pulse"></span> Econ &amp; Energy @ Cornell · Bay Area → Ithaca</p>
+      <p class="eyebrow mono reveal"><span class="pulse"></span> Environmental Engineering @ Cornell · Class of 2030</p>
       <h1 class="hero-title"><span class="line"><span class="split">Chiara</span></span><span class="line"><span class="split italic">Luey</span></span></h1>
-      <p class="hero-sub reveal">I work where <em>energy</em>, <em>finance</em> and <em>policy</em> meet — and I build things to <span class="rotator" id="rotator">prove it</span>.</p>
+      <p class="hero-sub reveal">Freshman at Cornell who loves <em>energy</em> and <em>economics</em>, and builds things to <span class="rotator" id="rotator">prove it</span>.</p>
       <div class="hero-cta reveal">
         <a href="#projects" class="btn btn-primary" data-magnetic>See the work <span>→</span></a>
         <a href="#media" class="btn btn-ghost" data-magnetic>Watch the TEDx</a>
       </div>
     </div>
-    <div class="hero-visual reveal">
-      <div class="orbit o1"><span class="sat">E</span></div>
-      <div class="orbit o2"><span class="sat">$</span></div>
-      <div class="orbit o3"><span class="sat">∑</span></div>
-      <div class="portrait"><img src="assets/portrait.jpg" alt="Chiara Luey"></div>
-      <div class="hero-badge mono">2026 Youth Sustainability<br>Award Winner</div>
+    <div class="hero-visual board reveal">
+      <div class="photo"><img src="assets/portrait.jpg" alt="Chiara Luey"></div>
+      <a class="sticker" href="https://www.cornell.edu" target="_blank" rel="noopener" style="--x:6%;--y:4%;--r:-6deg;--i:0" aria-label="Cornell"><img src="assets/logos/cornell.svg" alt="Cornell" draggable="false"></a><a class="sticker" href="#work" style="--x:62%;--y:0%;--r:5deg;--i:1" aria-label="Stanford"><img src="assets/logos/stanford.svg" alt="Stanford" draggable="false"></a><a class="sticker" href="#media" style="--x:80%;--y:22%;--r:-8deg;--i:2" aria-label="TEDx"><img src="assets/logos/ted.svg" alt="TEDx" draggable="false"></a><a class="sticker" href="https://cognition.ai" target="_blank" rel="noopener" style="--x:-4%;--y:30%;--r:4deg;--i:3" aria-label="Cognition"><img src="assets/logos/cognition.svg" alt="Cognition" draggable="false"></a><a class="sticker" href="#volunteer" style="--x:84%;--y:52%;--r:7deg;--i:4" aria-label="UN MGCY"><img src="assets/logos/mgcy.png" alt="UN MGCY" draggable="false"></a><a class="sticker" href="https://www.westlightenergy.org" target="_blank" rel="noopener" style="--x:-2%;--y:62%;--r:-9deg;--i:5" aria-label="WestLight"><img src="assets/logos/westlight-mark.png" alt="WestLight" draggable="false"></a><a class="sticker" href="#media" style="--x:60%;--y:82%;--r:-4deg;--i:6" aria-label="SSMC award"><img src="assets/logos/ssmc.png" alt="SSMC award" draggable="false"></a><a class="sticker" href="https://cornellvc.com" target="_blank" rel="noopener" style="--x:40%;--y:-4%;--r:-10deg;--i:8" aria-label="Cornell VC"><img src="assets/logos/cvc.svg" alt="Cornell VC" draggable="false"></a><a class="sticker" href="#work" style="--x:86%;--y:76%;--r:10deg;--i:9" aria-label="PlateTale"><img src="assets/logos/platetale.png" alt="PlateTale" draggable="false"></a><a class="sticker" href="https://re-volv.org" target="_blank" rel="noopener" style="--x:30%;--y:92%;--r:-3deg;--i:10" aria-label="RE-volv"><img src="assets/logos/revolv-color.png" alt="RE-volv" draggable="false"></a><a class="sticker txt serif" href="#studio" style="--x:12%;--y:84%;--r:-8deg;--i:11">Chiara Malia</a><span class="sticker txt mono acc" style="--x:66%;--y:62%;--r:8deg;--i:12">judges’ choice ★</span>
+      <span class="board-hint mono">drag the stickers</span>
     </div>
   </div>
   <a class="scroll-cue mono" href="#impact">scroll<span></span></a>
@@ -79,16 +76,13 @@
     <div class="about-img reveal"><img src="assets/podium.jpg" alt="Chiara at a podium"><img class="float-img" src="assets/pce-team.jpg" alt="Peninsula Clean Energy team"></div>
     <div class="about-copy">
       <span class="mono idx">02 — about</span>
-      <blockquote class="big-quote reveal">“I dream of a world where clean energy solutions reach every family, school, and community.”</blockquote>
-      <p class="reveal">I study Environmental Engineering at Cornell and work on clean energy from every side I can: research, policy campaigns, classrooms and code.</p>
-      <p class="reveal">Most recently, my team won Judges’ Choice at the Cornell Commons Local AI Hackathon for <a href="https://github.com/ItzXizZ/econ-whiteboard-hackathon" target="_blank" rel="noopener" style="border-bottom:1px solid var(--acc)">Adam</a>, a handwriting econ tutor that runs fully offline.</p>
-      <p class="reveal">Off the clock: top-100 US Squash, French, and <a href="#studio" style="border-bottom:1px solid var(--acc)">Chiara Malia</a>.</p>
+      <p class="about-hi reveal">Hi! Nice to meet you.</p>
+      <p class="reveal">I’m Chiara Luey, a freshman at Cornell studying Environmental Engineering. I love energy and economics: how clean power gets invented, paid for and brought to the people who need it most.</p>
+      <p class="reveal">That curiosity has taken me to chemistry labs, policy campaigns, K–8 classrooms and, most recently, a Judges’ Choice win at Cornell’s Local AI Hackathon. Off the clock I play squash (top-100 in the US), speak French and design jewelry for <a class="ul" href="#studio">Chiara Malia</a>.</p>
       <div class="chips reveal"><span>Energy storage</span><span>Computational chemistry</span><span>EV infrastructure</span><span>Energy policy</span><span>Economics</span><span>Python / ML</span><span>Java</span><span>AnyLogic</span><span>Avogadro</span><span>Public speaking</span></div>
     </div>
   </div>
 </section>
-
-<div class="band " aria-hidden="true"><div class="marquee-track"><span>Research</span><i>✦</i><span>Policy</span><i>✦</i><span>Classrooms</span><i>✦</i><span>Code</span><i>✦</i><span>Squash</span><i>✦</i><span>Jewelry</span><i>✦</i><span>Research</span><i>✦</i><span>Policy</span><i>✦</i><span>Classrooms</span><i>✦</i><span>Code</span><i>✦</i><span>Squash</span><i>✦</i><span>Jewelry</span><i>✦</i></div></div>
 
 <!-- MEDIA -->
 <section id="media" class="section alt">
@@ -98,37 +92,35 @@
     <button class="video-card reveal" data-yt="C1NDCvmvOU0"><img src="assets/yt-award.jpg" alt=""><div class="vc-over"><span class="play">▶</span><div><span class="mono tag">SSMC · 2026</span><h3>Youth Sustainability Award</h3></div></div></button>
     <button class="video-card reveal" data-yt="pEp48JJ8qF8"><img src="assets/yt-tailpipe.jpg" alt=""><div class="vc-over"><span class="play">▶</span><div><span class="mono tag">Research video</span><h3>CO₂ → Ethanol tailpipe device</h3></div></div></button>
   </div>
-  <div class="press">
-    <a class="press-row reveal" href="https://globeanew.net/episodes/chiara-luey-climate-movement-before-college" target="_blank" rel="noopener"><span class="mono">Podcast</span><span class="pt">Starting a Climate Movement Before College</span><span class="po">Globe Anew</span><span class="arr">↗</span></a>
-    <a class="press-row reveal" href="https://sustainablesanmateo.org/2026/01/15/2026-youth-sustainability-award-winner-chiara-luey/" target="_blank" rel="noopener"><span class="mono">Award</span><span class="pt">2026 Youth Sustainability Award Winner</span><span class="po">Sustainable San Mateo County</span><span class="arr">↗</span></a>
-    <a class="press-row reveal" href="https://awesomemathgirls.org/posts/interview-series-featuring-chiara-luey/" target="_blank" rel="noopener"><span class="mono">Interview</span><span class="pt">“Energy follows money” — Interview Series</span><span class="po">Awesome Math Girls</span><span class="arr">↗</span></a>
-    <a class="press-row reveal" href="https://www.smdailyjournal.com/community/class-notes-chiara-luey-named-2026-youth-sustainability-award-winner-by-sustainable-san-mateo-county/image_5a49ca98-437d-4ee4-a4cd-7eb466e898de.html" target="_blank" rel="noopener"><span class="mono">Press</span><span class="pt">Class Notes: Chiara Luey named award winner</span><span class="po">San Mateo Daily Journal</span><span class="arr">↗</span></a>
-    <a class="press-row reveal" href="https://www.linkedin.com/posts/silicon-valley-youth-climate-action_from-classrooms-to-county-how-a-group-of-activity-7448157926998872064-Fyjr" target="_blank" rel="noopener"><span class="mono">Feature</span><span class="pt">From Classrooms to County — PCE Electrification Team</span><span class="po">SVYCA</span><span class="arr">↗</span></a>
-    <a class="press-row reveal" href="https://energizingyouth.org/our-story" target="_blank" rel="noopener"><span class="mono">Story</span><span class="pt">How Energizing Youth started</span><span class="po">energizingyouth.org</span><span class="arr">↗</span></a>
-    <a class="press-row reveal" href="https://www.youtube.com/@ChiaraLuey/videos" target="_blank" rel="noopener"><span class="mono">Channel</span><span class="pt">STEM projects &amp; research videos</span><span class="po">YouTube</span><span class="arr">↗</span></a>
+  <div class="articles">
+    <a class="art reveal" href="https://globeanew.net/episodes/chiara-luey-climate-movement-before-college" target="_blank" rel="noopener"><div class="art-img"><img src="assets/art-globe.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>Globe Anew</span><span>Podcast</span></div><h3>Starting a Climate Movement Before College</h3><span class="art-go mono">Read ↗</span></a>
+    <a class="art reveal" href="https://sustainablesanmateo.org/2026/01/15/2026-youth-sustainability-award-winner-chiara-luey/" target="_blank" rel="noopener"><div class="art-img"><img src="assets/award-card.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>Sustainable San Mateo County</span><span>Award</span></div><h3>2026 Youth Sustainability Award Winner</h3><span class="art-go mono">Read ↗</span></a>
+    <a class="art reveal" href="https://awesomemathgirls.org/posts/interview-series-featuring-chiara-luey/" target="_blank" rel="noopener"><div class="art-img"><img src="assets/poster-session.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>Awesome Math Girls</span><span>Interview</span></div><h3>Interview Series: Chiara Luey</h3><span class="art-go mono">Read ↗</span></a>
+    <a class="art reveal" href="https://www.smdailyjournal.com/community/class-notes-chiara-luey-named-2026-youth-sustainability-award-winner-by-sustainable-san-mateo-county/image_5a49ca98-437d-4ee4-a4cd-7eb466e898de.html" target="_blank" rel="noopener"><div class="art-img"><img src="assets/art-smdj.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>San Mateo Daily Journal</span><span>Press</span></div><h3>Class Notes: Chiara Luey named award winner</h3><span class="art-go mono">Read ↗</span></a>
+    <a class="art reveal" href="https://www.linkedin.com/posts/silicon-valley-youth-climate-action_from-classrooms-to-county-how-a-group-of-activity-7448157926998872064-Fyjr" target="_blank" rel="noopener"><div class="art-img"><img src="assets/art-li.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>SVYCA</span><span>Feature</span></div><h3>From Classrooms to County — PCE Electrification Team</h3><span class="art-go mono">Read ↗</span></a>
+    <a class="art reveal" href="https://energizingyouth.org/our-story" target="_blank" rel="noopener"><div class="art-img"><img src="assets/classroom.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>energizingyouth.org</span><span>Story</span></div><h3>How Energizing Youth started</h3><span class="art-go mono">Read ↗</span></a>
+    <a class="art reveal" href="https://www.youtube.com/@ChiaraLuey/videos" target="_blank" rel="noopener"><div class="art-img"><img src="assets/yt-5ZgSESacrg8.jpg" alt="" loading="lazy"></div><div class="art-meta mono"><span>YouTube</span><span>Channel</span></div><h3>STEM projects &amp; research videos</h3><span class="art-go mono">Read ↗</span></a>
   </div>
   <figure class="pull reveal"><blockquote>“There's something that happens when a peer stands up and talks about clean energy.”</blockquote><figcaption class="mono">— on youth-led electrification, SVYCA</figcaption></figure>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="work" class="section hwork">
-<div class="hs-pin">
+<section id="work" class="section">
   <div class="section-head"><span class="mono idx">04</span><h2 class="reveal">Experience <em>&amp; leadership</em></h2></div>
   <div class="timeline">
     <div class="tl-line"><div class="tl-fill" id="tlFill"></div></div>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">2026 — 2030</div><div class="tl-card"><h3>Cornell University</h3><p class="role">B.S. Environmental Engineering</p><p>Ithaca, NY. Coursework and certificates in quantitative modeling (Wharton) and modelling the energy transition (Politecnico di Milano).</p></div></article>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">2026 — now</div><div class="tl-card"><h3>Cornell Venture Capital</h3><p class="role">New Member Education</p><p>Writing investment theses on seed and Series A AI-infrastructure startups, including Hatchet, Atomic, Frenos, ZeroDrift and Build.</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">2026 — 2030</div><div class="tl-card"><img class="tl-logo" src="assets/logos/cornell-seal.svg" alt="" loading="lazy"><h3>Cornell University</h3><p class="role">B.S. Environmental Engineering</p><p>Ithaca, NY. Coursework and certificates in quantitative modeling (Wharton) and modelling the energy transition (Politecnico di Milano).</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">2026 — now</div><div class="tl-card"><img class="tl-logo" src="assets/logos/cvc.svg" alt="" loading="lazy"><h3>Cornell Venture Capital</h3><p class="role">New Member Education · Fall ’26 class</p><p>Writing investment theses on seed and Series A AI-infrastructure startups, including Hatchet, Atomic, Frenos, ZeroDrift and Build. Working with Cognition AI.</p></div></article>
     <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">2026 — now</div><div class="tl-card"><h3>Energy Transition Club</h3><p class="role">Member · Cornell University</p><p>Cornell’s student community for the clean-energy transition: technology, policy and markets.</p></div></article>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Jun — Aug 2026</div><div class="tl-card"><h3>PlateTale</h3><p class="role">Operations &amp; Growth Intern</p><p>Helped take an AI food-tech startup from 0 to 1: chef and customer partnerships, outreach to 100+ prospects and VC-backed startups, and refining its AI taste model. Secured 3 VC sponsors and hosted a flagship dinner club of 20 founders from Stanford, Berkeley, MIT and YC companies.</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Jun — Aug 2026</div><div class="tl-card"><img class="tl-logo" src="assets/logos/platetale.png" alt="" loading="lazy"><h3>PlateTale</h3><p class="role">Operations &amp; Growth Intern</p><p>Helped take an AI food-tech startup from 0 to 1: chef and customer partnerships, outreach to 100+ prospects and VC-backed startups, and refining its AI taste model. Secured 3 VC sponsors and hosted a flagship dinner club of 20 founders from Stanford, Berkeley, MIT and YC companies.</p></div></article>
     <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Jun 2025 — Apr 2026</div><div class="tl-card"><h3>Shields Mobility</h3><p class="role">Research Analyst</p><p>Sourced and scored 300+ EV commercial-fleet charging sites across California, tracked incentive programs to steer investment toward underserved infrastructure, and built an ArcGIS site to visualize and sort properties.</p></div></article>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Jun — Jul 2025</div><div class="tl-card"><h3>Stanford University · Dept. of Chemistry</h3><p class="role">Research Intern</p><p>Graduate-student projects in computational molecular physics and energy storage in the Waymouth and Rotskoff labs.</p></div></article>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Apr 2025 — Mar 2026</div><div class="tl-card"><h3>RE-volv</h3><p class="role">Analyst</p><p>Built and pitched a solar financing proposal for a church, modeling 30%+ federal incentives, 20-year project economics and energy savings, with Peninsula Clean Energy to expand nonprofit solar across the Bay Area.</p></div></article>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Mar 2025 — now</div><div class="tl-card"><h3>WestLight Energy</h3><p class="role">Clean Energy Advisor · former intern</p><p>Manage a $50K electrification grant, mentor interns and expand K–12 outreach to 360+ Peninsula students. Co-led Electric-First campaigns that passed resolutions in 4 school districts, mobilizing 9,000+ students and cutting an estimated 2M+ kg CO₂ a year; represented Peninsula Clean Energy at regional events and guest-spoke to 400+ students.</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Jun — Jul 2025</div><div class="tl-card"><img class="tl-logo" src="assets/logos/stanford.svg" alt="" loading="lazy"><h3>Stanford University · Dept. of Chemistry</h3><p class="role">Research Intern</p><p>Graduate-student projects in computational molecular physics and energy storage in the Waymouth and Rotskoff labs.</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Apr 2025 — Mar 2026</div><div class="tl-card"><img class="tl-logo" src="assets/logos/revolv-color.png" alt="" loading="lazy"><h3>RE-volv</h3><p class="role">Analyst</p><p>Built and pitched a solar financing proposal for a church, modeling 30%+ federal incentives, 20-year project economics and energy savings, with Peninsula Clean Energy to expand nonprofit solar across the Bay Area.</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Mar 2025 — now</div><div class="tl-card"><img class="tl-logo" src="assets/logos/westlight-mark.png" alt="" loading="lazy"><h3>WestLight Energy</h3><p class="role">Clean Energy Advisor · former intern</p><p>Manage a $50K electrification grant, mentor interns and expand K–12 outreach to 360+ Peninsula students. Co-led Electric-First campaigns that passed resolutions in 4 school districts, mobilizing 9,000+ students and cutting an estimated 2M+ kg CO₂ a year; represented Peninsula Clean Energy at regional events and guest-spoke to 400+ students.</p></div></article>
     <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">Feb — Aug 2025</div><div class="tl-card"><h3>Elytra Robotics</h3><p class="role">Market Researcher</p><p>Merged 2 public datasets and used spatial clustering and predictive modeling to map trash hot spots for autonomous waste collection at a 10-person robotics startup, later acquired.</p></div></article>
     <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">2022 — 2026</div><div class="tl-card"><h3>Independent research</h3><p class="role">Sustainability &amp; materials science</p><p>CO₂-to-ethanol MOF catalysts (published, 91% Faradaic efficiency) and refrigerant-free thermoelectric A/C. Presented at ICAE (UN Bangkok), Columbia Junior Science Journal, MIT THINK, JSHS and the California Science &amp; Engineering Fair.</p></div></article>
-    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">class of 2026</div><div class="tl-card"><h3>Crystal Springs Uplands School</h3><p class="role">Hillsborough, CA · 4.12 GPA</p><p>Distinguished Award in Science. President of STEM Invention Studio (membership up 50%, research symposium with 15 judges). Student Government for 6 years, including Co-President; led 30+ events. TEDx speaker.</p></div></article>
+    <article class="tl-item reveal"><div class="tl-dot"></div><div class="tl-date mono">class of 2026</div><div class="tl-card"><img class="tl-logo" style="background:#1d2a44" src="assets/logos/csus.png" alt="" loading="lazy"><h3>Crystal Springs Uplands School</h3><p class="role">Hillsborough, CA · 4.12 GPA</p><p>Distinguished Award in Science. President of STEM Invention Studio (membership up 50%, research symposium with 15 judges). Student Government for 6 years, including Co-President; led 30+ events. TEDx speaker.</p></div></article>
   </div>
-</div>
 </section>
 
 <!-- PROJECTS -->
@@ -141,15 +133,19 @@
   <a class="gh-more reveal" href="https://github.com/chiaraluey" target="_blank" rel="noopener" data-magnetic><span>More on GitHub</span><span class="mono">github.com/chiaraluey ↗</span></a>
 </section>
 
-<div class="band rev" aria-hidden="true"><div class="marquee-track"><span>Plugged into my community</span><i>✦</i><span>Youth-led</span><i>✦</i><span>Clean energy for everyone</span><i>✦</i><span>Plugged into my community</span><i>✦</i><span>Youth-led</span><i>✦</i><span>Clean energy for everyone</span><i>✦</i></div></div>
-
 <!-- VOLUNTEER -->
 <section id="volunteer" class="section">
   <div class="section-head"><span class="mono idx">06</span><h2 class="reveal">Volunteering <em>&amp; service</em></h2></div>
   <p class="vol-note mono reveal">Presidential Volunteer Service Award · Young Adult Gold</p>
-  <div class="vol-rows reveal">
-  <div class="vol-row"><div class="vol-track"><article class="vol tilt"><span class="mono yr">Founder → board member · 2024–now</span><h3>Energizing Youth</h3><p>A youth-led clean-energy education program for K–8 students in under-resourced schools; 500+ students, with branches in Zambia and Brazil.</p><a class="vol-link mono" href="https://energizingyouth.org" target="_blank" rel="noopener">energizingyouth.org ↗</a></article><article class="vol tilt"><span class="mono yr">Individual Delegate · 2025–26</span><h3>UN Major Group for Children &amp; Youth</h3><p>Youth delegate on sustainable development to the UN’s official youth constituency.</p></article><article class="vol tilt"><span class="mono yr">Steering Committee, Chair of Events · 2025–26</span><h3>California Association of Youth Commissions</h3><p>Launched a statewide youth-policy network connecting 500+ commissioners across 20+ cities; co-hosted two 200-person summits.</p></article><article class="vol tilt"><span class="mono yr">VP Communications · 2020–26</span><h3>National Charity League</h3><p>Past President and VP Philanthropy. Led outreach for a 250+ member chapter across 40+ service initiatives; raised $16,000 for My New Red Shoes and secured a $1,500 grant.</p></article></div></div>
-  <div class="vol-row rev"><div class="vol-track"><article class="vol tilt"><span class="mono yr">Environmental Chair</span><h3>Hillsborough Youth Commission</h3><p>Ran civic events reaching 300+ residents and school waste audits that cut landfill waste by 25%.</p></article><article class="vol tilt"><span class="mono yr">Youth advocate</span><h3>Silicon Valley Youth Climate Action</h3><p>Pushed for Electric-First resolutions and spoke before the Sequoia Union High School District board.</p><a class="vol-link mono" href="https://www.linkedin.com/posts/silicon-valley-youth-climate-action_from-classrooms-to-county-how-a-group-of-activity-7448157926998872064-Fyjr" target="_blank" rel="noopener">Read the feature ↗</a></article><article class="vol tilt"><span class="mono yr">President · 2023–26</span><h3>STEM Invention Studio</h3><p>Mentored 20+ members, grew membership 50% and ran 4 annual events, including a research symposium with 15 guest judges and speakers.</p></article><article class="vol tilt"><span class="mono yr">Host</span><h3>The Green Code</h3><p>Interview series with scientists and policymakers, translating climate jargon into human stories.</p></article></div></div>
+  <div class="vol-grid">
+    <article class="vol reveal tilt"><span class="mono yr">Founder → board member · 2024–now</span><h3>Energizing Youth</h3><p>A youth-led clean-energy education program for K–8 students in under-resourced schools; 500+ students, with branches in Zambia and Brazil.</p><a class="vol-link mono" href="https://energizingyouth.org" target="_blank" rel="noopener">energizingyouth.org ↗</a></article>
+    <article class="vol reveal tilt"><span class="mono yr">Individual Delegate · 2025–26</span><h3>UN Major Group for Children &amp; Youth</h3><p>Youth delegate on sustainable development to the UN’s official youth constituency.</p></article>
+    <article class="vol reveal tilt"><span class="mono yr">Steering Committee, Chair of Events · 2025–26</span><h3>California Association of Youth Commissions</h3><p>Launched a statewide youth-policy network connecting 500+ commissioners across 20+ cities; co-hosted two 200-person summits.</p></article>
+    <article class="vol reveal tilt"><span class="mono yr">VP Communications · 2020–26</span><h3>National Charity League</h3><p>Past President and VP Philanthropy. Led outreach for a 250+ member chapter across 40+ service initiatives; raised $16,000 for My New Red Shoes and secured a $1,500 grant.</p></article>
+    <article class="vol reveal tilt"><span class="mono yr">Environmental Chair</span><h3>Hillsborough Youth Commission</h3><p>Ran civic events reaching 300+ residents and school waste audits that cut landfill waste by 25%.</p></article>
+    <article class="vol reveal tilt"><span class="mono yr">Youth advocate</span><h3>Silicon Valley Youth Climate Action</h3><p>Pushed for Electric-First resolutions and spoke before the Sequoia Union High School District board.</p><a class="vol-link mono" href="https://www.linkedin.com/posts/silicon-valley-youth-climate-action_from-classrooms-to-county-how-a-group-of-activity-7448157926998872064-Fyjr" target="_blank" rel="noopener">Read the feature ↗</a></article>
+    <article class="vol reveal tilt"><span class="mono yr">President · 2023–26</span><h3>STEM Invention Studio</h3><p>Mentored 20+ members, grew membership 50% and ran 4 annual events, including a research symposium with 15 guest judges and speakers.</p></article>
+    <article class="vol reveal tilt"><span class="mono yr">Host</span><h3>The Green Code</h3><p>Interview series with scientists and policymakers, translating climate jargon into human stories.</p></article>
   </div>
 </section>
 
@@ -230,6 +226,6 @@
 <div class="cmd" id="cmd" aria-hidden="true"><div class="cmd-box"><input id="cmdInput" placeholder="Jump to… (try “tedx”, “projects”, “email”)" autocomplete="off"><ul id="cmdList"></ul><div class="cmd-foot mono">↑↓ navigate · ↵ select · esc close</div></div></div>
 <div class="toast mono" id="toast"></div>
 
-<script src="main.js?v=7"></script>
+<script src="main.js?v=8"></script>
 </body>
 </html>
