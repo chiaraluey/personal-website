@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects · Chiara Luey</title>
+<meta name="description" content="Research projects, science-fair posters and code.">
+<meta property="og:title" content="Projects · Chiara Luey"><meta property="og:image" content="assets/portrait.jpg">
+<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css?v=10">
+</head>
+<body class="p-projects">
+<header class="hdr">
+  <a class="brand" href="index.html">chiara luey</a>
+  <nav class="nav"><a href="work.html">Work</a><a href="projects.html" aria-current="page">Projects</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
+  <button class="theme" id="theme" aria-label="Toggle dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+</header>
+<main class="main">
+<div class="page-head"><h1 class="page-title" data-split>Projects</h1><p class="page-sub reveal">Science-fair research, a published paper and things I’ve built. Click one for posters and details.</p></div>
+<div class="filters reveal"><button class="f on" data-f="all">All</button><button class="f" data-f="research">Research</button><button class="f" data-f="energy">Energy</button><button class="f" data-f="web">Web</button></div>
+<div class="tiles" id="tiles"></div>
+<p class="more reveal"><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">More on GitHub ↗</a></p>
+</main>
+<footer class="ftr">
+  <button class="copy" data-copy="chiara@luey.us">chiara@luey.us</button>
+  <div class="ftr-links"><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a><a href="https://www.youtube.com/@ChiaraLuey" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/chiara_luey" target="_blank" rel="noopener">Instagram</a></div>
+  <span class="ftr-c">© 2026 Chiara Luey</span>
+</footer>
+<div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
+<div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
+<div class="toast" id="toast">Copied</div>
+<script src="assets/projects.js?v=10"></script><script src="site.js?v=10"></script>
+</body>
+</html>
