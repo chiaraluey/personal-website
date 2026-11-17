@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '13'
+V = '17'
 E = html.escape
 
 NAV = [('index.html', 'Island'), ('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry')]
@@ -94,7 +94,7 @@ home = f'''<section class="home">
 # ---------- work ----------
 CORNELL = [
     ('Cornell University', 'B.S. Environmental Engineering', '2026 — 2030', 'Ithaca, NY. Coursework and certificates in quantitative modeling (Wharton) and modelling and measuring the energy transition (Politecnico di Milano).', 'cornell-seal.svg', 'https://www.cornell.edu'),
-    ('Cornell Venture Capital', 'New Member Education · Fall ’26 class', '2026 — now', 'Learning to source and evaluate early-stage startups. Writing investment theses on seed and Series A AI-infrastructure companies, including Hatchet, Atomic, Frenos, ZeroDrift and Build, and working with Cognition AI.', 'cvc.svg', 'https://cornellvc.com'),
+    ('Cornell Venture Capital', 'New Member Education · Fall ’26 class', '2026 — now', 'Working alongside the club’s VCs on sourcing and diligence, and on the deal team for Cognition AI. Writing investment theses on seed and Series A AI-infrastructure startups, including Hatchet, Atomic, Frenos, ZeroDrift and Build.', 'cvc.svg', 'https://cornellvc.com'),
     ('Energy Transition Club', 'Member', '2026 — now', 'Undergraduate organization preparing members to lead in the energy transition through New Member Education, analytical project teams (energy storage, grid modernization, carbon capture, climate policy and more), site visits and speaker sessions.', 'etc.png', 'https://www.cornelletc.org'),
 ]
 EXPERIENCE = [
@@ -109,7 +109,9 @@ RESEARCH = [
     ('Independent research', 'Sustainability & materials science', '2022 — 2026', 'Simulated copper–MOF catalytic pathways that turn vehicle CO₂ into ethanol, reaching 91% Faradaic efficiency, and published a paper with mentors from MIT, Stanford and Washington State. Prototyped an LTC3108-based air conditioner that cools without refrigerants. Presented at ICAE (UN Bangkok), Columbia Junior Science Journal, MIT THINK, JSHS and the California Science & Engineering Fair.', None, 'projects.html'),
     ('Crystal Springs Uplands School', 'High school · 4.12 GPA', '2019 — 2026', 'Distinguished Award in Science. President of STEM Invention Studio: mentored 20+ members, grew membership 50% and ran a research symposium with 15 guest judges. Elected to Student Government for 6 years, including Co-President; led 30+ events, from a $50K prom to Social Justice Week.', 'csus.png', 'https://www.csus.org'),
 ]
-work = head('Work', 'Where I’ve worked, researched and learned. Every row links to the organization.') + f'''
+STATS = [(9000, '+', 'students mobilized by Electric-First campaigns'), (2, 'M+ kg', 'CO₂ cut per year (est.)'), (300, '+', 'EV fleet-charging sites scored'), (50, 'K', 'electrification grant managed ($)'), (500, '+', 'K–8 students taught'), (91, '%', 'Faradaic efficiency in my MOF research')]
+stats_html = '<div class="stats">' + ''.join(f'<div class="stat reveal"><b data-count="{n}" data-suf="{E(su)}">0</b><span>{E(l)}</span></div>' for n, su, l in STATS) + '</div>'
+work = head('Work', 'Clean energy, venture and research. Every row links to the organization.') + stats_html + f'''
 <section class="group" id="cornell"><h2 class="g-t reveal">At Cornell</h2>{rows(CORNELL)}</section>
 <section class="group" id="experience"><h2 class="g-t reveal">Experience</h2>{rows(EXPERIENCE)}</section>
 <section class="group" id="research"><h2 class="g-t reveal">Research & school</h2>{rows(RESEARCH)}</section>

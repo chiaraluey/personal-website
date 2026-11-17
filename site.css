@@ -241,3 +241,10 @@ html.theming::view-transition-new(root){z-index:2}
 .index a{position:relative}
 @media (pointer:fine){body.has-cur,body.has-cur a,body.has-cur button{cursor:none}}
 @media (prefers-reduced-motion:reduce){.tile .t-img img,.art-th img,.ph img,.vid img,.cm-strip figure{clip-path:none}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin:.5rem 0 1rem}
+.stat{background:var(--bg);padding:1.4rem 1.4rem 1.3rem;display:flex;flex-direction:column;gap:.3rem;transition:background .4s}
+.stat:hover{background:var(--soft)}
+.stat b{font:300 clamp(2.2rem,4vw,3.2rem)/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat b em{font-style:italic;color:var(--acc);font-size:.6em;margin-left:.1em}
+.stat span{font-size:.84rem;color:var(--mute)}
+@media (max-width:560px){.stats{grid-template-columns:1fr 1fr}}

@@ -384,6 +384,11 @@ const tokens = [];
   $('#coinTotal').textContent = tokens.length;
 }
 
+// guide: arrow over my head pointing to the next unvisited building
+const guide = new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.9, 16), new THREE.MeshStandardMaterial({ color: '#b31b1b', emissive: '#ff3b2f', emissiveIntensity: 0.5 }));
+guide.geometry.rotateX(Math.PI / 2); scene.add(guide);
+const nextPlace = () => PLACES.find(q => !q.visited);
+$('#nextBtn').onclick = () => { const n = nextPlace(); if (n) travel(n); };
 // trampolines + hoops on the quad
 const TRAMPS = [[-16, -6], [10, -6], [-16, 13], [10, 13]].map(([x, z], i) => {
   const y = H(x, z), g = new THREE.Group(); g.position.set(x, y, z); scene.add(g);
@@ -450,6 +455,7 @@ function frame() {
   comboTimer -= dt; if (comboTimer <= 0 && combo > 1) { combo = 1; $('#combo').textContent = ''; }
   TRAMPS.forEach(tp => { if (Math.hypot(me.position.x - tp.x, me.position.z - tp.z) < 1.7 && me.position.y < tp.y + 0.6 && vy <= 0) { vy = 17; grounded = false; jumpsLeft = 1; me.position.y = tp.y + 0.62; tp.m.scale.y = 0.4; sfx('jump'); sfx('coin'); } tp.m.scale.y += (1 - tp.m.scale.y) * Math.min(1, dt * 8); });
   HOOPS.forEach(h => { h.m.rotation.y += dt * 0.8; if (h.cd > 0) { h.cd -= dt; h.m.visible = h.cd <= 0; return; } if (me.position.distanceTo(h.m.position) < 1.9 || v3.copy(me.position).setY(me.position.y + 1).distanceTo(h.m.position) < 1.6) { h.cd = 8; h.m.visible = false; score(5, 'HOOP!'); burst(h.m.position, '#ffd27a', 40); } });
+  { const n = nextPlace(); guide.visible = !!n && started; if (n) { guide.position.set(me.position.x, me.position.y + 3.1 + Math.sin(t * 3) * 0.12, me.position.z); guide.lookAt(n.door[0], me.position.y + 3.1, n.door[1]); $('#nextBtn').innerHTML = `Next stop: <b>${SIGNS[n.id] === 'CORNELL' ? 'Cornell' : n.name}</b> →`; } else $('#nextBtn').textContent = 'Tour complete ✓'; }
   sprites.forEach((sp, i) => sp.position.y = sp.userData.y + Math.sin(t * 1.5 + i) * 0.3);
   PLACES.forEach(pl => { if (!pl.visited && Math.hypot(me.position.x - pl.door[0], me.position.z - pl.door[1]) < 5.5) { pl.visited = true; pl.q.classList.add('done'); points += 10; hud(); toast(`Found ${pl.name}! +10 · press Enter to open`); sfx('win'); if (PLACES.every(q => q.visited)) setTimeout(() => toast('Campus tour complete! +50'), 2900), points += 50; } });
   // camera

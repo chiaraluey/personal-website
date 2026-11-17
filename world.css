@@ -117,3 +117,9 @@ body:not(.playing) .prompt{transform:translate(-50%,160%)!important}
 .playing .hud,.playing .places{pointer-events:auto}
 .mute,.places button{pointer-events:auto}
 body:not(.playing) .mute,body:not(.playing) .places button{pointer-events:none}
+.next-btn{position:fixed;left:50%;top:5.2rem;z-index:8;transform:translate(-50%,-10px);opacity:0;pointer-events:none;padding:.7rem 1.3rem;border-radius:99px;background:#b31b1b;color:#fff;font-size:.92rem;box-shadow:0 12px 30px -10px rgba(179,27,27,.6);transition:all .5s var(--ease)}
+.next-btn b{font-weight:600}
+.playing .next-btn{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.next-btn:hover{transform:translate(-50%,-2px) scale(1.03)}
+.prompt{bottom:5rem}
+@media (max-width:760px){.next-btn{top:4.6rem;font-size:.82rem}}
