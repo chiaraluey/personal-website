@@ -301,7 +301,7 @@ const labels = $('#labels');
 PLACES.forEach(p => {
   const el = document.createElement('button'); el.className = 'w-label'; el.innerHTML = `<span><b>${p.name}</b><i>${p.desc.split(':')[0]}</i></span>`; el.onclick = () => travel(p); labels.appendChild(el); p.el = el;
   p.top = new THREE.Vector3(p.pos[0], p.y + p.ly, p.pos[1]);
-  const b = document.createElement('button'); b.textContent = p.desc.split(':')[0].split('·')[0].trim(); b.title = p.name; b.onclick = () => travel(p); $('#places').appendChild(b);
+  const b = document.createElement('button'); b.innerHTML = `<i></i>${SIGNS[p.id] === 'CORNELL' ? 'Cornell' : SIGNS[p.id].charAt(0) + SIGNS[p.id].slice(1).toLowerCase()}`; b.title = p.name; b.onclick = () => travel(p); $('#places').appendChild(b);
 });
 
 // big floating signs + quests
@@ -319,12 +319,12 @@ let target = null, yaw = 0, pitch = 0.4, dist = 17, active = null, started = fal
 addEventListener('keydown', e => {
   const k = e.key.toLowerCase(); keys[k] = true;
   if (e.code === 'Space') jump();
-  if (k === 'enter' && active) location.href = active.href;
+  if (k === 'enter' && active) openDrawer(active); if (k === 'escape') closeDrawer();
   if (k === 'c' && active && active.act) chimes();
   if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(k)) e.preventDefault();
 });
 addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
-function travel(p) { target = new THREE.Vector3(p.door[0], 0, p.door[1]); start(); }
+function travel(p) { target = new THREE.Vector3(p.door[0], 0, p.door[1]); arrivedAt = p; start(); }
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 let down = null;
 canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, yaw, pitch }; canvas.setPointerCapture(e.pointerId); });
@@ -340,6 +340,13 @@ canvas.addEventListener('pointerup', e => {
 canvas.addEventListener('wheel', e => { dist = Math.min(36, Math.max(7, dist + e.deltaY * 0.01)); }, { passive: true });
 function start() { if (!started) { started = true; document.body.classList.add('playing'); } }
 $('#startBtn').onclick = start;
+let touring = false, arrivedAt = null;
+const drawer = $('#drawer');
+function openDrawer(p) { p.visited || (p.visited = true); $('#drTitle').textContent = `${p.name} · ${SIGNS[p.id].charAt(0) + SIGNS[p.id].slice(1).toLowerCase()}`; $('#drFull').href = p.href; const f = $('#drFrame'); const src = p.href.replace(/(#|$)/, m => (m === '#' ? '?embed=1#' : '?embed=1')); if (f.dataset.src !== src) { f.dataset.src = src; f.src = src; } drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false'); document.body.classList.add('reading'); }
+function closeDrawer() { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); document.body.classList.remove('reading'); }
+$('#drClose').onclick = () => { closeDrawer(); touring = false; };
+$('#drNext').onclick = () => { closeDrawer(); const n = PLACES.find(q => !q.visited) || null; if (n) travel(n); else toast('You’ve seen everything. Thanks for visiting!'); };
+$('#tourBtn').onclick = () => { touring = true; start(); const n = PLACES.find(q => !q.visited); if (n) travel(n); };
 
 // ---------- game: tokens, jump, chimes, particles, sound ----------
 let vy = 0, grounded = true, got = 0, points = 0, rung = false, muted = localStorage.getItem('muted') === '1', actx;
@@ -363,6 +370,7 @@ function hud() { $('#coins').textContent = got; $('#pts').textContent = points; 
 function toast(msg) { const t = $('#wToast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2800); }
 function chimes() { sfx('bell'); if (!rung) { rung = true; points += 5; hud(); toast('You rang the McGraw chimes! +5'); } else toast('Ding, dong'); burst(new THREE.Vector3(-37, H(-37, -6) + 25, -6), '#ffe3a3', 60); }
 $('#pAct').onclick = () => chimes();
+$('#pOpen').addEventListener('click', e => { if (active) { e.preventDefault(); openDrawer(active); } });
 const bursts = [];
 function burst(p, color, n = 26) {
   const pos = new Float32Array(n * 3), vel = [];
@@ -457,7 +465,7 @@ function frame() {
   HOOPS.forEach(h => { h.m.rotation.y += dt * 0.8; if (h.cd > 0) { h.cd -= dt; h.m.visible = h.cd <= 0; return; } if (me.position.distanceTo(h.m.position) < 1.9 || v3.copy(me.position).setY(me.position.y + 1).distanceTo(h.m.position) < 1.6) { h.cd = 8; h.m.visible = false; score(5, 'HOOP!'); burst(h.m.position, '#ffd27a', 40); } });
   { const n = nextPlace(); guide.visible = !!n && started; if (n) { guide.position.set(me.position.x, me.position.y + 3.1 + Math.sin(t * 3) * 0.12, me.position.z); guide.lookAt(n.door[0], me.position.y + 3.1, n.door[1]); $('#nextBtn').innerHTML = `Next stop: <b>${SIGNS[n.id] === 'CORNELL' ? 'Cornell' : n.name}</b> →`; } else $('#nextBtn').textContent = 'Tour complete ✓'; }
   sprites.forEach((sp, i) => sp.position.y = sp.userData.y + Math.sin(t * 1.5 + i) * 0.3);
-  PLACES.forEach(pl => { if (!pl.visited && Math.hypot(me.position.x - pl.door[0], me.position.z - pl.door[1]) < 5.5) { pl.visited = true; pl.q.classList.add('done'); points += 10; hud(); toast(`Found ${pl.name}! +10 · press Enter to open`); sfx('win'); if (PLACES.every(q => q.visited)) setTimeout(() => toast('Campus tour complete! +50'), 2900), points += 50; } });
+  PLACES.forEach(pl => { if (!pl.toured && Math.hypot(me.position.x - pl.door[0], me.position.z - pl.door[1]) < 5.5) { pl.toured = true; pl.visited = true; pl.q.classList.add('done'); points += 10; hud(); toast(`Found ${pl.name}! +10 · press Enter to open`); sfx('win'); if (PLACES.every(q => q.toured)) setTimeout(() => toast('Campus tour complete! +50'), 2900), points += 50; } });
   // camera
   intro += ((started ? 0 : 1) - intro) * Math.min(1, dt * 1.4);
   const d = dist + intro * 75, p = pitch + intro * 0.38, y = yaw + intro * (0.6 + t * 0.04);
@@ -497,7 +505,7 @@ function frame() {
     pl.el.style.pointerEvents = vis ? 'auto' : 'none';
     if (dd < 5.5) active = pl;
   });
-  if (active) { prompt.classList.add('on'); $('#pTitle').textContent = active.name; $('#pDesc').textContent = active.desc; $('#pOpen').href = active.href; $('#pAct').style.display = active.act ? '' : 'none'; } else prompt.classList.remove('on');
+  if (active) { prompt.classList.add('on'); $('#pTitle').textContent = active.name; $('#pDesc').textContent = active.desc; $('#pOpen').href = active.href; if (arrivedAt === active && !target) { arrivedAt = null; if (touring || true) openDrawer(active); } $('#pAct').style.display = active.act ? '' : 'none'; } else prompt.classList.remove('on');
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }

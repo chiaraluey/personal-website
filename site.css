@@ -248,3 +248,5 @@ html.theming::view-transition-new(root){z-index:2}
 .stat b em{font-style:italic;color:var(--acc);font-size:.6em;margin-left:.1em}
 .stat span{font-size:.84rem;color:var(--mute)}
 @media (max-width:560px){.stats{grid-template-columns:1fr 1fr}}
+.embed .hdr,.embed .ftr,.embed .cur,.embed .aura{display:none!important}
+.embed .page-head{padding-top:2rem}

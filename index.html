@@ -8,7 +8,7 @@
 <script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(matchMedia('(prefers-reduced-motion: reduce)').matches)location.replace('about.html')})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="world.css?v=17">
+<link rel="stylesheet" href="world.css?v=18">
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
@@ -23,10 +23,13 @@
 
 <section class="intro" id="intro">
   <p class="intro-hi">Hi! Nice to meet you.</p>
-  <h1 class="intro-name">I’m Chiara Luey.</h1>
-  <p class="intro-lead">Freshman at Cornell who loves energy and economics. Welcome to my corner of campus: walk the Arts Quad and step into each building to see what I’ve been up to.</p>
-  <div class="intro-cta"><button class="w-btn" id="startBtn">Start exploring</button><a class="w-link" href="about.html">or read the classic site →</a></div>
-  <p class="intro-keys">Visit every building on the tour, double-jump to flip, bounce on trampolines through the hoops, and collect Big Red tokens.</p>
+  <h1 class="intro-name"><span class="ln">I’m Chiara</span><span class="ln">Luey.</span></h1>
+  <p class="intro-lead">Cornell freshman · Environmental Engineering · energy &amp; economics. This is my corner of campus. Pick how you want to meet me:</p>
+  <div class="choices">
+    <button class="choice" id="tourBtn"><b>Guided tour</b><span>Auto-walk to every building, ~1 min</span><i>→</i></button>
+    <button class="choice" id="startBtn"><b>Explore freely</b><span>Walk, flip, collect tokens</span><i>→</i></button>
+    <a class="choice" href="about.html"><b>Just read</b><span>Classic site, no game</span><i>→</i></a>
+  </div>
 </section>
 
 <div class="hud"><div class="score" id="score"><span class="c-ic"></span><b id="coins">0</b><span class="of">/<span id="coinTotal">30</span></span><span class="sep"></span><span class="star">★</span><b id="pts">0</b><em id="combo"></em></div><button class="mute" id="muteBtn">sound on</button></div>
@@ -34,10 +37,11 @@
 <button class="jump-btn" id="jumpBtn" aria-label="Jump">↑</button>
 <div class="w-toast" id="wToast"></div><div id="pops"></div><button class="next-btn" id="nextBtn">Next stop →</button><div class="quests"><span>Campus tour</span><ul id="quests"></ul></div>
 <div class="prompt" id="prompt"><div><strong id="pTitle"></strong><span id="pDesc"></span></div><button class="w-btn ghost" id="pAct">Ring the chimes <kbd>C</kbd></button><a class="w-btn" id="pOpen" href="#">Open <kbd>↵</kbd></a></div>
-<nav class="places" id="places" aria-label="Fast travel"><span>Campus</span></nav>
+<nav class="dock" id="places" aria-label="Buildings"></nav>
 
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="dr-top"><div><small id="drKick">Now visiting</small><strong id="drTitle"></strong></div><div class="dr-act"><a class="w-btn ghost" id="drFull" href="#" >Full page ↗</a><button class="w-btn" id="drNext">Next stop →</button><button class="dr-x" id="drClose" aria-label="Close">✕</button></div></div><iframe id="drFrame" title="Page preview"></iframe></aside>
 <div class="loader" id="loader"><div class="loader-in"><span>walking up Libe Slope</span><div class="bar"><i id="loadBar"></i></div></div></div>
 <noscript><meta http-equiv="refresh" content="0;url=about.html"></noscript>
-<script type="module" src="world.js?v=17"></script>
+<script type="module" src="world.js?v=18"></script>
 </body>
 </html>
