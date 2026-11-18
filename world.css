@@ -158,3 +158,4 @@ body:not(.playing) .mute,body:not(.playing) .places button{pointer-events:none}
 .drawer iframe{flex:1;width:100%;border:0;background:var(--bg)}
 .reading .prompt,.reading .keys-chip{opacity:0;pointer-events:none}
 @media (max-width:760px){.intro{top:auto;bottom:4vh;transform:none}.choice b{font-size:1.15rem}.drawer{top:4.4rem;right:.5rem;left:.5rem;width:auto}}
+body:not(.playing) .prompt{opacity:0;pointer-events:none}
