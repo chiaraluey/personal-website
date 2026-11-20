@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chiara Luey</title>
+<meta name="description" content="Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics. Explore my corner of Cornell.">
+<meta property="og:title" content="Chiara Luey"><meta property="og:image" content="assets/portrait.jpg">
+<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(matchMedia('(prefers-reduced-motion: reduce)').matches)location.replace('about.html')})()</script>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="world.css?v=20">
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<canvas id="world"></canvas>
+<div id="labels"></div>
+
+<header class="w-hdr">
+  <a class="w-brand" href="index.html">chiara luey</a>
+  <nav class="w-nav"><a href="index.html">Home</a><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects &amp; Research</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
+  <button class="w-theme" id="theme" aria-label="Toggle day and night"><svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+</header>
+
+<section class="intro" id="intro">
+  <p class="intro-hi">Hi! Nice to meet you.</p>
+  <h1 class="intro-name"><span class="ln">I’m Chiara</span><span class="ln">Luey.</span></h1>
+  <p class="intro-lead">Cornell freshman · Environmental Engineering · energy &amp; economics. This is my corner of campus. Pick how you want to meet me:</p>
+  <div class="choices">
+    <button class="choice" id="tourBtn"><b>Guided tour</b><span>Auto-walk to every building, ~1 min</span><i>→</i></button>
+    <button class="choice" id="startBtn"><b>Explore freely</b><span>Walk, flip, collect tokens</span><i>→</i></button>
+    <a class="choice" href="index.html"><b>Just read</b><span>Classic site, no game</span><i>→</i></a>
+  </div>
+</section>
+
+<div class="hud"><div class="score" id="score"><span class="c-ic"></span><b id="coins">0</b><span class="of">/<span id="coinTotal">30</span></span><span class="sep"></span><span class="star">★</span><b id="pts">0</b><em id="combo"></em></div><button class="mute" id="muteBtn">sound on</button></div>
+<div class="keys-chip"><kbd>WASD</kbd> move <kbd>Space</kbd> jump <kbd>×2</kbd> flip <kbd>Shift</kbd> sprint <kbd>click</kbd> walk <kbd>drag</kbd> look <kbd>↵</kbd> enter</div>
+<button class="jump-btn" id="jumpBtn" aria-label="Jump">↑</button>
+<div class="w-toast" id="wToast"></div><div id="pops"></div><button class="next-btn" id="nextBtn">Next stop →</button><div class="quests"><span>Campus tour</span><ul id="quests"></ul></div>
+<div class="prompt" id="prompt"><div><strong id="pTitle"></strong><span id="pDesc"></span></div><button class="w-btn ghost" id="pAct">Ring the chimes <kbd>C</kbd></button><a class="w-btn" id="pOpen" href="#">Open <kbd>↵</kbd></a></div>
+<nav class="dock" id="places" aria-label="Buildings"></nav>
+
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="dr-top"><div><small id="drKick">Now visiting</small><strong id="drTitle"></strong></div><div class="dr-act"><a class="w-btn ghost" id="drFull" href="#" >Full page ↗</a><button class="w-btn" id="drNext">Next stop →</button><button class="dr-x" id="drClose" aria-label="Close">✕</button></div></div><iframe id="drFrame" title="Page preview"></iframe></aside>
+<div class="loader" id="loader"><div class="loader-in"><span>walking up Libe Slope</span><div class="bar"><i id="loadBar"></i></div></div></div>
+<noscript><meta http-equiv="refresh" content="0;url=about.html"></noscript>
+<script type="module" src="world.js?v=19"></script>
+</body>
+</html>

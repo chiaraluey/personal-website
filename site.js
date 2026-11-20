@@ -77,3 +77,4 @@ watch();
 // count-up stats
 const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);const el=e.target,n=+el.dataset.count,suf=el.dataset.suf||'',t0=performance.now(),d=1600;const step=t=>{const k=Math.min((t-t0)/d,1),v=Math.round(n*(1-Math.pow(1-k,4)));el.innerHTML=v.toLocaleString()+`<em>${suf}</em>`;if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}),{threshold:.6});
 $$('[data-count]').forEach(el=>cio.observe(el));
+document.addEventListener('pointermove',e=>{const c=e.target.closest('.rc');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')});

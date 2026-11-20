@@ -6,7 +6,7 @@ const $ = s => document.querySelector(s);
 const root = document.documentElement;
 const canvas = $('#world');
 let renderer;
-try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); } catch (e) { location.replace('about.html'); throw e; }
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); } catch (e) { location.replace('index.html'); throw e; }
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;

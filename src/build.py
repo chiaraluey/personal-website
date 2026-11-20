@@ -1,10 +1,10 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '18'
+V = '19'
 E = html.escape
 
-NAV = [('index.html', 'Island'), ('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry')]
+NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
 SOCIALS = [('LinkedIn', 'https://www.linkedin.com/in/chiara-luey'), ('GitHub', 'https://github.com/chiaraluey'), ('YouTube', 'https://www.youtube.com/@ChiaraLuey'), ('Instagram', 'https://www.instagram.com/chiara_luey')]
 
 THEME_BOOT = "<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>"
@@ -167,7 +167,40 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
   <a class="btn reveal" href="https://www.chiaramalia.com/" target="_blank" rel="noopener">Visit chiaramalia.com ↗</a>
 </div>'''
 
+
+# ---------- landing (receipts first) ----------
+LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC'), ('ncwit.png', 'NCWIT'), ('ssmc.png', 'Sustainable San Mateo'), ('mgcy.png', 'UN MGCY')]
+def rc(cls, href, inner):
+    return f'<a class="rc reveal {cls}" href="{href}"{ext(href)}>{inner}<i class="rc-arr">↗</i></a>'
+def num(n, suf):
+    return f'<b class="rc-n" data-count="{n}" data-suf="{E(suf)}">{n:,}<em>{E(suf)}</em></b>'
+CARDS = [
+    rc('big research', 'projects.html', f'<span class="rc-k">Published research</span>{num(91, "%")}<span class="rc-h">Faradaic efficiency</span><p>Designed copper–MOF catalytic pathways that turn tailpipe CO₂ into ethanol. Published with mentors from MIT, Stanford and Washington State.</p><img class="rc-poster" src="assets/mof-poster.jpg" alt="" loading="lazy">'),
+    rc('vc', 'work.html#cornell', '<span class="rc-k">Venture</span><span class="rc-logos"><img src="assets/logos/cognition.svg" alt="Cognition"><img src="assets/logos/cvc.svg" alt="Cornell VC"></span><span class="rc-h">Cognition AI deal team</span><p>Cornell Venture Capital, sourcing and diligence alongside the club’s VCs.</p>'),
+    rc('', 'work.html#experience', f'<span class="rc-k">Policy</span>{num(9000, "+")}<span class="rc-h">students mobilized</span><p>Electric-First resolutions passed in 4 school districts.</p>'),
+    rc('', 'https://github.com/ItzXizZ/econ-whiteboard-hackathon', '<span class="rc-k">Hackathon · Nov 2026</span><span class="rc-logos"><img src="assets/logos/cornell-seal.svg" alt="Cornell"></span><span class="rc-h">Judges’ Choice</span><p>Cornell Local AI Hackathon. Adam, an AI tutor that runs fully offline.</p>'),
+    rc('', 'work.html#experience', f'<span class="rc-k">Impact</span>{num(2, "M+ kg")}<span class="rc-h">CO₂ cut a year (est.)</span><p>From the Electric-First campaigns I co-led.</p>'),
+    rc('wide media', 'press.html', '<img class="rc-bg" src="assets/yt-tedx.jpg" alt="" loading="lazy"><span class="rc-k">Talk</span><span class="rc-h">TEDx speaker · “Circles”</span><p>Plus podcasts and press features.</p><span class="rc-play">▶</span>'),
+    rc('', 'work.html#experience', '<span class="rc-k">Lab</span><span class="rc-logos"><img src="assets/logos/stanford-s.svg" alt="Stanford"></span><span class="rc-h">Stanford Chemistry</span><p>Research intern in the Waymouth and Rotskoff labs: computational molecular physics and energy storage.</p>'),
+    rc('', 'projects.html', '<span class="rc-k">Stages</span><span class="rc-logos"><img src="assets/logos/un.svg" alt="UN"></span><span class="rc-h">UN Bangkok to MIT</span><p>Presented at ICAE (UN Bangkok), MIT THINK, JSHS and the California State Science Fair.</p>'),
+    rc('', 'https://energizingyouth.org', f'<span class="rc-k">Founder</span>{num(500, "+")}<span class="rc-h">K–8 students taught</span><p>Energizing Youth: clean-energy lessons, now with branches in Zambia and Brazil.</p>'),
+    rc('wide media', 'jewelry.html', '<img class="rc-bg" src="assets/cm-1.jpg" alt="" loading="lazy"><span class="rc-k">Founder</span><span class="rc-h">Chiara Malia</span><p>My jewelry brand. 19-piece debut collection.</p>'),
+    rc('', 'about.html', f'<span class="rc-k">Athlete</span><b class="rc-n">Top 100</b><span class="rc-h">US Squash</span><p>3× U.S. Squash Scholar-Athlete.</p>'),
+    rc('', 'work.html#experience', f'<span class="rc-k">At WestLight Energy</span><b class="rc-n">$<span data-count="50" data-suf="K">50<em>K</em></span></b><span class="rc-h">grant managed</span><p>Clean Energy Advisor. I mentor interns and run K–12 outreach.</p>'),
+    rc('', 'service.html', '<span class="rc-k">Awards</span><span class="rc-logos"><img src="assets/logos/ncwit.png" alt="NCWIT"></span><span class="rc-h">NCWIT national award</span><p>Plus the 2026 Youth Sustainability Award.</p>'),
+    rc('wide campus', 'campus.html', '<span class="rc-k">Play</span><span class="rc-h">Explore my Cornell campus in 3D →</span><p>Walk, flip and collect tokens. Every building opens a page.</p>'),
+]
+landing = f'''<section class="hero">
+  <div class="hero-top reveal"><img class="avatar" src="assets/portrait.jpg" alt="Chiara Luey"><span class="now"><span class="pulse"></span>Now: Cornell VC, Cognition AI deal team</span></div>
+  <h1 class="hero-name" data-split>Chiara Luey</h1>
+  <p class="hero-line reveal">Cornell Environmental Engineering ’30. I’ve published catalyst research, gotten 4 school districts to go electric, given a TEDx talk and started two organizations.</p>
+  <div class="hero-cta reveal"><a class="btn" href="mailto:chiara@luey.us">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn ghost" href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub ↗</a></div>
+</section>
+<div class="marquee reveal" aria-label="Organizations"><div class="mq-track">{''.join(f'<span class="mq-i"><img src="assets/logos/{s}" alt="{E(n)}"></span>' for s, n in LOGOS * 2)}</div></div>
+<section class="receipts">{''.join(CARDS)}</section>'''
+
 PAGES = [
+    ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, ''),
     ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
     ('work.html', 'Work · Chiara Luey', 'Experience at Cornell Venture Capital, WestLight Energy, Stanford and more.', work, ''),
     ('projects.html', 'Projects & Research · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),

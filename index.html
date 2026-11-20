@@ -3,45 +3,39 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chiara Luey</title>
-<meta name="description" content="Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics. Explore my corner of Cornell.">
+<meta name="description" content="Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.">
 <meta property="og:title" content="Chiara Luey"><meta property="og:image" content="assets/portrait.jpg">
-<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(matchMedia('(prefers-reduced-motion: reduce)').matches)location.replace('about.html')})()</script>
+<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="world.css?v=20">
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<link rel="stylesheet" href="site.css?v=19">
 </head>
-<body>
-<canvas id="world"></canvas>
-<div id="labels"></div>
-
-<header class="w-hdr">
-  <a class="w-brand" href="index.html">chiara luey</a>
-  <nav class="w-nav"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects &amp; Research</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></nav>
-  <button class="w-theme" id="theme" aria-label="Toggle day and night"><svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+<body class="p-index">
+<header class="hdr">
+  <a class="brand" href="index.html">chiara luey</a>
+  <nav class="nav"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects & Research</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a><a href="campus.html">3D Campus</a></nav>
+  <button class="theme" id="theme" aria-label="Toggle dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
 </header>
-
-<section class="intro" id="intro">
-  <p class="intro-hi">Hi! Nice to meet you.</p>
-  <h1 class="intro-name"><span class="ln">I’m Chiara</span><span class="ln">Luey.</span></h1>
-  <p class="intro-lead">Cornell freshman · Environmental Engineering · energy &amp; economics. This is my corner of campus. Pick how you want to meet me:</p>
-  <div class="choices">
-    <button class="choice" id="tourBtn"><b>Guided tour</b><span>Auto-walk to every building, ~1 min</span><i>→</i></button>
-    <button class="choice" id="startBtn"><b>Explore freely</b><span>Walk, flip, collect tokens</span><i>→</i></button>
-    <a class="choice" href="about.html"><b>Just read</b><span>Classic site, no game</span><i>→</i></a>
-  </div>
+<main class="main">
+<section class="hero">
+  <div class="hero-top reveal"><img class="avatar" src="assets/portrait.jpg" alt="Chiara Luey"><span class="now"><span class="pulse"></span>Now: Cornell VC, Cognition AI deal team</span></div>
+  <h1 class="hero-name" data-split>Chiara Luey</h1>
+  <p class="hero-line reveal">Cornell Environmental Engineering ’30. I’ve published catalyst research, gotten 4 school districts to go electric, given a TEDx talk and started two organizations.</p>
+  <div class="hero-cta reveal"><a class="btn" href="mailto:chiara@luey.us">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn ghost" href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub ↗</a></div>
 </section>
-
-<div class="hud"><div class="score" id="score"><span class="c-ic"></span><b id="coins">0</b><span class="of">/<span id="coinTotal">30</span></span><span class="sep"></span><span class="star">★</span><b id="pts">0</b><em id="combo"></em></div><button class="mute" id="muteBtn">sound on</button></div>
-<div class="keys-chip"><kbd>WASD</kbd> move <kbd>Space</kbd> jump <kbd>×2</kbd> flip <kbd>Shift</kbd> sprint <kbd>click</kbd> walk <kbd>drag</kbd> look <kbd>↵</kbd> enter</div>
-<button class="jump-btn" id="jumpBtn" aria-label="Jump">↑</button>
-<div class="w-toast" id="wToast"></div><div id="pops"></div><button class="next-btn" id="nextBtn">Next stop →</button><div class="quests"><span>Campus tour</span><ul id="quests"></ul></div>
-<div class="prompt" id="prompt"><div><strong id="pTitle"></strong><span id="pDesc"></span></div><button class="w-btn ghost" id="pAct">Ring the chimes <kbd>C</kbd></button><a class="w-btn" id="pOpen" href="#">Open <kbd>↵</kbd></a></div>
-<nav class="dock" id="places" aria-label="Buildings"></nav>
-
-<aside class="drawer" id="drawer" aria-hidden="true"><div class="dr-top"><div><small id="drKick">Now visiting</small><strong id="drTitle"></strong></div><div class="dr-act"><a class="w-btn ghost" id="drFull" href="#" >Full page ↗</a><button class="w-btn" id="drNext">Next stop →</button><button class="dr-x" id="drClose" aria-label="Close">✕</button></div></div><iframe id="drFrame" title="Page preview"></iframe></aside>
-<div class="loader" id="loader"><div class="loader-in"><span>walking up Libe Slope</span><div class="bar"><i id="loadBar"></i></div></div></div>
-<noscript><meta http-equiv="refresh" content="0;url=about.html"></noscript>
-<script type="module" src="world.js?v=19"></script>
+<div class="marquee reveal" aria-label="Organizations"><div class="mq-track"><span class="mq-i"><img src="assets/logos/cornell-seal.svg" alt="Cornell"></span><span class="mq-i"><img src="assets/logos/stanford-s.svg" alt="Stanford"></span><span class="mq-i"><img src="assets/logos/cognition.svg" alt="Cognition"></span><span class="mq-i"><img src="assets/logos/cvc.svg" alt="Cornell VC"></span><span class="mq-i"><img src="assets/logos/ted.svg" alt="TEDx"></span><span class="mq-i"><img src="assets/logos/un.svg" alt="UN"></span><span class="mq-i"><img src="assets/logos/westlight-mark.png" alt="WestLight"></span><span class="mq-i"><img src="assets/logos/revolv-color.png" alt="RE-volv"></span><span class="mq-i"><img src="assets/logos/platetale.png" alt="PlateTale"></span><span class="mq-i"><img src="assets/logos/elytra.png" alt="Elytra"></span><span class="mq-i"><img src="assets/logos/etc.png" alt="ETC"></span><span class="mq-i"><img src="assets/logos/ncwit.png" alt="NCWIT"></span><span class="mq-i"><img src="assets/logos/ssmc.png" alt="Sustainable San Mateo"></span><span class="mq-i"><img src="assets/logos/mgcy.png" alt="UN MGCY"></span><span class="mq-i"><img src="assets/logos/cornell-seal.svg" alt="Cornell"></span><span class="mq-i"><img src="assets/logos/stanford-s.svg" alt="Stanford"></span><span class="mq-i"><img src="assets/logos/cognition.svg" alt="Cognition"></span><span class="mq-i"><img src="assets/logos/cvc.svg" alt="Cornell VC"></span><span class="mq-i"><img src="assets/logos/ted.svg" alt="TEDx"></span><span class="mq-i"><img src="assets/logos/un.svg" alt="UN"></span><span class="mq-i"><img src="assets/logos/westlight-mark.png" alt="WestLight"></span><span class="mq-i"><img src="assets/logos/revolv-color.png" alt="RE-volv"></span><span class="mq-i"><img src="assets/logos/platetale.png" alt="PlateTale"></span><span class="mq-i"><img src="assets/logos/elytra.png" alt="Elytra"></span><span class="mq-i"><img src="assets/logos/etc.png" alt="ETC"></span><span class="mq-i"><img src="assets/logos/ncwit.png" alt="NCWIT"></span><span class="mq-i"><img src="assets/logos/ssmc.png" alt="Sustainable San Mateo"></span><span class="mq-i"><img src="assets/logos/mgcy.png" alt="UN MGCY"></span></div></div>
+<section class="receipts"><a class="rc reveal big research" href="projects.html"><span class="rc-k">Published research</span><b class="rc-n" data-count="91" data-suf="%">91<em>%</em></b><span class="rc-h">Faradaic efficiency</span><p>Designed copper–MOF catalytic pathways that turn tailpipe CO₂ into ethanol. Published with mentors from MIT, Stanford and Washington State.</p><img class="rc-poster" src="assets/mof-poster.jpg" alt="" loading="lazy"><i class="rc-arr">↗</i></a><a class="rc reveal vc" href="work.html#cornell"><span class="rc-k">Venture</span><span class="rc-logos"><img src="assets/logos/cognition.svg" alt="Cognition"><img src="assets/logos/cvc.svg" alt="Cornell VC"></span><span class="rc-h">Cognition AI deal team</span><p>Cornell Venture Capital, sourcing and diligence alongside the club’s VCs.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="work.html#experience"><span class="rc-k">Policy</span><b class="rc-n" data-count="9000" data-suf="+">9,000<em>+</em></b><span class="rc-h">students mobilized</span><p>Electric-First resolutions passed in 4 school districts.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="https://github.com/ItzXizZ/econ-whiteboard-hackathon" target="_blank" rel="noopener"><span class="rc-k">Hackathon · Nov 2026</span><span class="rc-logos"><img src="assets/logos/cornell-seal.svg" alt="Cornell"></span><span class="rc-h">Judges’ Choice</span><p>Cornell Local AI Hackathon. Adam, an AI tutor that runs fully offline.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="work.html#experience"><span class="rc-k">Impact</span><b class="rc-n" data-count="2" data-suf="M+ kg">2<em>M+ kg</em></b><span class="rc-h">CO₂ cut a year (est.)</span><p>From the Electric-First campaigns I co-led.</p><i class="rc-arr">↗</i></a><a class="rc reveal wide media" href="press.html"><img class="rc-bg" src="assets/yt-tedx.jpg" alt="" loading="lazy"><span class="rc-k">Talk</span><span class="rc-h">TEDx speaker · “Circles”</span><p>Plus podcasts and press features.</p><span class="rc-play">▶</span><i class="rc-arr">↗</i></a><a class="rc reveal " href="work.html#experience"><span class="rc-k">Lab</span><span class="rc-logos"><img src="assets/logos/stanford-s.svg" alt="Stanford"></span><span class="rc-h">Stanford Chemistry</span><p>Research intern in the Waymouth and Rotskoff labs: computational molecular physics and energy storage.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="projects.html"><span class="rc-k">Stages</span><span class="rc-logos"><img src="assets/logos/un.svg" alt="UN"></span><span class="rc-h">UN Bangkok to MIT</span><p>Presented at ICAE (UN Bangkok), MIT THINK, JSHS and the California State Science Fair.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="https://energizingyouth.org" target="_blank" rel="noopener"><span class="rc-k">Founder</span><b class="rc-n" data-count="500" data-suf="+">500<em>+</em></b><span class="rc-h">K–8 students taught</span><p>Energizing Youth: clean-energy lessons, now with branches in Zambia and Brazil.</p><i class="rc-arr">↗</i></a><a class="rc reveal wide media" href="jewelry.html"><img class="rc-bg" src="assets/cm-1.jpg" alt="" loading="lazy"><span class="rc-k">Founder</span><span class="rc-h">Chiara Malia</span><p>My jewelry brand. 19-piece debut collection.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="about.html"><span class="rc-k">Athlete</span><b class="rc-n">Top 100</b><span class="rc-h">US Squash</span><p>3× U.S. Squash Scholar-Athlete.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="work.html#experience"><span class="rc-k">At WestLight Energy</span><b class="rc-n">$<span data-count="50" data-suf="K">50<em>K</em></span></b><span class="rc-h">grant managed</span><p>Clean Energy Advisor. I mentor interns and run K–12 outreach.</p><i class="rc-arr">↗</i></a><a class="rc reveal " href="service.html"><span class="rc-k">Awards</span><span class="rc-logos"><img src="assets/logos/ncwit.png" alt="NCWIT"></span><span class="rc-h">NCWIT national award</span><p>Plus the 2026 Youth Sustainability Award.</p><i class="rc-arr">↗</i></a><a class="rc reveal wide campus" href="campus.html"><span class="rc-k">Play</span><span class="rc-h">Explore my Cornell campus in 3D →</span><p>Walk, flip and collect tokens. Every building opens a page.</p><i class="rc-arr">↗</i></a></section>
+</main>
+<footer class="ftr">
+  <button class="copy" data-copy="chiara@luey.us">chiara@luey.us</button>
+  <div class="ftr-links"><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a><a href="https://www.youtube.com/@ChiaraLuey" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/chiara_luey" target="_blank" rel="noopener">Instagram</a></div>
+  <span class="ftr-c">© 2026 Chiara Luey</span>
+</footer>
+<div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
+<div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
+<div class="toast" id="toast">Copied</div>
+<div class="aura" aria-hidden="true"></div><div class="cur" id="cur" aria-hidden="true"><span></span></div>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="site.js?v=19"></script>
 </body>
 </html>
