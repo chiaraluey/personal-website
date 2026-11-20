@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+await Promise.race([document.fonts.load('600 64px "Clash Display"'), new Promise(r => setTimeout(r, 1500))]).catch(() => {});
 
 const $ = s => document.querySelector(s);
 const root = document.documentElement;
@@ -307,8 +308,8 @@ PLACES.forEach(p => {
 // big floating signs + quests
 const sprites = [];
 PLACES.forEach(p => {
-  const txt = SIGNS[p.id], c = document.createElement('canvas'), x = c.getContext('2d'); x.font = '600 64px Geist, Inter, sans-serif'; const w = Math.ceil(x.measureText(txt).width) + 90; c.width = w; c.height = 120;
-  x.font = '600 64px Geist, Inter, sans-serif'; x.fillStyle = 'rgba(20,20,22,.82)'; x.beginPath(); x.roundRect(4, 4, w - 8, 112, 56); x.fill(); x.fillStyle = p.id === 'tower' ? '#ff6b5f' : '#ffffff'; x.textBaseline = 'middle'; x.fillText(txt, 45, 64);
+  const txt = SIGNS[p.id], c = document.createElement('canvas'), x = c.getContext('2d'); x.font = '600 64px "Clash Display", Satoshi, sans-serif'; const w = Math.ceil(x.measureText(txt).width) + 90; c.width = w; c.height = 120;
+  x.font = '600 64px "Clash Display", Satoshi, sans-serif'; x.fillStyle = 'rgba(20,20,22,.82)'; x.beginPath(); x.roundRect(4, 4, w - 8, 112, 56); x.fill(); x.fillStyle = p.id === 'tower' ? '#ff6b5f' : '#ffffff'; x.textBaseline = 'middle'; x.fillText(txt, 45, 64);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
   const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, transparent: true })); sp.renderOrder = 10; sp.scale.set(w / 120 * 2.2, 2.2, 1); sp.position.copy(p.top).add(new THREE.Vector3(0, 2.5, 0)); sp.userData.y = sp.position.y; scene.add(sp); sprites.push(sp);
   const li = document.createElement('li'); li.innerHTML = `<i></i>${SIGNS[p.id] === 'CORNELL' ? 'Cornell' : SIGNS[p.id].charAt(0) + SIGNS[p.id].slice(1).toLowerCase()}`; $('#quests').appendChild(li); p.q = li;
