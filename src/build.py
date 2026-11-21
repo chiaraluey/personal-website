@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '27'
+V = '29'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -42,7 +42,7 @@ def page(slug, title, desc, body, scripts='', hdr=None):
   <nav class="ftr-nav">{nav}</nav>
   <button class="copy" data-copy="chiara@luey.us">chiara@luey.us</button>
   <div class="ftr-links">{soc}</div>
-  <span class="ftr-c">© 2026 Chiara Luey {THEME_BTN}</span>
+  <span class="ftr-c"><span class="clock" id="clock">Ithaca, NY</span> © 2026 Chiara Luey {THEME_BTN}</span>
 </footer>
 <div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
@@ -167,22 +167,24 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
 
 
 # ---------- landing ----------
-def lk(href, text, logo='', only=False):
+def lk(href, text, logo='', only=False, pic=''):
     img = f'<img src="assets/logos/{logo}" alt="{E(text) if only else ""}">' if logo else ''
-    return f'<a class="lk{" lk-only" if only else ""}" href="{href}"{ext(href)}>{img}{"" if only else E(text)}</a>'
+    di = f' data-img="{pic}"' if pic else ''
+    return f'<a class="lk{" lk-only" if only else ""}" href="{href}"{ext(href)}{di}>{img}{"" if only else E(text)}</a>'
 RESEARCH = [
     ('Copper–MOF catalysts for converting CO₂ into ethanol', 'projects.html', 'assets/mof-poster.jpg', '91% Faradaic efficiency. Published with mentors from MIT, Stanford and Washington State.', 'ICAE (with the UN, Bangkok) · MIT THINK · JSHS · Columbia Junior Science Journal'),
     ('Refrigerant-free thermoelectric air conditioning', 'projects.html', 'assets/poster-session.jpg', 'A low-power cooling system built around an LTC3108 energy harvester.', 'California Science & Engineering Fair'),
 ]
 di = lambda im: f' data-img="{im}"' if im else ''
 res_html = ''.join(f'<li><a class="r-t" href="{h}"{ext(h)}{di(im)}>{E(t)}</a><p>{E(d)}</p><p class="venue">{E(v)}</p></li>' for t, h, im, d, v in RESEARCH)
-PRESS_ITEMS = [(t, o, u) for t, o, u, _ in ARTICLES[:4]]
-press_html = '<li><button class="r-t" data-yt="wiUsqBOQTuw">“Circles”, my TEDx talk</button><span>TEDxCrystal Springs Youth</span></li>' + ''.join(f'<li><a class="r-t" href="{u}" target="_blank" rel="noopener">{E(t)}</a><span>{E(o)}</span></li>' for t, o, u in PRESS_ITEMS)
+PRESS_ITEMS = [(t, o, u, im) for t, o, u, im in ARTICLES[:4]]
+press_html = '<li><button class="r-t" data-yt="wiUsqBOQTuw" data-img="assets/yt-tedx.jpg">“Circles”, my TEDx talk</button><span>TEDxCrystal Springs Youth</span></li>' + ''.join(f'<li><a class="r-t" href="{u}" target="_blank" rel="noopener" data-img="{im}">{E(t)}</a><span>{E(o)}</span></li>' for t, o, u, im in PRESS_ITEMS)
 LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC')]
 logos_html = ''.join(f'<img src="assets/logos/{s}" alt="{E(n)}" title="{E(n)}">' for s, n in LOGOS)
 landing = f'''<section class="intro">
   <div class="intro-t">
-    <h1 class="big-name">Chiara Luey</h1>
+    <h1 class="big-name" aria-label="Chiara Luey">{''.join(f'<span aria-hidden="true" style="--i:{i}">{c}</span>' if c != ' ' else ' ' for i, c in enumerate('Chiara Luey'))}</h1>
+    <svg class="ink" viewBox="0 0 400 24" aria-hidden="true"><path d="M2 14 C 30 4, 52 4, 76 13 S 124 23, 150 12 S 200 2, 226 12 S 276 22, 302 12 S 350 4, 398 10"/></svg>
     <p class="intro-sub">Environmental Engineering at Cornell</p>
     <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
     <p class="intro-pages">{''.join(f'<a href="{h}">{n}</a>' for h, n in NAV[:-1])}</p>
@@ -191,26 +193,26 @@ landing = f'''<section class="intro">
 </section>
 <div class="home">
 
-  <section class="h-sec">
+  <section class="h-sec reveal">
     <h2>Work</h2>
     <p>I study Environmental Engineering at {lk('https://www.cornell.edu', 'Cornell', 'cornell-seal.svg')}. I’m on the {lk('https://cornellvc.com', 'Cornell Venture Capital', 'cvc.svg')} deal team for {lk('https://cognition.ai', 'Cognition AI', 'cognition.svg', True)}, and a member of the {lk('https://www.cornelletc.org', 'Energy Transition Club', 'etc.png')}.</p>
-    <p>I’m a Clean Energy Advisor at {lk('work.html#experience', 'WestLight Energy', 'westlight-mark.png')}, where I co-led Electric-First campaigns in 4 school districts, mobilizing 9,000+ students for an estimated 2M+ kg of CO₂ cut a year.</p>
-    <p>Before that, I was a research intern in {lk('work.html#experience', 'Stanford Chemistry', 'stanford-s.svg')}, an operations &amp; growth intern at {lk('work.html#experience', 'PlateTale', 'platetale.png')}, an analyst at {lk('https://re-volv.org', 'RE-volv', 'revolv-color.png')} and a market researcher at {lk('https://elytrarobotics.com', 'Elytra Robotics', 'elytra.png')}.</p>
-    <p>I also founded {lk('https://energizingyouth.org', 'Energizing Youth')}, which has taught 500+ kids about clean energy, and my jewelry brand {lk('jewelry.html', 'Chiara Malia')}.</p>
+    <p>I’m a Clean Energy Advisor at {lk('work.html#experience', 'WestLight Energy', 'westlight-mark.png', pic='assets/pce-team.jpg')}, where I co-led Electric-First campaigns in 4 school districts, mobilizing 9,000+ students for an estimated 2M+ kg of CO₂ cut a year.</p>
+    <p>Before that, I was a research intern in {lk('work.html#experience', 'Stanford Chemistry', 'stanford-s.svg', pic='assets/poster-session.jpg')}, an operations &amp; growth intern at {lk('work.html#experience', 'PlateTale', 'platetale.png')}, an analyst at {lk('https://re-volv.org', 'RE-volv', 'revolv-color.png')} and a market researcher at {lk('https://elytrarobotics.com', 'Elytra Robotics', 'elytra.png')}.</p>
+    <p>I also founded {lk('https://energizingyouth.org', 'Energizing Youth', pic='assets/classroom.jpg')}, which has taught 500+ kids about clean energy, and my jewelry brand {lk('jewelry.html', 'Chiara Malia', pic='assets/cm-1.jpg')}.</p>
   </section>
 
-  <section class="h-sec">
+  <section class="h-sec reveal">
     <h2>Research</h2>
     <ul class="h-list">{res_html}</ul>
   </section>
 
-  <section class="h-sec">
+  <section class="h-sec reveal">
     <h2>Talks &amp; press</h2>
     <ul class="h-press">{press_html}</ul>
     <p class="h-more"><a href="press.html">More press →</a></p>
   </section>
 
-  <section class="h-sec">
+  <section class="h-sec reveal">
     <div class="h-logos">{logos_html}</div>
   </section>
 

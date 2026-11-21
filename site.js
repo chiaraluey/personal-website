@@ -104,3 +104,11 @@ if(cv){
   cv.addEventListener('pointerleave',()=>{mx=my=-1e4;active=false;kick()});
   new MutationObserver(kick).observe(root,{attributes:true,attributeFilter:['data-theme']});
 }
+
+// name: letters slip into italic near the cursor
+(()=>{const n=$('.big-name');if(!n)return;const ls=$$('span',n);
+const fix=()=>ls.forEach(s=>{s.style.width='';s.classList.remove('it')}),lock=()=>{fix();ls.forEach(s=>s.style.width=s.offsetWidth+'px')};
+document.fonts.ready.then(lock);addEventListener('resize',lock);
+const tm=new Map();n.addEventListener('pointermove',e=>ls.forEach(s=>{const r=s.getBoundingClientRect();if(Math.abs(e.clientX-(r.left+r.width/2))<r.width*1.1){s.classList.add('it');clearTimeout(tm.get(s));tm.set(s,setTimeout(()=>s.classList.remove('it'),700))}}))})();
+// footer: Ithaca local time
+(()=>{const c=$('#clock');if(!c)return;const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit'});const u=()=>c.textContent='Ithaca, NY · '+f.format(new Date()).toLowerCase();u();setInterval(u,15000)})();
