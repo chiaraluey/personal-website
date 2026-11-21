@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '19'
+V = '21'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -11,10 +11,13 @@ THEME_BOOT = "<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('
 SUN = '<svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>'
 MOON = '<svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'
 
+THEME_BTN = f'<button class="theme" id="theme" aria-label="Toggle dark mode">{SUN}{MOON}</button>'
+
 def ext(url):
     return ' target="_blank" rel="noopener"' if url.startswith('http') else ''
 
-def page(slug, title, desc, body, scripts=''):
+def page(slug, title, desc, body, scripts='', hdr=None):
+    header = hdr.format(nav='{nav}', theme=THEME_BTN) if hdr else '<header class="hdr">\n  <a class="brand" href="index.html">Chiara Luey</a>\n  <nav class="nav">{nav}</nav>\n  ' + THEME_BTN + '\n</header>'
     cur = ' aria-current="page"'
     nav = ''.join(f'<a href="{h}"{cur if h == slug else ""}>{n}</a>' for h, n in NAV)
     soc = ''.join(f'<a href="{u}"{ext(u)}>{n}</a>' for n, u in SOCIALS)
@@ -26,16 +29,12 @@ def page(slug, title, desc, body, scripts=''):
 <meta name="description" content="{E(desc)}">
 <meta property="og:title" content="{E(title)}"><meta property="og:image" content="assets/portrait.jpg">
 {THEME_BOOT}
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..900;1,8..60,400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css?v={V}">
 </head>
 <body class="p-{slug.split('.')[0]}">
-<header class="hdr">
-  <a class="brand" href="index.html">chiara luey</a>
-  <nav class="nav">{nav}</nav>
-  <button class="theme" id="theme" aria-label="Toggle dark mode">{SUN}{MOON}</button>
-</header>
+{header.replace('{nav}', nav)}
 <main class="main">
 {body}
 </main>
@@ -47,7 +46,6 @@ def page(slug, title, desc, body, scripts=''):
 <div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
 <div class="toast" id="toast">Copied</div>
-<div class="aura" aria-hidden="true"></div><div class="cur" id="cur" aria-hidden="true"><span></span></div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 {scripts}<script src="site.js?v={V}"></script>
 </body>
@@ -168,39 +166,66 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
 </div>'''
 
 
-# ---------- landing (receipts first) ----------
-LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC'), ('ncwit.png', 'NCWIT'), ('ssmc.png', 'Sustainable San Mateo'), ('mgcy.png', 'UN MGCY')]
-def rc(cls, href, inner):
-    return f'<a class="rc reveal {cls}" href="{href}"{ext(href)}>{inner}<i class="rc-arr">↗</i></a>'
-def num(n, suf):
-    return f'<b class="rc-n" data-count="{n}" data-suf="{E(suf)}">{n:,}<em>{E(suf)}</em></b>'
-CARDS = [
-    rc('big research', 'projects.html', f'<span class="rc-k">Published research</span>{num(91, "%")}<span class="rc-h">Faradaic efficiency</span><p>Designed copper–MOF catalytic pathways that turn tailpipe CO₂ into ethanol. Published with mentors from MIT, Stanford and Washington State.</p><img class="rc-poster" src="assets/mof-poster.jpg" alt="" loading="lazy">'),
-    rc('vc', 'work.html#cornell', '<span class="rc-k">Venture</span><span class="rc-logos"><img src="assets/logos/cognition.svg" alt="Cognition"><img src="assets/logos/cvc.svg" alt="Cornell VC"></span><span class="rc-h">Cognition AI deal team</span><p>Cornell Venture Capital, sourcing and diligence alongside the club’s VCs.</p>'),
-    rc('', 'work.html#experience', f'<span class="rc-k">Policy</span>{num(9000, "+")}<span class="rc-h">students mobilized</span><p>Electric-First resolutions passed in 4 school districts.</p>'),
-    rc('', 'https://github.com/ItzXizZ/econ-whiteboard-hackathon', '<span class="rc-k">Hackathon · Nov 2026</span><span class="rc-logos"><img src="assets/logos/cornell-seal.svg" alt="Cornell"></span><span class="rc-h">Judges’ Choice</span><p>Cornell Local AI Hackathon. Adam, an AI tutor that runs fully offline.</p>'),
-    rc('', 'work.html#experience', f'<span class="rc-k">Impact</span>{num(2, "M+ kg")}<span class="rc-h">CO₂ cut a year (est.)</span><p>From the Electric-First campaigns I co-led.</p>'),
-    rc('wide media', 'press.html', '<img class="rc-bg" src="assets/yt-tedx.jpg" alt="" loading="lazy"><span class="rc-k">Talk</span><span class="rc-h">TEDx speaker · “Circles”</span><p>Plus podcasts and press features.</p><span class="rc-play">▶</span>'),
-    rc('', 'work.html#experience', '<span class="rc-k">Lab</span><span class="rc-logos"><img src="assets/logos/stanford-s.svg" alt="Stanford"></span><span class="rc-h">Stanford Chemistry</span><p>Research intern in the Waymouth and Rotskoff labs: computational molecular physics and energy storage.</p>'),
-    rc('', 'projects.html', '<span class="rc-k">Stages</span><span class="rc-logos"><img src="assets/logos/un.svg" alt="UN"></span><span class="rc-h">UN Bangkok to MIT</span><p>Presented at ICAE (UN Bangkok), MIT THINK, JSHS and the California State Science Fair.</p>'),
-    rc('', 'https://energizingyouth.org', f'<span class="rc-k">Founder</span>{num(500, "+")}<span class="rc-h">K–8 students taught</span><p>Energizing Youth: clean-energy lessons, now with branches in Zambia and Brazil.</p>'),
-    rc('wide media', 'jewelry.html', '<img class="rc-bg" src="assets/cm-1.jpg" alt="" loading="lazy"><span class="rc-k">Founder</span><span class="rc-h">Chiara Malia</span><p>My jewelry brand. 19-piece debut collection.</p>'),
-    rc('', 'about.html', f'<span class="rc-k">Athlete</span><b class="rc-n">Top 100</b><span class="rc-h">US Squash</span><p>3× U.S. Squash Scholar-Athlete.</p>'),
-    rc('', 'work.html#experience', f'<span class="rc-k">At WestLight Energy</span><b class="rc-n">$<span data-count="50" data-suf="K">50<em>K</em></span></b><span class="rc-h">grant managed</span><p>Clean Energy Advisor. I mentor interns and run K–12 outreach.</p>'),
-    rc('', 'service.html', '<span class="rc-k">Awards</span><span class="rc-logos"><img src="assets/logos/ncwit.png" alt="NCWIT"></span><span class="rc-h">NCWIT national award</span><p>Plus the 2026 Youth Sustainability Award.</p>'),
-    rc('wide campus', 'campus.html', '<span class="rc-k">Play</span><span class="rc-h">Explore my Cornell campus in 3D →</span><p>Walk, flip and collect tokens. Every building opens a page.</p>'),
+# ---------- landing: front page ----------
+LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC'), ('ssmc.png', 'Sustainable San Mateo')]
+MAST = '''<header class="mast">
+  <div class="ear"><span>Ithaca, N.Y.</span><span id="today" class="ear-c"></span><span class="ear-r"><a href="mailto:chiara@luey.us">chiara@luey.us</a>{theme}</span></div>
+  <h1 class="nameplate"><span>Chiara Luey</span></h1>
+  <p class="motto">Environmental Engineering · Cornell University · Class of 2030</p>
+  <nav class="sections">{nav}</nav>
+</header>'''
+def fig(src, cap, cls='', extra=''):
+    capt = f'<figcaption>{cap}</figcaption>' if cap else ''
+    return f'<figure class="pic {cls}"><span class="ht"><img src="{src}" alt="" loading="lazy">{extra}</span>{capt}</figure>'
+BRIEF = [
+    ('https://github.com/ItzXizZ/econ-whiteboard-hackathon', 'Judges’ Choice', 'at Cornell’s Local AI Hackathon for Adam, an offline handwriting econ tutor.'),
+    ('work.html#experience', 'Stanford Chemistry', 'research intern in the Waymouth and Rotskoff labs, on molecular physics and energy storage.'),
+    ('service.html', 'NCWIT', 'Aspirations in Computing national award.'),
+    ('https://sustainablesanmateo.org/2026/01/15/2026-youth-sustainability-award-winner-chiara-luey/', 'Youth Sustainability Award', '2026, from Sustainable San Mateo County.'),
+    ('about.html', 'Top 100', 'in US Squash, and a 3× U.S. Squash Scholar-Athlete.'),
 ]
-landing = f'''<section class="hero">
-  <div class="hero-top reveal"><img class="avatar" src="assets/portrait.jpg" alt="Chiara Luey"><span class="now"><span class="pulse"></span>Now: Cornell VC, Cognition AI deal team</span></div>
-  <h1 class="hero-name" data-split>Chiara Luey</h1>
-  <p class="hero-line reveal">Cornell Environmental Engineering ’30. I’ve published catalyst research, gotten 4 school districts to go electric, given a TEDx talk and started two organizations.</p>
-  <div class="hero-cta reveal"><a class="btn" href="mailto:chiara@luey.us">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn ghost" href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub ↗</a></div>
+FIGS = [('91', '%', 'Faradaic efficiency, CO₂ → ethanol'), ('9000', '+', 'students mobilized'), ('2', 'M+ kg', 'CO₂ cut a year (est.)'), ('4', '', 'districts gone Electric-First'), ('500', '+', 'K–8 students taught'), ('300', '+', 'EV charging sites scored'), ('50', 'K', 'electrification grant, $')]
+brief_html = ''.join(f'<li><a href="{u}"{ext(u)}><b>{t}</b> {d}</a></li>' for u, t, d in BRIEF)
+figs_html = ''.join(f'<div class="fg"><b data-count="{n}" data-suf="{E(u)}">{int(n):,}<em>{E(u)}</em></b><span>{E(t)}</span></div>' for n, u, t in FIGS)
+press_html = ''.join(f'<li><a href="{u}" target="_blank" rel="noopener"><span class="pr-t"><small>{E(o)}</small>{E(t)}</span><span class="ht pr-th"><img src="{img}" alt="" loading="lazy"></span></a></li>' for t, o, u, img in ARTICLES[:5])
+logos_html = ''.join(f'<img src="assets/logos/{s}" alt="{E(n)}" title="{E(n)}">' for s, n in LOGOS)
+landing = f'''<div class="paper">
+<section class="band r-top">
+  <article class="lede">
+    <a class="story" href="projects.html"><span class="kick">Research</span>
+    <h2 class="hl hl-xl">Her copper catalyst turns tailpipe CO₂ into ethanol at 91% efficiency</h2></a>
+    <div class="lead-body">
+      {fig('assets/poster-session.jpg', 'Presenting the CO₂-to-ethanol research.', 'tall')}
+      <div class="cols">
+        <p class="dropcap">Chiara designed copper–MOF catalytic pathways that convert car exhaust into ethanol, and published the work with mentors from MIT, Stanford and Washington State.</p>
+        <p>She has presented her research at ICAE with the UN in Bangkok, MIT THINK, JSHS and the California Science &amp; Engineering Fair. She also built a refrigerant-free thermoelectric air conditioner.</p>
+        <p>She is now a freshman studying Environmental Engineering at Cornell.</p>
+        <a class="more-link" href="projects.html">All projects &amp; research →</a>
+      </div>
+    </div>
+  </article>
+  <aside class="rail">
+    <a class="mug" href="about.html"><img src="assets/portrait.jpg" alt="Chiara Luey"><span><b>Chiara Luey</b>Cornell ’30. Energy, economics and engineering. <u>About her →</u></span></a>
+    <a class="nowbox" href="work.html#cornell"><span class="kick">Now</span><img class="now-logo" src="assets/logos/cognition.svg" alt="Cognition"><h3 class="hl hl-s">On the Cognition AI deal team</h3><p>With Cornell Venture Capital’s Fall ’26 class, sourcing and doing diligence alongside the club’s VCs.</p></a>
+    <div class="brief"><span class="kick">In brief</span><ul>{brief_html}</ul></div>
+  </aside>
 </section>
-<div class="marquee reveal" aria-label="Organizations"><div class="mq-track">{''.join(f'<span class="mq-i"><img src="assets/logos/{s}" alt="{E(n)}"></span>' for s, n in LOGOS * 2)}</div></div>
-<section class="receipts">{''.join(CARDS)}</section>'''
+<section class="band r-three">
+  <a class="story" href="work.html#experience">{fig('assets/pce-team.jpg', 'With the Peninsula Clean Energy team.', 'wide')}<span class="kick">Policy</span><h3 class="hl hl-m">Four school districts go Electric-First</h3><p>At WestLight Energy, she co-led campaigns that mobilized 9,000+ students, for an estimated 2M+ kg of CO₂ cut a year. She now manages a $50K electrification grant.</p></a>
+  <button class="story" data-yt="wiUsqBOQTuw">{fig('assets/yt-tedx.jpg', 'TEDxCrystal Springs Youth.', 'wide', '<span class="watch">▶ Watch</span>')}<span class="kick">Talks</span><h3 class="hl hl-m">On the TEDx stage: “Circles”</h3><p>Her TEDx talk on youth-led climate action. She has also spoken to 400+ students about electrification.</p></button>
+  <a class="story" href="https://energizingyouth.org" target="_blank" rel="noopener">{fig('assets/classroom.jpg', 'An Energizing Youth lesson.', 'wide')}<span class="kick">Founder</span><h3 class="hl hl-m">Teaching clean energy to 500+ kids</h3><p>She founded Energizing Youth, which brings clean-energy lessons to K–8 classrooms and now has branches in Zambia and Brazil.</p></a>
+</section>
+<section class="band r-figs"><span class="kick">By the numbers</span><div class="figs">{figs_html}</div></section>
+<section class="band r-press">
+  <div class="press"><span class="kick">In the press</span><ul>{press_html}</ul><a class="more-link" href="press.html">All press, talks and videos →</a></div>
+  <a class="ad" href="https://www.chiaramalia.com/" target="_blank" rel="noopener"><small>Advertisement</small><span class="ht"><img src="assets/cm-1.jpg" alt="Chiara Malia jewelry" loading="lazy"></span><b>Chiara Malia</b><span>A wave, caught in gold.<br>The <i>Onda e Marea</i> collection, from $52.</span><u>chiaramalia.com</u><em>Founded by Chiara Luey</em></a>
+</section>
+<section class="band r-logos"><span class="kick">Worked with</span><div class="logos">{logos_html}</div></section>
+<a class="band classified" href="campus.html"><span class="kick">Also in this edition</span><span class="cl-t">Walk around my Cornell campus in 3D</span><span class="cl-a">Open →</span></a>
+</div>'''
 
 PAGES = [
-    ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, ''),
+    ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, '', MAST),
     ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
     ('work.html', 'Work · Chiara Luey', 'Experience at Cornell Venture Capital, WestLight Energy, Stanford and more.', work, ''),
     ('projects.html', 'Projects & Research · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),
@@ -208,7 +233,7 @@ PAGES = [
     ('service.html', 'Service · Chiara Luey', 'Volunteering and honors.', service, ''),
     ('jewelry.html', 'Chiara Malia · Chiara Luey', 'Chiara Malia, a jewelry brand by Chiara Luey.', jewelry, ''),
 ]
-for slug, title, desc, body, scripts in PAGES:
+for slug, title, desc, body, scripts, *h in PAGES:
     with open(os.path.join(ROOT, slug), 'w') as f:
-        f.write(page(slug, title, desc, body, scripts))
+        f.write(page(slug, title, desc, body, scripts, *h))
 print('built', len(PAGES), 'pages')
