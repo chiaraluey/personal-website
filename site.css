@@ -432,8 +432,3 @@ h1,h2,h3,.brand,.big-name,.page-t,.w-big,.pcard b,.campus-link,.stat b,.row-org,
 .hover-img img{object-fit:cover}
 @media (prefers-reduced-motion:reduce){.ink path{animation:none;stroke-dashoffset:0}.home .reveal{opacity:1;transform:none}}
 .big-name{animation:none!important}.big-name span{animation:rise 1s var(--ease) backwards;animation-delay:calc(var(--i)*45ms)}
-/* ---------- liquid glass over the portrait ---------- */
-.dots-wrap .glass{position:absolute;inset:-14%;width:128%;height:128%;pointer-events:none;opacity:0;transition:opacity 1.2s var(--ease)}
-.dots-wrap.glassy .glass{opacity:1}
-.dots-wrap.glassy #dots{opacity:0}
-body{overflow-x:clip}
