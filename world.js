@@ -333,6 +333,7 @@ canvas.addEventListener('pointermove', e => { if (!down) return; yaw = down.yaw 
 canvas.addEventListener('pointerup', e => {
   if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) {
     ndc.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(ndc, camera);
+    if (eggClick(ray)) { down = null; return; }
     const hitP = PLACES.find(p => ray.intersectObject(p.group, true).length);
     if (hitP) travel(hitP); else { const h = ray.intersectObject(terrain)[0]; if (h && h.point.y > LAKE + 0.5) { target = h.point.clone(); ring.position.set(h.point.x, h.point.y + 0.05, h.point.z); ring.material.opacity = 0.9; start(); } }
   }
@@ -369,7 +370,7 @@ const muteBtn = $('#muteBtn'), setMute = () => { muteBtn.textContent = muted ? '
 muteBtn.onclick = () => { muted = !muted; localStorage.setItem('muted', muted ? '1' : '0'); setMute(); }; setMute();
 function hud() { $('#coins').textContent = got; $('#pts').textContent = points; const s = $('#score'); s.classList.remove('bump'); void s.offsetWidth; s.classList.add('bump'); }
 function toast(msg) { const t = $('#wToast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2800); }
-function chimes() { sfx('bell'); if (!rung) { rung = true; points += 5; hud(); toast('You rang the McGraw chimes! +5'); } else toast('Ding, dong'); burst(new THREE.Vector3(-37, H(-37, -6) + 25, -6), '#ffe3a3', 60); }
+function chimes() { eggChime(); sfx('bell'); if (!rung) { rung = true; points += 5; hud(); toast('You rang the McGraw chimes! +5'); } else toast('Ding, dong'); burst(new THREE.Vector3(-37, H(-37, -6) + 25, -6), '#ffe3a3', 60); }
 $('#pAct').onclick = () => chimes();
 $('#pOpen').addEventListener('click', e => { if (active) { e.preventDefault(); openDrawer(active); } });
 const bursts = [];
@@ -410,6 +411,69 @@ const HOOPS = [[-16, -6, 9], [10, -6, 10], [-16, 13, 9.5], [10, 13, 10.5], [-4, 
   const m = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.12, 10, 40), new THREE.MeshStandardMaterial({ color: '#ffcf4a', emissive: '#ffb400', emissiveIntensity: 0.6, metalness: 0.6, roughness: 0.3 }));
   m.position.set(x, H(x, z) + hh, z); scene.add(m); return { m, cd: 0 };
 });
+// ---------- secret easter eggs ----------
+const SECRETS = { konami: 'Konami code: moon gravity', wave: 'The hidden Onda wave', bear: 'Touchdown the bear', dragon: 'Dragon Day dragon', song: 'Evening Song' };
+const found = new Set(); let lowG = 0, rings = 0;
+function secret(id, n = 15) {
+  if (found.has(id)) return; found.add(id); points += n; hud(); sfx('win');
+  const s = $('#secrets'); s.hidden = false; $('#secN').textContent = found.size; s.classList.remove('bump'); void s.offsetWidth; s.classList.add('bump');
+  toast(`Secret found: ${SECRETS[id]} +${n}${found.size === 5 ? ' · all 5 found!' : ''}`);
+  burst(me.position.clone().setY(me.position.y + 2), '#ffd27a', 70);
+  if (found.size === 5) setTimeout(() => { points += 50; hud(); toast('Master of secrets +50'); for (let i = 0; i < 6; i++) setTimeout(() => burst(me.position.clone().add(new THREE.Vector3((Math.random() - .5) * 8, 4 + Math.random() * 4, (Math.random() - .5) * 8)), ['#ff5a4f', '#ffd27a', '#9fd3ff'][i % 3], 60), i * 180); }, 3000);
+}
+const spot = (x, z) => { for (let r = 0; r < 30; r++) for (let a = 0; a < 6.28; a += 0.4) { const px = x + Math.cos(a) * r, pz = z + Math.sin(a) * r; if (H(px, pz) > LAKE + 1 && !blocked(px, pz, 1.6) && Math.hypot(px * 0.8, pz) < 100) return [px, pz]; } return [x, z]; };
+const gold = M('#e2b04a', { metalness: 1, roughness: 0.22, emissive: '#5a3a00', emissiveIntensity: 0.25 });
+// 1. Onda wave, tucked behind the Johnson Museum
+const wave = new THREE.Group(); {
+  const [x, z] = spot(-30, -45); wave.position.set(x, H(x, z), z); scene.add(wave);
+  mesh(new THREE.CylinderGeometry(0.9, 1, 0.8, 24), M('#d8d2c6'), 0, 0.4, 0, wave);
+  const pts = [[-1.4, 0], [-0.8, 0.5], [-0.1, 1.5], [0.6, 2.3], [1.3, 2.1], [1.4, 1.4], [0.9, 1.1], [0.75, 1.6]].map(([a, b]) => new THREE.Vector3(a, b + 0.8, 0));
+  mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 80, 0.16, 12), gold, 0, 0, 0, wave);
+  BLOCK.push({ x0: x - 1, x1: x + 1, z0: z - 1, z1: z + 1 });
+}
+// 2. Touchdown the bear, hiding behind Bailey Hall
+const bear = new THREE.Group(); {
+  const [x, z] = spot(39, -40); bear.position.set(x, H(x, z), z); scene.add(bear);
+  const fur = M('#6b4528', { roughness: 1 }), snout = M('#c79a6b');
+  mesh(new THREE.SphereGeometry(0.75, 18, 14), fur, 0, 0.9, 0, bear).scale.set(1, 1.15, 0.9);
+  mesh(new THREE.SphereGeometry(0.5, 18, 14), fur, 0, 2, 0, bear);
+  [-0.32, 0.32].forEach(e => mesh(new THREE.SphereGeometry(0.16, 10, 8), fur, e, 2.42, 0, bear));
+  mesh(new THREE.SphereGeometry(0.2, 12, 10), snout, 0, 1.92, 0.42, bear);
+  mesh(new THREE.SphereGeometry(0.06, 8, 6), M('#111'), 0, 1.98, 0.6, bear);
+  [-0.18, 0.18].forEach(e => mesh(new THREE.SphereGeometry(0.05, 8, 6), M('#111'), e, 2.12, 0.42, bear));
+  [-0.55, 0.55].forEach(e => mesh(new THREE.CapsuleGeometry(0.17, 0.5, 4, 8), fur, e, 1.15, 0.2, bear).rotation.z = e > 0 ? -0.5 : 0.5);
+  mesh(new THREE.BoxGeometry(0.5, 0.5, 0.06), M('#b31b1b'), 0, 1.05, 0.7, bear);
+  BLOCK.push({ x0: x - 0.8, x1: x + 0.8, z0: z - 0.8, z1: z + 0.8 });
+}
+// 3. Dragon Day dragon circling the sky (click it)
+const dragon = new THREE.Group(); scene.add(dragon); const segs = []; let wings; {
+  const red = M('#c8281e', { roughness: 0.6 }), dark = M('#7a120c');
+  for (let i = 0; i < 12; i++) { const s = mesh(new THREE.SphereGeometry(1.1 - i * 0.07, 14, 10), i % 2 ? red : dark, 0, 0, 0, dragon); s.castShadow = false; segs.push(s); }
+  const head = segs[0]; mesh(new THREE.ConeGeometry(0.7, 1.8, 10), red, 0, 0, 1.2, head).rotation.x = Math.PI / 2;
+  [-0.5, 0.5].forEach(e => mesh(new THREE.ConeGeometry(0.18, 0.9, 6), M('#f3e3b0'), e, 0.8, -0.2, head).rotation.x = -0.4);
+  wings = [-1, 1].map(sd => { const w = new THREE.Group(); segs[2].add(w); mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), dark, sd * 2.1, 0, 0, w); return w; });
+  head.add(new THREE.Mesh(new THREE.SphereGeometry(5, 8, 6), new THREE.MeshBasicMaterial({ visible: false })));
+}
+const dragonAt = (u, out) => out.set(Math.sin(u) * 62, 30 + Math.sin(u * 3) * 4, Math.cos(u) * 48 - 4);
+function eggClick(r) { if (r.intersectObject(dragon, true).length) { secret('dragon'); burst(segs[0].getWorldPosition(new THREE.Vector3()), '#ff5a4f', 60); return true; } return false; }
+// 4. ring the chimes 3 times -> Evening Song
+function eggChime() { if (++rings === 3) { secret('song'); const top = new THREE.Vector3(-37, H(-37, -6) + 30, -6); for (let i = 0; i < 8; i++) setTimeout(() => burst(top.clone().add(new THREE.Vector3((Math.random() - .5) * 10, Math.random() * 8, (Math.random() - .5) * 10)), ['#ff5a4f', '#ffd27a', '#ffffff'][i % 3], 70), i * 260); } }
+// 5. Konami code -> moon gravity
+const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a']; let kIdx = 0;
+addEventListener('keydown', e => { const k = e.key.toLowerCase(); kIdx = k === KONAMI[kIdx] ? kIdx + 1 : (k === KONAMI[0] ? 1 : 0); if (kIdx === KONAMI.length) { kIdx = 0; lowG = 25; secret('konami', 25); toast('Moon gravity for 25 seconds. Jump!'); } });
+const dv = new THREE.Vector3();
+function eggTick(dt, t) {
+  wave.rotation.y += dt * 0.5;
+  if (Math.hypot(me.position.x - wave.position.x, me.position.z - wave.position.z) < 3) secret('wave');
+  bear.rotation.y = Math.atan2(me.position.x - bear.position.x, me.position.z - bear.position.z); bear.position.y = H(bear.position.x, bear.position.z) + Math.abs(Math.sin(t * 2.4)) * 0.15;
+  if (Math.hypot(me.position.x - bear.position.x, me.position.z - bear.position.z) < 3.2) secret('bear');
+  const u = t * 0.12; segs.forEach((s, i) => dragonAt(u - i * 0.022, s.position).y += Math.sin(t * 4 - i * 0.6) * 0.5);
+  segs.forEach((s, i) => { if (i < segs.length - 1) s.lookAt(i ? segs[i - 1].position : dragonAt(u + 0.02, dv)); else s.lookAt(segs[i - 1].position); });
+  wings.forEach((w, i) => w.rotation.z = (i ? -1 : 1) * Math.sin(t * 6) * 0.6);
+  if (lowG > 0 && (lowG -= dt) <= 0) toast('Gravity is back to normal');
+}
+console.log('%cpsst… there are 5 secrets hidden on this campus. Old-school gamers know a code.', 'color:#b31b1b;font-weight:600');
+
 // ---------- day / night ----------
 const day = { top: '#8fc0e8', bottom: '#f6ead8', water: '#5f9fc2', hemi: 0.85, sun: 2.5, sunC: '#ffe7c4', exp: 1.05 };
 const night = { top: '#0a1230', bottom: '#2a3658', water: '#183a57', hemi: 0.2, sun: 0.4, sunC: '#a9c1ff', exp: 0.6 };
@@ -456,7 +520,7 @@ function frame() {
     walk += dt * 11;
   } else walk *= 0.9;
   const gy = walkH(me.position.x, me.position.z);
-  if (!grounded || me.position.y > gy + 0.3) { grounded = false; vy -= 24 * dt; me.position.y += vy * dt; if (me.position.y <= gy) { me.position.y = gy; vy = 0; grounded = true; onLand(); } }
+  if (!grounded || me.position.y > gy + 0.3) { grounded = false; vy -= (lowG > 0 ? 8 : 24) * dt; me.position.y += vy * dt; if (me.position.y <= gy) { me.position.y = gy; vy = 0; grounded = true; onLand(); } }
   else me.position.y = gy + Math.abs(Math.sin(walk)) * 0.12 * (moving ? 1 : 0);
   me.userData.arms.forEach((a, i) => a.rotation.x = grounded ? Math.sin(walk + i * Math.PI) * (moving ? 0.7 : 0.05) : -2.4);
   ring.material.opacity *= 0.96;
@@ -507,6 +571,7 @@ function frame() {
     if (dd < 5.5) active = pl;
   });
   if (active) { prompt.classList.add('on'); $('#pTitle').textContent = active.name; $('#pDesc').textContent = active.desc; $('#pOpen').href = active.href; if (arrivedAt === active && !target) { arrivedAt = null; if (touring || true) openDrawer(active); } $('#pAct').style.display = active.act ? '' : 'none'; } else prompt.classList.remove('on');
+  eggTick(dt, t);
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }

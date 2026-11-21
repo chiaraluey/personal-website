@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '24'
+V = '25'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -83,7 +83,6 @@ home = f'''<section class="home">
     <p class="hello reveal">Hi! Nice to meet you.</p>
     <h1 class="home-name" data-split>I’m Chiara Luey.</h1>
     <p class="lead reveal">A freshman at Cornell studying Environmental Engineering. I love energy and economics: how clean power gets invented, paid for and brought to the people who need it most.</p>
-    <p class="now reveal"><span class="pulse"></span>Most recently: Judges’ Choice at Cornell’s Local AI Hackathon</p>
     <ul class="index">{''.join(f'<li class="reveal"><a href="{h}" data-img="{img}"><span class="ix-t">{t}</span><span class="ix-d">{d}</span><i>→</i></a></li>' for h, t, d, img in INDEX)}</ul>
   </div>
   <figure class="home-photo"><img src="assets/portrait.jpg" alt="Chiara Luey"></figure>
@@ -167,40 +166,52 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
 
 
 # ---------- landing ----------
-LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC'), ('ssmc.png', 'Sustainable San Mateo')]
-WINS = [
-    ('91%', 'Published CO₂-to-ethanol catalyst research, with mentors from MIT, Stanford and Washington State.', 'Research', 'projects.html', 'assets/poster-session.jpg', ''),
-    ('Cognition AI', 'On the deal team at Cornell Venture Capital, sourcing and diligence alongside the club’s VCs.', 'Venture', 'work.html#cornell', '', ''),
-    ('4 districts', 'Co-led Electric-First campaigns at WestLight Energy: 9,000+ students, about 2M kg of CO₂ a year.', 'Policy', 'work.html#experience', 'assets/pce-team.jpg', ''),
-    ('TEDx', 'Gave a talk, “Circles”, at TEDxCrystal Springs Youth.', 'Talk', '', 'assets/yt-tedx.jpg', 'wiUsqBOQTuw'),
-    ('Judges’ Choice', 'Cornell Local AI Hackathon, for Adam, an offline handwriting econ tutor.', 'Code', 'https://github.com/ItzXizZ/econ-whiteboard-hackathon', '', ''),
-    ('Stanford', 'Research intern in the Waymouth and Rotskoff chemistry labs.', 'Lab', 'work.html#experience', '', ''),
-    ('Bangkok → MIT', 'Presented research at ICAE with the UN, MIT THINK, JSHS and the California Science Fair.', 'Stages', 'projects.html', 'assets/podium.jpg', ''),
-    ('500+ kids', 'Founded Energizing Youth, clean-energy lessons with branches in Zambia and Brazil.', 'Founder', 'https://energizingyouth.org', 'assets/classroom.jpg', ''),
-    ('Chiara Malia', 'Started my own jewelry brand. 19-piece debut collection.', 'Founder', 'jewelry.html', 'assets/cm-1.jpg', ''),
-    ('Top 100', 'US Squash, and a 3× U.S. Squash Scholar-Athlete.', 'Athlete', 'about.html', '', ''),
+def lk(href, text, logo='', only=False):
+    img = f'<img src="assets/logos/{logo}" alt="{E(text) if only else ""}">' if logo else ''
+    return f'<a class="lk{" lk-only" if only else ""}" href="{href}"{ext(href)}>{img}{"" if only else E(text)}</a>'
+RESEARCH = [
+    ('Copper–MOF catalysts for converting CO₂ into ethanol', 'projects.html', 'assets/mof-poster.jpg', '91% Faradaic efficiency. Published with mentors from MIT, Stanford and Washington State.', 'ICAE (with the UN, Bangkok) · MIT THINK · JSHS · Columbia Junior Science Journal'),
+    ('Refrigerant-free thermoelectric air conditioning', 'projects.html', 'assets/poster-session.jpg', 'A low-power cooling system built around an LTC3108 energy harvester.', 'California Science & Engineering Fair'),
 ]
-def win(i, w):
-    big, d, tag, href, img, yt = w
-    attrs = f' data-yt="{yt}"' if yt else f' href="{href}"{ext(href)}'
-    tagname = 'button' if yt else 'a'
-    di = f' data-img="{img}"' if img else ''
-    return f'<li class="reveal"><{tagname} class="win"{attrs}{di}><span class="w-big"><span class="roll" data-t="{E(big)}">{E(big)}</span></span><span class="w-d">{E(d)}</span><span class="w-tag">{tag}</span></{tagname}></li>'
-wins_html = ''.join(win(i + 1, w) for i, w in enumerate(WINS))
-press_html = ''.join(f'<a class="pcard reveal" href="{u}" target="_blank" rel="noopener"><span class="ht"><img src="{img}" alt="" loading="lazy"></span><small>{E(o)}</small><b>{E(t)}</b></a>' for t, o, u, img in ARTICLES[:6])
+di = lambda im: f' data-img="{im}"' if im else ''
+res_html = ''.join(f'<li><a class="r-t" href="{h}"{ext(h)}{di(im)}>{E(t)}</a><p>{E(d)}</p><p class="venue">{E(v)}</p></li>' for t, h, im, d, v in RESEARCH)
+PRESS_ITEMS = [(t, o, u) for t, o, u, _ in ARTICLES[:4]]
+press_html = '<li><button class="r-t" data-yt="wiUsqBOQTuw">“Circles”, my TEDx talk</button><span>TEDxCrystal Springs Youth</span></li>' + ''.join(f'<li><a class="r-t" href="{u}" target="_blank" rel="noopener">{E(t)}</a><span>{E(o)}</span></li>' for t, o, u in PRESS_ITEMS)
+LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC')]
 logos_html = ''.join(f'<img src="assets/logos/{s}" alt="{E(n)}" title="{E(n)}">' for s, n in LOGOS)
-landing = f'''<section class="intro">
-  <div class="intro-t">
-    <h1 class="big-name">Chiara Luey</h1>
-    <p class="intro-sub">Environmental Engineering at Cornell</p>
-    <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
-  </div>
-  <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
-</section>
-<section class="sect"><h2 class="sect-t">Selected</h2><ul class="wins">{wins_html}</ul></section>
-<section class="sect"><h2 class="sect-t">Press <a href="press.html">All →</a></h2><div class="pcards">{press_html}</div></section>
-<section class="sect logos-sect"><h2 class="sect-t">Worked with</h2><div class="logos">{logos_html}</div></section>
-<a class="campus-link reveal" href="campus.html"><span>Walk around my Cornell campus in 3D</span><i>→</i></a>'''
+landing = f'''<div class="home">
+  <header class="h-id">
+    <img class="h-pic" src="assets/portrait.jpg" alt="Chiara Luey">
+    <h1>Chiara Luey</h1>
+    <p>Environmental Engineering at Cornell</p>
+  </header>
+
+  <section class="h-sec">
+    <h2>Work</h2>
+    <p>I study Environmental Engineering at {lk('https://www.cornell.edu', 'Cornell', 'cornell-seal.svg')}. I’m on the {lk('https://cornellvc.com', 'Cornell Venture Capital', 'cvc.svg')} deal team for {lk('https://cognition.ai', 'Cognition AI', 'cognition.svg', True)}, and a member of the {lk('https://www.cornelletc.org', 'Energy Transition Club', 'etc.png')}.</p>
+    <p>I’m a Clean Energy Advisor at {lk('work.html#experience', 'WestLight Energy', 'westlight-mark.png')}, where I co-led Electric-First campaigns in 4 school districts, mobilizing 9,000+ students for an estimated 2M+ kg of CO₂ cut a year.</p>
+    <p>Before that, I was a research intern in {lk('work.html#experience', 'Stanford Chemistry', 'stanford-s.svg')}, an operations &amp; growth intern at {lk('work.html#experience', 'PlateTale', 'platetale.png')}, an analyst at {lk('https://re-volv.org', 'RE-volv', 'revolv-color.png')} and a market researcher at {lk('https://elytrarobotics.com', 'Elytra Robotics', 'elytra.png')}.</p>
+    <p>I also founded {lk('https://energizingyouth.org', 'Energizing Youth')}, which has taught 500+ kids about clean energy, and my jewelry brand {lk('jewelry.html', 'Chiara Malia')}.</p>
+  </section>
+
+  <section class="h-sec">
+    <h2>Research</h2>
+    <ul class="h-list">{res_html}</ul>
+  </section>
+
+  <section class="h-sec">
+    <h2>Talks &amp; press</h2>
+    <ul class="h-press">{press_html}</ul>
+    <p class="h-more"><a href="press.html">More press →</a></p>
+  </section>
+
+  <section class="h-sec">
+    <div class="h-logos">{logos_html}</div>
+  </section>
+
+  <p class="h-campus"><a href="campus.html">Explore my Cornell campus in 3D →</a></p>
+
+</div>'''
 
 PAGES = [
     ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, ''),

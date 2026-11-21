@@ -159,3 +159,5 @@ body:not(.playing) .mute,body:not(.playing) .places button{pointer-events:none}
 .reading .prompt,.reading .keys-chip{opacity:0;pointer-events:none}
 @media (max-width:760px){.intro{top:auto;bottom:4vh;transform:none}.choice b{font-size:1.15rem}.drawer{top:4.4rem;right:.5rem;left:.5rem;width:auto}}
 body:not(.playing) .prompt{opacity:0;pointer-events:none}
+
+.secrets{padding:.4rem .85rem;border-radius:99px;background:#1c1a17;color:#ffd27a;font:500 .85rem var(--sans);box-shadow:0 6px 20px rgba(0,0,0,.2)}.secrets[hidden]{display:none}.secrets.bump{animation:bump .45s var(--ease)}

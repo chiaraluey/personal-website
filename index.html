@@ -8,7 +8,7 @@
 <script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=24">
+<link rel="stylesheet" href="site.css?v=25">
 </head>
 <body class="p-index">
 <header class="hdr">
@@ -17,18 +17,39 @@
   <button class="theme" id="theme" aria-label="Toggle dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
 </header>
 <main class="main">
-<section class="intro">
-  <div class="intro-t">
-    <h1 class="big-name">Chiara Luey</h1>
-    <p class="intro-sub">Environmental Engineering at Cornell</p>
-    <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
-  </div>
-  <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
-</section>
-<section class="sect"><h2 class="sect-t">Selected</h2><ul class="wins"><li class="reveal"><a class="win" href="projects.html" data-img="assets/poster-session.jpg"><span class="w-big"><span class="roll" data-t="91%">91%</span></span><span class="w-d">Published CO₂-to-ethanol catalyst research, with mentors from MIT, Stanford and Washington State.</span><span class="w-tag">Research</span></a></li><li class="reveal"><a class="win" href="work.html#cornell"><span class="w-big"><span class="roll" data-t="Cognition AI">Cognition AI</span></span><span class="w-d">On the deal team at Cornell Venture Capital, sourcing and diligence alongside the club’s VCs.</span><span class="w-tag">Venture</span></a></li><li class="reveal"><a class="win" href="work.html#experience" data-img="assets/pce-team.jpg"><span class="w-big"><span class="roll" data-t="4 districts">4 districts</span></span><span class="w-d">Co-led Electric-First campaigns at WestLight Energy: 9,000+ students, about 2M kg of CO₂ a year.</span><span class="w-tag">Policy</span></a></li><li class="reveal"><button class="win" data-yt="wiUsqBOQTuw" data-img="assets/yt-tedx.jpg"><span class="w-big"><span class="roll" data-t="TEDx">TEDx</span></span><span class="w-d">Gave a talk, “Circles”, at TEDxCrystal Springs Youth.</span><span class="w-tag">Talk</span></button></li><li class="reveal"><a class="win" href="https://github.com/ItzXizZ/econ-whiteboard-hackathon" target="_blank" rel="noopener"><span class="w-big"><span class="roll" data-t="Judges’ Choice">Judges’ Choice</span></span><span class="w-d">Cornell Local AI Hackathon, for Adam, an offline handwriting econ tutor.</span><span class="w-tag">Code</span></a></li><li class="reveal"><a class="win" href="work.html#experience"><span class="w-big"><span class="roll" data-t="Stanford">Stanford</span></span><span class="w-d">Research intern in the Waymouth and Rotskoff chemistry labs.</span><span class="w-tag">Lab</span></a></li><li class="reveal"><a class="win" href="projects.html" data-img="assets/podium.jpg"><span class="w-big"><span class="roll" data-t="Bangkok → MIT">Bangkok → MIT</span></span><span class="w-d">Presented research at ICAE with the UN, MIT THINK, JSHS and the California Science Fair.</span><span class="w-tag">Stages</span></a></li><li class="reveal"><a class="win" href="https://energizingyouth.org" target="_blank" rel="noopener" data-img="assets/classroom.jpg"><span class="w-big"><span class="roll" data-t="500+ kids">500+ kids</span></span><span class="w-d">Founded Energizing Youth, clean-energy lessons with branches in Zambia and Brazil.</span><span class="w-tag">Founder</span></a></li><li class="reveal"><a class="win" href="jewelry.html" data-img="assets/cm-1.jpg"><span class="w-big"><span class="roll" data-t="Chiara Malia">Chiara Malia</span></span><span class="w-d">Started my own jewelry brand. 19-piece debut collection.</span><span class="w-tag">Founder</span></a></li><li class="reveal"><a class="win" href="about.html"><span class="w-big"><span class="roll" data-t="Top 100">Top 100</span></span><span class="w-d">US Squash, and a 3× U.S. Squash Scholar-Athlete.</span><span class="w-tag">Athlete</span></a></li></ul></section>
-<section class="sect"><h2 class="sect-t">Press <a href="press.html">All →</a></h2><div class="pcards"><a class="pcard reveal" href="https://globeanew.net/episodes/chiara-luey-climate-movement-before-college" target="_blank" rel="noopener"><span class="ht"><img src="assets/art-globe.jpg" alt="" loading="lazy"></span><small>Globe Anew · Podcast</small><b>Starting a Climate Movement Before College</b></a><a class="pcard reveal" href="https://sustainablesanmateo.org/2026/01/15/2026-youth-sustainability-award-winner-chiara-luey/" target="_blank" rel="noopener"><span class="ht"><img src="assets/award-card.jpg" alt="" loading="lazy"></span><small>Sustainable San Mateo County</small><b>2026 Youth Sustainability Award Winner</b></a><a class="pcard reveal" href="https://www.smdailyjournal.com/community/class-notes-chiara-luey-named-2026-youth-sustainability-award-winner-by-sustainable-san-mateo-county/image_5a49ca98-437d-4ee4-a4cd-7eb466e898de.html" target="_blank" rel="noopener"><span class="ht"><img src="assets/art-smdj.jpg" alt="" loading="lazy"></span><small>San Mateo Daily Journal</small><b>Class Notes: Chiara Luey named award winner</b></a><a class="pcard reveal" href="https://awesomemathgirls.org/posts/interview-series-featuring-chiara-luey/" target="_blank" rel="noopener"><span class="ht"><img src="assets/poster-session.jpg" alt="" loading="lazy"></span><small>Awesome Math Girls</small><b>Interview Series: Chiara Luey</b></a><a class="pcard reveal" href="https://www.linkedin.com/posts/silicon-valley-youth-climate-action_from-classrooms-to-county-how-a-group-of-activity-7448157926998872064-Fyjr" target="_blank" rel="noopener"><span class="ht"><img src="assets/art-li.jpg" alt="" loading="lazy"></span><small>Silicon Valley Youth Climate Action</small><b>From Classrooms to County: the Peninsula’s first electrification outreach team</b></a><a class="pcard reveal" href="https://energizingyouth.org/our-story" target="_blank" rel="noopener"><span class="ht"><img src="assets/classroom.jpg" alt="" loading="lazy"></span><small>energizingyouth.org</small><b>How Energizing Youth started</b></a></div></section>
-<section class="sect logos-sect"><h2 class="sect-t">Worked with</h2><div class="logos"><img src="assets/logos/cornell-seal.svg" alt="Cornell" title="Cornell"><img src="assets/logos/stanford-s.svg" alt="Stanford" title="Stanford"><img src="assets/logos/cognition.svg" alt="Cognition" title="Cognition"><img src="assets/logos/cvc.svg" alt="Cornell VC" title="Cornell VC"><img src="assets/logos/ted.svg" alt="TEDx" title="TEDx"><img src="assets/logos/un.svg" alt="UN" title="UN"><img src="assets/logos/westlight-mark.png" alt="WestLight" title="WestLight"><img src="assets/logos/revolv-color.png" alt="RE-volv" title="RE-volv"><img src="assets/logos/platetale.png" alt="PlateTale" title="PlateTale"><img src="assets/logos/elytra.png" alt="Elytra" title="Elytra"><img src="assets/logos/etc.png" alt="ETC" title="ETC"><img src="assets/logos/ssmc.png" alt="Sustainable San Mateo" title="Sustainable San Mateo"></div></section>
-<a class="campus-link reveal" href="campus.html"><span>Walk around my Cornell campus in 3D</span><i>→</i></a>
+<div class="home">
+  <header class="h-id">
+    <img class="h-pic" src="assets/portrait.jpg" alt="Chiara Luey">
+    <h1>Chiara Luey</h1>
+    <p>Environmental Engineering at Cornell</p>
+  </header>
+
+  <section class="h-sec">
+    <h2>Work</h2>
+    <p>I study Environmental Engineering at <a class="lk" href="https://www.cornell.edu" target="_blank" rel="noopener"><img src="assets/logos/cornell-seal.svg" alt="">Cornell</a>. I’m on the <a class="lk" href="https://cornellvc.com" target="_blank" rel="noopener"><img src="assets/logos/cvc.svg" alt="">Cornell Venture Capital</a> deal team for <a class="lk lk-only" href="https://cognition.ai" target="_blank" rel="noopener"><img src="assets/logos/cognition.svg" alt="Cognition AI"></a>, and a member of the <a class="lk" href="https://www.cornelletc.org" target="_blank" rel="noopener"><img src="assets/logos/etc.png" alt="">Energy Transition Club</a>.</p>
+    <p>I’m a Clean Energy Advisor at <a class="lk" href="work.html#experience"><img src="assets/logos/westlight-mark.png" alt="">WestLight Energy</a>, where I co-led Electric-First campaigns in 4 school districts, mobilizing 9,000+ students for an estimated 2M+ kg of CO₂ cut a year.</p>
+    <p>Before that, I was a research intern in <a class="lk" href="work.html#experience"><img src="assets/logos/stanford-s.svg" alt="">Stanford Chemistry</a>, an operations &amp; growth intern at <a class="lk" href="work.html#experience"><img src="assets/logos/platetale.png" alt="">PlateTale</a>, an analyst at <a class="lk" href="https://re-volv.org" target="_blank" rel="noopener"><img src="assets/logos/revolv-color.png" alt="">RE-volv</a> and a market researcher at <a class="lk" href="https://elytrarobotics.com" target="_blank" rel="noopener"><img src="assets/logos/elytra.png" alt="">Elytra Robotics</a>.</p>
+    <p>I also founded <a class="lk" href="https://energizingyouth.org" target="_blank" rel="noopener">Energizing Youth</a>, which has taught 500+ kids about clean energy, and my jewelry brand <a class="lk" href="jewelry.html">Chiara Malia</a>.</p>
+  </section>
+
+  <section class="h-sec">
+    <h2>Research</h2>
+    <ul class="h-list"><li><a class="r-t" href="projects.html" data-img="assets/mof-poster.jpg">Copper–MOF catalysts for converting CO₂ into ethanol</a><p>91% Faradaic efficiency. Published with mentors from MIT, Stanford and Washington State.</p><p class="venue">ICAE (with the UN, Bangkok) · MIT THINK · JSHS · Columbia Junior Science Journal</p></li><li><a class="r-t" href="projects.html" data-img="assets/poster-session.jpg">Refrigerant-free thermoelectric air conditioning</a><p>A low-power cooling system built around an LTC3108 energy harvester.</p><p class="venue">California Science &amp; Engineering Fair</p></li></ul>
+  </section>
+
+  <section class="h-sec">
+    <h2>Talks &amp; press</h2>
+    <ul class="h-press"><li><button class="r-t" data-yt="wiUsqBOQTuw">“Circles”, my TEDx talk</button><span>TEDxCrystal Springs Youth</span></li><li><a class="r-t" href="https://globeanew.net/episodes/chiara-luey-climate-movement-before-college" target="_blank" rel="noopener">Starting a Climate Movement Before College</a><span>Globe Anew · Podcast</span></li><li><a class="r-t" href="https://sustainablesanmateo.org/2026/01/15/2026-youth-sustainability-award-winner-chiara-luey/" target="_blank" rel="noopener">2026 Youth Sustainability Award Winner</a><span>Sustainable San Mateo County</span></li><li><a class="r-t" href="https://www.smdailyjournal.com/community/class-notes-chiara-luey-named-2026-youth-sustainability-award-winner-by-sustainable-san-mateo-county/image_5a49ca98-437d-4ee4-a4cd-7eb466e898de.html" target="_blank" rel="noopener">Class Notes: Chiara Luey named award winner</a><span>San Mateo Daily Journal</span></li><li><a class="r-t" href="https://awesomemathgirls.org/posts/interview-series-featuring-chiara-luey/" target="_blank" rel="noopener">Interview Series: Chiara Luey</a><span>Awesome Math Girls</span></li></ul>
+    <p class="h-more"><a href="press.html">More press →</a></p>
+  </section>
+
+  <section class="h-sec">
+    <div class="h-logos"><img src="assets/logos/cornell-seal.svg" alt="Cornell" title="Cornell"><img src="assets/logos/stanford-s.svg" alt="Stanford" title="Stanford"><img src="assets/logos/cognition.svg" alt="Cognition" title="Cognition"><img src="assets/logos/cvc.svg" alt="Cornell VC" title="Cornell VC"><img src="assets/logos/ted.svg" alt="TEDx" title="TEDx"><img src="assets/logos/un.svg" alt="UN" title="UN"><img src="assets/logos/westlight-mark.png" alt="WestLight" title="WestLight"><img src="assets/logos/revolv-color.png" alt="RE-volv" title="RE-volv"><img src="assets/logos/platetale.png" alt="PlateTale" title="PlateTale"><img src="assets/logos/elytra.png" alt="Elytra" title="Elytra"><img src="assets/logos/etc.png" alt="ETC" title="ETC"></div>
+  </section>
+
+  <p class="h-campus"><a href="campus.html">Explore my Cornell campus in 3D →</a></p>
+
+</div>
 </main>
 <footer class="ftr">
   <button class="copy" data-copy="chiara@luey.us">chiara@luey.us</button>
@@ -39,6 +60,6 @@
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
 <div class="toast" id="toast">Copied</div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="site.js?v=24"></script>
+<script src="site.js?v=25"></script>
 </body>
 </html>
