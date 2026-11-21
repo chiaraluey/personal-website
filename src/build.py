@@ -179,12 +179,15 @@ PRESS_ITEMS = [(t, o, u) for t, o, u, _ in ARTICLES[:4]]
 press_html = '<li><button class="r-t" data-yt="wiUsqBOQTuw">“Circles”, my TEDx talk</button><span>TEDxCrystal Springs Youth</span></li>' + ''.join(f'<li><a class="r-t" href="{u}" target="_blank" rel="noopener">{E(t)}</a><span>{E(o)}</span></li>' for t, o, u in PRESS_ITEMS)
 LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC')]
 logos_html = ''.join(f'<img src="assets/logos/{s}" alt="{E(n)}" title="{E(n)}">' for s, n in LOGOS)
-landing = f'''<div class="home">
-  <header class="h-id">
-    <img class="h-pic" src="assets/portrait.jpg" alt="Chiara Luey">
-    <h1>Chiara Luey</h1>
-    <p>Environmental Engineering at Cornell</p>
-  </header>
+landing = f'''<section class="intro">
+  <div class="intro-t">
+    <h1 class="big-name">Chiara Luey</h1>
+    <p class="intro-sub">Environmental Engineering at Cornell</p>
+    <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
+  </div>
+  <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
+</section>
+<div class="home">
 
   <section class="h-sec">
     <h2>Work</h2>

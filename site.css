@@ -358,7 +358,7 @@ h1,h2,h3,.hl,.brand,.big-name,.w-big,.pcard b,.campus-link,.stat b,.page-t{font-
 .intro-links a::after{transform:none;opacity:.25;transition:opacity .3s}.intro-links a:hover::after{opacity:1;transform:none}
 .stat b i,.stat b em,.stat b small,.stat b span{color:var(--mute)!important}
 /* ---------- home: single column ---------- */
-.home{display:block;min-height:0;max-width:680px;margin:0 auto;padding:4.5rem 0 3rem;color:var(--mute);font-size:1.08rem;line-height:1.7}
+.home{display:block;min-height:0;max-width:680px;margin:0 auto;padding:1rem 0 3rem;color:var(--mute);font-size:1.08rem;line-height:1.7}
 .home>*{animation:fadeUp .9s var(--ease) both}
 .home>*:nth-child(2){animation-delay:.08s}.home>*:nth-child(3){animation-delay:.16s}.home>*:nth-child(4){animation-delay:.24s}.home>*:nth-child(n+5){animation-delay:.32s}
 .h-pic{width:88px;height:88px;border-radius:14px;object-fit:cover;object-position:50% 20%;margin-bottom:1.4rem;display:block}
@@ -395,3 +395,4 @@ h1,h2,h3,.hl,.brand,.big-name,.w-big,.pcard b,.campus-link,.stat b,.page-t{font-
 .home .lk img{display:inline-block}
 .home .h-pic{display:block}
 .h-logos img{display:block}
+.home>.h-sec:first-child{margin-top:2rem}
