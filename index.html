@@ -8,7 +8,7 @@
 <script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=29">
+<link rel="stylesheet" href="site.css?v=30">
 </head>
 <body class="p-index">
 
@@ -22,6 +22,8 @@
     <p class="intro-pages"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects & Research</a><a href="press.html">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a></p>
   </div>
   <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
+  <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.170.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.170.0/examples/jsm/"}}</script>
+  <script type="module" src="blob.js?v=30"></script>
 </section>
 <div class="home">
 
@@ -62,6 +64,6 @@
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
 <div class="toast" id="toast">Copied</div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="site.js?v=29"></script>
+<script src="site.js?v=30"></script>
 </body>
 </html>

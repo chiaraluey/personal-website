@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '29'
+V = '30'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -190,6 +190,8 @@ landing = f'''<section class="intro">
     <p class="intro-pages">{''.join(f'<a href="{h}">{n}</a>' for h, n in NAV[:-1])}</p>
   </div>
   <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
+  <script type="importmap">{{"imports":{{"three":"https://unpkg.com/three@0.170.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.170.0/examples/jsm/"}}}}</script>
+  <script type="module" src="blob.js?v={V}"></script>
 </section>
 <div class="home">
 
