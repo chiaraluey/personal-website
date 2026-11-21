@@ -161,3 +161,4 @@ body:not(.playing) .mute,body:not(.playing) .places button{pointer-events:none}
 body:not(.playing) .prompt{opacity:0;pointer-events:none}
 
 .secrets{padding:.4rem .85rem;border-radius:99px;background:#1c1a17;color:#ffd27a;font:500 .85rem var(--sans);box-shadow:0 6px 20px rgba(0,0,0,.2)}.secrets[hidden]{display:none}.secrets.bump{animation:bump .45s var(--ease)}
+:root{--serif:'Libre Caslon Text',Georgia,serif;--sans:var(--serif)}

@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '26'
+V = '27'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -29,6 +29,8 @@ def page(slug, title, desc, body, scripts='', hdr=None):
 <meta name="description" content="{E(desc)}">
 <meta property="og:title" content="{E(title)}"><meta property="og:image" content="assets/portrait.jpg">
 {THEME_BOOT}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css?v={V}">
 </head>
 <body class="p-{slug.split('.')[0]}">

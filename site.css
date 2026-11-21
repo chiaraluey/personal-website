@@ -411,3 +411,13 @@ body{font-family:var(--sans);letter-spacing:0;-webkit-font-smoothing:antialiased
 .ftr-nav{flex-basis:100%;display:flex;flex-wrap:wrap;gap:.4rem 1.3rem;font-size:.92rem}
 .ftr-nav a{color:var(--mute);text-decoration:none}.ftr-nav a:hover,.ftr-nav a[aria-current]{color:var(--fg)}
 .ftr-c{display:inline-flex;align-items:center;gap:1rem}
+/* ---------- Libre Caslon ---------- */
+:root{--serif:'Libre Caslon Text',Georgia,'Times New Roman',serif;--sans:var(--serif);--mono:var(--serif)}
+body{font-family:var(--serif);font-size:15.5px;letter-spacing:0}
+h1,h2,h3,.brand,.big-name,.page-t,.w-big,.pcard b,.campus-link,.stat b,.row-org,.h-sec h2{font-family:var(--serif)!important;font-weight:400!important}
+.big-name{letter-spacing:-.025em!important;font-size:clamp(2.8rem,6vw,5.2rem)!important}
+.intro-sub,.page-sub,.h-id p{font-style:italic}
+.home{font-size:1rem;line-height:1.75}
+.h-sec h2{font-size:1.1rem;font-style:italic}
+.page-t{letter-spacing:-.02em!important}
+.stat b,.num{font-variant-numeric:lining-nums}
