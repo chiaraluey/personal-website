@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '21'
+V = '23'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -166,66 +166,45 @@ jewelry = head('Chiara Malia', 'A wave, caught in gold. My jewelry brand.') + f'
 </div>'''
 
 
-# ---------- landing: front page ----------
+# ---------- landing ----------
 LOGOS = [('cornell-seal.svg', 'Cornell'), ('stanford-s.svg', 'Stanford'), ('cognition.svg', 'Cognition'), ('cvc.svg', 'Cornell VC'), ('ted.svg', 'TEDx'), ('un.svg', 'UN'), ('westlight-mark.png', 'WestLight'), ('revolv-color.png', 'RE-volv'), ('platetale.png', 'PlateTale'), ('elytra.png', 'Elytra'), ('etc.png', 'ETC'), ('ssmc.png', 'Sustainable San Mateo')]
-MAST = '''<header class="mast">
-  <div class="ear"><span>Ithaca, N.Y.</span><span id="today" class="ear-c"></span><span class="ear-r"><a href="mailto:chiara@luey.us">chiara@luey.us</a>{theme}</span></div>
-  <h1 class="nameplate"><span>Chiara Luey</span></h1>
-  <p class="motto">Environmental Engineering · Cornell University · Class of 2030</p>
-  <nav class="sections">{nav}</nav>
-</header>'''
-def fig(src, cap, cls='', extra=''):
-    capt = f'<figcaption>{cap}</figcaption>' if cap else ''
-    return f'<figure class="pic {cls}"><span class="ht"><img src="{src}" alt="" loading="lazy">{extra}</span>{capt}</figure>'
-BRIEF = [
-    ('https://github.com/ItzXizZ/econ-whiteboard-hackathon', 'Judges’ Choice', 'at Cornell’s Local AI Hackathon for Adam, an offline handwriting econ tutor.'),
-    ('work.html#experience', 'Stanford Chemistry', 'research intern in the Waymouth and Rotskoff labs, on molecular physics and energy storage.'),
-    ('service.html', 'NCWIT', 'Aspirations in Computing national award.'),
-    ('https://sustainablesanmateo.org/2026/01/15/2026-youth-sustainability-award-winner-chiara-luey/', 'Youth Sustainability Award', '2026, from Sustainable San Mateo County.'),
-    ('about.html', 'Top 100', 'in US Squash, and a 3× U.S. Squash Scholar-Athlete.'),
+WINS = [
+    ('91%', 'Published CO₂-to-ethanol catalyst research, with mentors from MIT, Stanford and Washington State.', 'Research', 'projects.html', 'assets/poster-session.jpg', ''),
+    ('Cognition AI', 'On the deal team at Cornell Venture Capital, sourcing and diligence alongside the club’s VCs.', 'Venture', 'work.html#cornell', '', ''),
+    ('4 districts', 'Co-led Electric-First campaigns at WestLight Energy: 9,000+ students, about 2M kg of CO₂ a year.', 'Policy', 'work.html#experience', 'assets/pce-team.jpg', ''),
+    ('TEDx', 'Gave a talk, “Circles”, at TEDxCrystal Springs Youth.', 'Talk', '', 'assets/yt-tedx.jpg', 'wiUsqBOQTuw'),
+    ('Judges’ Choice', 'Cornell Local AI Hackathon, for Adam, an offline handwriting econ tutor.', 'Code', 'https://github.com/ItzXizZ/econ-whiteboard-hackathon', '', ''),
+    ('Stanford', 'Research intern in the Waymouth and Rotskoff chemistry labs.', 'Lab', 'work.html#experience', '', ''),
+    ('Bangkok → MIT', 'Presented research at ICAE with the UN, MIT THINK, JSHS and the California Science Fair.', 'Stages', 'projects.html', 'assets/podium.jpg', ''),
+    ('500+ kids', 'Founded Energizing Youth, clean-energy lessons with branches in Zambia and Brazil.', 'Founder', 'https://energizingyouth.org', 'assets/classroom.jpg', ''),
+    ('Chiara Malia', 'Started my own jewelry brand. 19-piece debut collection.', 'Founder', 'jewelry.html', 'assets/cm-1.jpg', ''),
+    ('Top 100', 'US Squash, and a 3× U.S. Squash Scholar-Athlete.', 'Athlete', 'about.html', '', ''),
 ]
-FIGS = [('91', '%', 'Faradaic efficiency, CO₂ → ethanol'), ('9000', '+', 'students mobilized'), ('2', 'M+ kg', 'CO₂ cut a year (est.)'), ('4', '', 'districts gone Electric-First'), ('500', '+', 'K–8 students taught'), ('300', '+', 'EV charging sites scored'), ('50', 'K', 'electrification grant, $')]
-brief_html = ''.join(f'<li><a href="{u}"{ext(u)}><b>{t}</b> {d}</a></li>' for u, t, d in BRIEF)
-figs_html = ''.join(f'<div class="fg"><b data-count="{n}" data-suf="{E(u)}">{int(n):,}<em>{E(u)}</em></b><span>{E(t)}</span></div>' for n, u, t in FIGS)
-press_html = ''.join(f'<li><a href="{u}" target="_blank" rel="noopener"><span class="pr-t"><small>{E(o)}</small>{E(t)}</span><span class="ht pr-th"><img src="{img}" alt="" loading="lazy"></span></a></li>' for t, o, u, img in ARTICLES[:5])
+def win(i, w):
+    big, d, tag, href, img, yt = w
+    attrs = f' data-yt="{yt}"' if yt else f' href="{href}"{ext(href)}'
+    tagname = 'button' if yt else 'a'
+    di = f' data-img="{img}"' if img else ''
+    return f'<li class="reveal"><{tagname} class="win"{attrs}{di}><span class="w-i">{i:02d}</span><span class="w-big"><span class="roll" data-t="{E(big)}">{E(big)}</span></span><span class="w-d">{E(d)}</span><span class="w-tag">{tag}</span></{tagname}></li>'
+wins_html = ''.join(win(i + 1, w) for i, w in enumerate(WINS))
+press_html = ''.join(f'<a class="pcard reveal" href="{u}" target="_blank" rel="noopener"><span class="ht"><img src="{img}" alt="" loading="lazy"></span><small>{E(o)}</small><b>{E(t)}</b></a>' for t, o, u, img in ARTICLES[:6])
 logos_html = ''.join(f'<img src="assets/logos/{s}" alt="{E(n)}" title="{E(n)}">' for s, n in LOGOS)
-landing = f'''<div class="paper">
-<section class="band r-top">
-  <article class="lede">
-    <a class="story" href="projects.html"><span class="kick">Research</span>
-    <h2 class="hl hl-xl">Her copper catalyst turns tailpipe CO₂ into ethanol at 91% efficiency</h2></a>
-    <div class="lead-body">
-      {fig('assets/poster-session.jpg', 'Presenting the CO₂-to-ethanol research.', 'tall')}
-      <div class="cols">
-        <p class="dropcap">Chiara designed copper–MOF catalytic pathways that convert car exhaust into ethanol, and published the work with mentors from MIT, Stanford and Washington State.</p>
-        <p>She has presented her research at ICAE with the UN in Bangkok, MIT THINK, JSHS and the California Science &amp; Engineering Fair. She also built a refrigerant-free thermoelectric air conditioner.</p>
-        <p>She is now a freshman studying Environmental Engineering at Cornell.</p>
-        <a class="more-link" href="projects.html">All projects &amp; research →</a>
-      </div>
-    </div>
-  </article>
-  <aside class="rail">
-    <a class="mug" href="about.html"><img src="assets/portrait.jpg" alt="Chiara Luey"><span><b>Chiara Luey</b>Cornell ’30. Energy, economics and engineering. <u>About her →</u></span></a>
-    <a class="nowbox" href="work.html#cornell"><span class="kick">Now</span><img class="now-logo" src="assets/logos/cognition.svg" alt="Cognition"><h3 class="hl hl-s">On the Cognition AI deal team</h3><p>With Cornell Venture Capital’s Fall ’26 class, sourcing and doing diligence alongside the club’s VCs.</p></a>
-    <div class="brief"><span class="kick">In brief</span><ul>{brief_html}</ul></div>
-  </aside>
+landing = f'''<section class="intro">
+  <div class="intro-t">
+    <p class="eyebrow">Cornell Environmental Engineering ’30</p>
+    <h1 class="big-name"><span>Chiara</span><span>Luey</span></h1>
+    <p class="intro-line">I research clean energy, campaign for it and teach it. Right now I’m on the Cognition AI deal team at Cornell Venture Capital.</p>
+    <div class="intro-cta"><a class="btn" href="mailto:chiara@luey.us">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn ghost" href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub ↗</a></div>
+  </div>
+  <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas><figcaption>Move your cursor over me</figcaption></figure>
 </section>
-<section class="band r-three">
-  <a class="story" href="work.html#experience">{fig('assets/pce-team.jpg', 'With the Peninsula Clean Energy team.', 'wide')}<span class="kick">Policy</span><h3 class="hl hl-m">Four school districts go Electric-First</h3><p>At WestLight Energy, she co-led campaigns that mobilized 9,000+ students, for an estimated 2M+ kg of CO₂ cut a year. She now manages a $50K electrification grant.</p></a>
-  <button class="story" data-yt="wiUsqBOQTuw">{fig('assets/yt-tedx.jpg', 'TEDxCrystal Springs Youth.', 'wide', '<span class="watch">▶ Watch</span>')}<span class="kick">Talks</span><h3 class="hl hl-m">On the TEDx stage: “Circles”</h3><p>Her TEDx talk on youth-led climate action. She has also spoken to 400+ students about electrification.</p></button>
-  <a class="story" href="https://energizingyouth.org" target="_blank" rel="noopener">{fig('assets/classroom.jpg', 'An Energizing Youth lesson.', 'wide')}<span class="kick">Founder</span><h3 class="hl hl-m">Teaching clean energy to 500+ kids</h3><p>She founded Energizing Youth, which brings clean-energy lessons to K–8 classrooms and now has branches in Zambia and Brazil.</p></a>
-</section>
-<section class="band r-figs"><span class="kick">By the numbers</span><div class="figs">{figs_html}</div></section>
-<section class="band r-press">
-  <div class="press"><span class="kick">In the press</span><ul>{press_html}</ul><a class="more-link" href="press.html">All press, talks and videos →</a></div>
-  <a class="ad" href="https://www.chiaramalia.com/" target="_blank" rel="noopener"><small>Advertisement</small><span class="ht"><img src="assets/cm-1.jpg" alt="Chiara Malia jewelry" loading="lazy"></span><b>Chiara Malia</b><span>A wave, caught in gold.<br>The <i>Onda e Marea</i> collection, from $52.</span><u>chiaramalia.com</u><em>Founded by Chiara Luey</em></a>
-</section>
-<section class="band r-logos"><span class="kick">Worked with</span><div class="logos">{logos_html}</div></section>
-<a class="band classified" href="campus.html"><span class="kick">Also in this edition</span><span class="cl-t">Walk around my Cornell campus in 3D</span><span class="cl-a">Open →</span></a>
-</div>'''
+<section class="sect"><h2 class="sect-t">Selected wins <span>{len(WINS)}</span></h2><ul class="wins">{wins_html}</ul></section>
+<section class="sect"><h2 class="sect-t">Written about me <a href="press.html">All press →</a></h2><div class="pcards">{press_html}</div></section>
+<section class="sect logos-sect"><h2 class="sect-t">Worked with</h2><div class="logos">{logos_html}</div></section>
+<a class="campus-link reveal" href="campus.html"><span>Walk around my Cornell campus in 3D</span><i>→</i></a>'''
 
 PAGES = [
-    ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, '', MAST),
+    ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, ''),
     ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
     ('work.html', 'Work · Chiara Luey', 'Experience at Cornell Venture Capital, WestLight Energy, Stanford and more.', work, ''),
     ('projects.html', 'Projects & Research · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),

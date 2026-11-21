@@ -69,8 +69,38 @@ watch();
 const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);const el=e.target,n=+el.dataset.count,suf=el.dataset.suf||'',t0=performance.now(),d=1600;const step=t=>{const k=Math.min((t-t0)/d,1),v=Math.round(n*(1-Math.pow(1-k,4)));el.innerHTML=v.toLocaleString()+`<em>${suf}</em>`;if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}),{threshold:.6});
 $$('[data-count]').forEach(el=>cio.observe(el));
 
-// front page: dateline + images print in
-const td=$('#today');if(td)td.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-$$('.band').forEach((r,i)=>r.style.setProperty('--rd',.15+i*.12+'s'));
-const hio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelector('.ht')?.classList.add('in');hio.unobserve(e.target)}}),{threshold:.15});
-$$('.pic').forEach(el=>reduce?$('.ht',el).classList.add('in'):hio.observe(el));
+// halftone portrait
+const cv=$('#dots');
+if(cv){
+  const ctx=cv.getContext('2d'),img=new Image();img.src=cv.dataset.src;
+  let W,H,S,dots=[],mx=-1e4,my=-1e4,t0=0,raf=0,active=false;
+  const build=()=>{
+    const dpr=Math.min(devicePixelRatio||1,2),r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    S=Math.max(5,Math.round(W/68));const cols=Math.ceil(W/S),rows=Math.ceil(H/S);
+    const o=document.createElement('canvas');o.width=cols;o.height=rows;const oc=o.getContext('2d');
+    const k=Math.max(cols/img.width,rows/img.height),iw=img.width*k,ih=img.height*k;oc.drawImage(img,(cols-iw)/2,(rows-ih)/2,iw,ih);
+    const d=oc.getImageData(0,0,cols,rows).data;dots=[];
+    for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const i=(y*cols+x)*4,l=(d[i]*.3+d[i+1]*.59+d[i+2]*.11)/255,al=d[i+3]/255;if(al<.08)continue;dots.push({x:x*S+S/2,y:y*S+S/2,l,al,ox:0,oy:0,dl:(x+y)/(cols+rows)})}
+  };
+  const draw=t=>{
+    const dark=root.dataset.theme==='dark',col=getComputedStyle(root).getPropertyValue('--fg').trim();
+    ctx.clearRect(0,0,W,H);ctx.fillStyle=col;const R=W*.18,intro=Math.min((t-t0)/1600,2);let moving=intro<2;
+    for(const p of dots){
+      let v=dark?p.l:1-p.l;v=Math.min(1,Math.max(.1,(v-.08)*1.25))*p.al;
+      const a=Math.min(Math.max((intro-p.dl)*2.2,0),1);if(a<=0)continue;
+      const dx=p.x-mx,dy=p.y-my,dd=Math.hypot(dx,dy),f=dd<R?Math.pow(1-dd/R,2):0;
+      const tx=f?dx/dd*f*S*3.2:0,ty=f?dy/dd*f*S*3.2:0;p.ox+=(tx-p.ox)*.16;p.oy+=(ty-p.oy)*.16;
+      if(Math.abs(tx-p.ox)>.05||Math.abs(ty-p.oy)>.05)moving=true;
+      const rad=S*.5*Math.sqrt(v)*(1+f*.5)*(1-Math.pow(1-a,3));
+      ctx.beginPath();ctx.arc(p.x+p.ox,p.y+p.oy,rad,0,6.283);ctx.fill();
+    }
+    raf=(moving||active)?requestAnimationFrame(draw):0;
+  };
+  const kick=()=>{if(!raf)raf=requestAnimationFrame(draw)};
+  img.onload=()=>{build();t0=performance.now();if(reduce)t0-=1e4;kick()};
+  addEventListener('resize',()=>{if(img.complete){build();kick()}});
+  const mv=e=>{const r=cv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;active=true;kick()};
+  cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);
+  cv.addEventListener('pointerleave',()=>{mx=my=-1e4;active=false;kick()});
+  new MutationObserver(kick).observe(root,{attributes:true,attributeFilter:['data-theme']});
+}
