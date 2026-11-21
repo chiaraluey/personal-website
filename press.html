@@ -6,16 +6,10 @@
 <meta name="description" content="TEDx talk, podcasts and articles.">
 <meta property="og:title" content="Press · Chiara Luey"><meta property="og:image" content="assets/portrait.jpg">
 <script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=25">
+<link rel="stylesheet" href="site.css?v=26">
 </head>
 <body class="p-press">
-<header class="hdr">
-  <a class="brand" href="index.html">Chiara Luey</a>
-  <nav class="nav"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects & Research</a><a href="press.html" aria-current="page">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a><a href="campus.html">3D Campus</a></nav>
-  <button class="theme" id="theme" aria-label="Toggle dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
-</header>
+<header class="top"><a class="brand" href="index.html">← Chiara Luey</a></header>
 <main class="main">
 <div class="page-head"><h1 class="page-title" data-split>Press</h1><p class="page-sub reveal">Talks, interviews and articles.</p></div>
 <div class="videos"><button class="vid reveal big" data-yt="wiUsqBOQTuw"><img src="assets/yt-tedx.jpg" alt="" loading="lazy"><span class="play">▶</span><span class="vid-cap"><small>TEDx Crystal Springs Youth</small>Circles</span></button><button class="vid reveal" data-yt="C1NDCvmvOU0"><img src="assets/yt-award.jpg" alt="" loading="lazy"><span class="play">▶</span><span class="vid-cap"><small>Sustainable San Mateo County</small>Youth Sustainability Award</span></button><button class="vid reveal" data-yt="pEp48JJ8qF8"><img src="assets/yt-tailpipe.jpg" alt="" loading="lazy"><span class="play">▶</span><span class="vid-cap"><small>Research video</small>CO₂ → ethanol tailpipe device</span></button></div>
@@ -24,14 +18,15 @@
 <section class="group"><h2 class="g-t reveal">Photos</h2><div class="photos"><button class="ph reveal" data-full="assets/classroom.jpg"><img src="assets/classroom.jpg" alt="Energizing Youth lesson" loading="lazy"><span>Energizing Youth lesson</span></button><button class="ph reveal" data-full="assets/podium.jpg"><img src="assets/podium.jpg" alt="Speaking" loading="lazy"><span>Speaking</span></button><button class="ph reveal" data-full="assets/pce-team.jpg"><img src="assets/pce-team.jpg" alt="Peninsula Clean Energy team" loading="lazy"><span>Peninsula Clean Energy team</span></button><button class="ph reveal" data-full="assets/poster-session.jpg"><img src="assets/poster-session.jpg" alt="Poster session" loading="lazy"><span>Poster session</span></button><button class="ph reveal" data-full="assets/award-card.jpg"><img src="assets/award-card.jpg" alt="Youth Sustainability Award" loading="lazy"><span>Youth Sustainability Award</span></button><button class="ph reveal" data-full="assets/friends.jpg"><img src="assets/friends.jpg" alt="With friends" loading="lazy"><span>With friends</span></button></div></section>
 </main>
 <footer class="ftr">
+  <nav class="ftr-nav"><a href="about.html">About</a><a href="work.html">Work</a><a href="projects.html">Projects & Research</a><a href="press.html" aria-current="page">Press</a><a href="service.html">Service</a><a href="jewelry.html">Jewelry</a><a href="campus.html">3D Campus</a></nav>
   <button class="copy" data-copy="chiara@luey.us">chiara@luey.us</button>
   <div class="ftr-links"><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a><a href="https://www.youtube.com/@ChiaraLuey" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/chiara_luey" target="_blank" rel="noopener">Instagram</a></div>
-  <span class="ftr-c">© 2026 Chiara Luey</span>
+  <span class="ftr-c">© 2026 Chiara Luey <button class="theme" id="theme" aria-label="Toggle dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button></span>
 </footer>
 <div class="lb" id="lb" aria-hidden="true"><button class="lb-x" aria-label="Close">✕</button><div class="lb-body" id="lbBody"></div></div>
 <div class="hover-img" id="hoverImg" aria-hidden="true"><img alt=""></div>
 <div class="toast" id="toast">Copied</div>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="site.js?v=25"></script>
+<script src="site.js?v=26"></script>
 </body>
 </html>
