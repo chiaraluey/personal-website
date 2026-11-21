@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '23'
+V = '24'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -30,7 +30,7 @@ def page(slug, title, desc, body, scripts='', hdr=None):
 <meta property="og:title" content="{E(title)}"><meta property="og:image" content="assets/portrait.jpg">
 {THEME_BOOT}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..900;1,8..60,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css?v={V}">
 </head>
 <body class="p-{slug.split('.')[0]}">
@@ -185,21 +185,20 @@ def win(i, w):
     attrs = f' data-yt="{yt}"' if yt else f' href="{href}"{ext(href)}'
     tagname = 'button' if yt else 'a'
     di = f' data-img="{img}"' if img else ''
-    return f'<li class="reveal"><{tagname} class="win"{attrs}{di}><span class="w-i">{i:02d}</span><span class="w-big"><span class="roll" data-t="{E(big)}">{E(big)}</span></span><span class="w-d">{E(d)}</span><span class="w-tag">{tag}</span></{tagname}></li>'
+    return f'<li class="reveal"><{tagname} class="win"{attrs}{di}><span class="w-big"><span class="roll" data-t="{E(big)}">{E(big)}</span></span><span class="w-d">{E(d)}</span><span class="w-tag">{tag}</span></{tagname}></li>'
 wins_html = ''.join(win(i + 1, w) for i, w in enumerate(WINS))
 press_html = ''.join(f'<a class="pcard reveal" href="{u}" target="_blank" rel="noopener"><span class="ht"><img src="{img}" alt="" loading="lazy"></span><small>{E(o)}</small><b>{E(t)}</b></a>' for t, o, u, img in ARTICLES[:6])
 logos_html = ''.join(f'<img src="assets/logos/{s}" alt="{E(n)}" title="{E(n)}">' for s, n in LOGOS)
 landing = f'''<section class="intro">
   <div class="intro-t">
-    <p class="eyebrow">Cornell Environmental Engineering ’30</p>
-    <h1 class="big-name"><span>Chiara</span><span>Luey</span></h1>
-    <p class="intro-line">I research clean energy, campaign for it and teach it. Right now I’m on the Cognition AI deal team at Cornell Venture Capital.</p>
-    <div class="intro-cta"><a class="btn" href="mailto:chiara@luey.us">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn ghost" href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub ↗</a></div>
+    <h1 class="big-name">Chiara Luey</h1>
+    <p class="intro-sub">Environmental Engineering at Cornell</p>
+    <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
   </div>
-  <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas><figcaption>Move your cursor over me</figcaption></figure>
+  <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
 </section>
-<section class="sect"><h2 class="sect-t">Selected wins <span>{len(WINS)}</span></h2><ul class="wins">{wins_html}</ul></section>
-<section class="sect"><h2 class="sect-t">Written about me <a href="press.html">All press →</a></h2><div class="pcards">{press_html}</div></section>
+<section class="sect"><h2 class="sect-t">Selected</h2><ul class="wins">{wins_html}</ul></section>
+<section class="sect"><h2 class="sect-t">Press <a href="press.html">All →</a></h2><div class="pcards">{press_html}</div></section>
 <section class="sect logos-sect"><h2 class="sect-t">Worked with</h2><div class="logos">{logos_html}</div></section>
 <a class="campus-link reveal" href="campus.html"><span>Walk around my Cornell campus in 3D</span><i>→</i></a>'''
 
