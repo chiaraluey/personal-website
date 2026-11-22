@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '37'
+V = '38'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -194,7 +194,7 @@ landing = f'''<section class="intro">
 <div class="home">
 
   <section class="h-sec reveal h-thesis">
-    <p class="thesis">I want to work across energy, AI and finance: in venture, in deal modeling, or in operations and growth at an early-stage startup.</p>
+    <p class="thesis">I work where capital, AI and energy meet. I want to back and build companies, in venture, finance or startup operations.</p>
     <p class="skills">Python, financial modeling, diligence, growth, ArcGIS, research, predictive modeling, AI training-data cleaning, LLM tools</p>
   </section>
 
