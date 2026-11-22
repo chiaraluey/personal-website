@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '33'
+V = '34'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -186,14 +186,17 @@ landing = f'''<section class="intro">
     <h1 class="big-name" aria-label="Chiara Luey">{''.join(f'<span aria-hidden="true" style="--i:{i}">{c}</span>' if c != ' ' else ' ' for i, c in enumerate('Chiara Luey'))}</h1>
     <svg class="ink" viewBox="0 0 400 24" aria-hidden="true"><path d="M2 14 C 30 4, 52 4, 76 13 S 124 23, 150 12 S 200 2, 226 12 S 276 22, 302 12 S 350 4, 398 10"/></svg>
     <p class="intro-sub">Environmental Engineering at Cornell</p>
-    <p class="thesis">Headed for venture, finance and operations, where AI meets climate.</p>
-    <p class="skills">Python, financial modeling, diligence, growth, ArcGIS, research, predictive modeling, AI training-data cleaning, LLM tools</p>
     <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
     <p class="intro-pages">{''.join(f'<a href="{h}">{n}</a>' for h, n in NAV[:-1])}</p>
   </div>
   <figure class="dots-wrap"><canvas id="dots" data-src="assets/portrait-cut.png" aria-label="Portrait of Chiara Luey"></canvas></figure>
 </section>
 <div class="home">
+
+  <section class="h-sec reveal h-thesis">
+    <p class="thesis">Headed for venture, finance and operations, where AI meets climate.</p>
+    <p class="skills">Python, financial modeling, diligence, growth, ArcGIS, research, predictive modeling, AI training-data cleaning, LLM tools</p>
+  </section>
 
   <section class="h-sec reveal">
     <h2>Work</h2>

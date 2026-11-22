@@ -434,3 +434,4 @@ h1,h2,h3,.brand,.big-name,.page-t,.w-big,.pcard b,.campus-link,.stat b,.row-org,
 .big-name{animation:none!important}.big-name span{animation:rise 1s var(--ease) backwards;animation-delay:calc(var(--i)*45ms)}
 .thesis{margin-top:.9rem;max-width:30rem;font-size:1.05rem;line-height:1.45;animation:fadeUp 1s .25s var(--ease) both}
 .skills{margin-top:.25rem;max-width:30rem;font-size:.92rem;line-height:1.45;color:var(--mute);animation:fadeUp 1s .3s var(--ease) both}
+.h-thesis .thesis{margin-top:0}
