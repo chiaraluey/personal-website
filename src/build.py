@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '31'
+V = '32'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -186,6 +186,11 @@ landing = f'''<section class="intro">
     <h1 class="big-name" aria-label="Chiara Luey">{''.join(f'<span aria-hidden="true" style="--i:{i}">{c}</span>' if c != ' ' else ' ' for i, c in enumerate('Chiara Luey'))}</h1>
     <svg class="ink" viewBox="0 0 400 24" aria-hidden="true"><path d="M2 14 C 30 4, 52 4, 76 13 S 124 23, 150 12 S 200 2, 226 12 S 276 22, 302 12 S 350 4, 398 10"/></svg>
     <p class="intro-sub">Environmental Engineering at Cornell</p>
+    <p class="thesis">I work where capital, AI and climate meet. I want to back and build companies, in venture, finance or startup operations.</p>
+    <dl class="facts">
+      <div><dt>Interested in</dt><dd>Venture capital · Finance · AI · Operations</dd></div>
+      <div><dt>Skills</dt><dd>Financial modeling · Sourcing &amp; diligence · Growth &amp; partnerships · Python · ArcGIS &amp; data analysis · Research · Public speaking</dd></div>
+    </dl>
     <p class="intro-links"><a href="mailto:chiara@luey.us">Email</a><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">GitHub</a></p>
     <p class="intro-pages">{''.join(f'<a href="{h}">{n}</a>' for h, n in NAV[:-1])}</p>
   </div>

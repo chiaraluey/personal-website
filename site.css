@@ -432,3 +432,9 @@ h1,h2,h3,.brand,.big-name,.page-t,.w-big,.pcard b,.campus-link,.stat b,.row-org,
 .hover-img img{object-fit:cover}
 @media (prefers-reduced-motion:reduce){.ink path{animation:none;stroke-dashoffset:0}.home .reveal{opacity:1;transform:none}}
 .big-name{animation:none!important}.big-name span{animation:rise 1s var(--ease) backwards;animation-delay:calc(var(--i)*45ms)}
+.thesis{margin-top:1.1rem;max-width:34rem;font-size:1.22rem;line-height:1.45;animation:fadeUp 1s .25s var(--ease) both}
+.facts{margin:1.1rem 0 0;display:grid;gap:.45rem;max-width:34rem;font-size:.95rem;line-height:1.45;animation:fadeUp 1s .32s var(--ease) both}
+.facts div{display:grid;grid-template-columns:7.2rem 1fr;gap:.8rem}
+.facts dt{color:var(--mute);font-style:italic}
+.facts dd{margin:0}
+@media (max-width:560px){.facts div{grid-template-columns:1fr;gap:.1rem}.thesis{font-size:1.1rem}}
