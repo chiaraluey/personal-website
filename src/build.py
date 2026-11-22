@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '34'
+V = '36'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
@@ -194,7 +194,7 @@ landing = f'''<section class="intro">
 <div class="home">
 
   <section class="h-sec reveal h-thesis">
-    <p class="thesis">Headed for venture, finance and operations, where AI meets climate.</p>
+    <p class="thesis">I want to work at the intersection of energy, AI and finance: sourcing and diligencing startups in venture, building the financial models behind energy and infrastructure deals, or running operations and growth at an early-stage company. I’ve started on each, on the Cognition AI deal team at Cornell VC, modeling 20-year solar economics at RE-volv, managing a $50K electrification grant at WestLight Energy, and growing partnerships at PlateTale.</p>
     <p class="skills">Python, financial modeling, diligence, growth, ArcGIS, research, predictive modeling, AI training-data cleaning, LLM tools</p>
   </section>
 
