@@ -436,3 +436,4 @@ h1,h2,h3,.brand,.big-name,.page-t,.w-big,.pcard b,.campus-link,.stat b,.row-org,
 .skills{margin-top:.7rem;max-width:36rem;font-size:.92rem;line-height:1.45;color:var(--mute);animation:fadeUp 1s .3s var(--ease) both}
 .h-thesis .thesis{margin-top:0}
 .skills span{color:var(--fg);font-style:italic}
+.h-thesis .skills{max-width:none}
