@@ -112,3 +112,8 @@ document.fonts.ready.then(lock);addEventListener('resize',lock);
 const tm=new Map();n.addEventListener('pointermove',e=>ls.forEach(s=>{const r=s.getBoundingClientRect();if(Math.abs(e.clientX-(r.left+r.width/2))<r.width*1.1){s.classList.add('it');clearTimeout(tm.get(s));tm.set(s,setTimeout(()=>s.classList.remove('it'),700))}}))})();
 // footer: Ithaca local time
 (()=>{const c=$('#clock');if(!c)return;const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit'});const u=()=>c.textContent='Ithaca, NY · '+f.format(new Date()).toLowerCase();u();setInterval(u,15000)})();
+(()=>{const cap=document.getElementById('dCap');if(!cap)return;let tx=0,ty=0,x=0,y=0;
+document.querySelectorAll('.d-tile').forEach(t=>{t.addEventListener('mouseenter',()=>{cap.innerHTML=`${t.dataset.cap} <i>— ${t.dataset.type}</i>`;cap.classList.add('on')});t.addEventListener('mouseleave',()=>cap.classList.remove('on'))});
+addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){x+=(tx-x)*.18;y+=(ty-y)*.18;cap.style.left=x+'px';cap.style.top=y+'px';requestAnimationFrame(f)})();
+const links=[...document.querySelectorAll('.d-nav a')];const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('.d-tile').forEach(t=>io.observe(t))})();

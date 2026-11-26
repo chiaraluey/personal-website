@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;box-sizing:border-box}body{width:1600px;height:1000px;background:#dfe4dc;font-family:'IBM Plex Sans';overflow:hidden;display:flex;align-items:center;justify-content:center}
+.dev{width:1420px;height:860px;background:#16181a;border-radius:46px;padding:22px;box-shadow:0 40px 80px rgba(0,0,0,.25)}
+.scr{width:100%;height:100%;background:#fbfaf6;border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1fr 420px;grid-template-rows:64px 1fr}
+.bar{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:0 28px;border-bottom:1px solid #e6e3da}
+.bar b{font:600 20px 'IBM Plex Sans'}.bar .pill{font:500 12px 'IBM Plex Mono';background:#eaf3e6;color:#2f6b2a;padding:5px 10px;border-radius:99px}
+.bar .tools{margin-left:auto;display:flex;gap:10px}.bar .tools i{width:34px;height:34px;border-radius:50%;display:block;border:2px solid #ddd}
+.board{position:relative;background-image:radial-gradient(#d8d4c8 1.2px,transparent 1.2px);background-size:26px 26px}
+.board svg{position:absolute;left:70px;top:40px;width:640px}
+.hand{font-family:Caveat;color:#1d3f8f}
+.q{position:absolute;left:70px;bottom:46px;font:600 30px Caveat;color:#333}
+.side{border-left:1px solid #e6e3da;padding:26px;display:flex;flex-direction:column;gap:16px;background:#fff}
+.side h4{font:500 12px 'IBM Plex Mono';letter-spacing:.1em;color:#8a877d;text-transform:uppercase}
+.msg{border-radius:18px;padding:16px 18px;font-size:16px;line-height:1.45}
+.a{background:#f1efe8}.u{background:#1d3f8f;color:#fff;align-self:flex-end;max-width:80%}
+.ok{color:#2f6b2a;font-weight:600}
+.step{display:flex;gap:10px;font-size:14px;color:#555;align-items:center}.step i{width:18px;height:18px;border-radius:50%;background:#2f6b2a;display:inline-block}.step i.o{background:none;border:2px solid #bbb}
+.badge{margin-top:auto;font:500 12px 'IBM Plex Mono';color:#8a877d;border-top:1px solid #eee;padding-top:14px;line-height:1.6}
+</style></head><body>
+<div class="dev"><div class="scr">
+  <div class="bar"><b>Adam</b><span class="pill">● offline · on-device model</span><span style="color:#8a877d;font-size:14px">Unit 3 · Supply &amp; demand</span><div class="tools"><i style="background:#1d3f8f;border-color:#1d3f8f"></i><i style="background:#c0392b;border-color:#c0392b"></i><i></i></div></div>
+  <div class="board">
+    <svg viewBox="0 0 640 560" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M60 30 C 58 200, 62 380, 60 500 C 230 502, 420 498, 600 500" stroke="#222" stroke-width="4"/>
+      <text x="14" y="40" class="hand" font-size="34" fill="#222" stroke="none">P</text><text x="590" y="540" class="hand" font-size="34" fill="#222" stroke="none">Q</text>
+      <path d="M110 90 C 220 200, 360 330, 520 450" stroke="#1d3f8f" stroke-width="5"/><text x="528" y="470" class="hand" font-size="32" fill="#1d3f8f" stroke="none">D₁</text>
+      <path d="M190 60 C 290 160, 420 290, 590 420" stroke="#1d3f8f" stroke-width="5" stroke-dasharray="2 12"/><text x="596" y="410" class="hand" font-size="32" fill="#1d3f8f" stroke="none">D₂</text>
+      <path d="M110 450 C 250 340, 380 230, 540 100" stroke="#c0392b" stroke-width="5"/><text x="548" y="96" class="hand" font-size="32" fill="#c0392b" stroke="none">S</text>
+      <path d="M324 280 L 60 280 M324 280 L 324 500" stroke="#888" stroke-width="2.5" stroke-dasharray="6 8"/>
+      <path d="M386 232 L 60 232" stroke="#2f6b2a" stroke-width="2.5" stroke-dasharray="6 8"/>
+      <circle cx="324" cy="280" r="8" fill="#222" stroke="none"/><circle cx="386" cy="232" r="9" fill="none" stroke="#2f6b2a" stroke-width="4"/>
+      <path d="M230 150 C 250 140, 268 140, 286 150 M276 140 l12 10 -14 6" stroke="#1d3f8f" stroke-width="3.5"/>
+      <text x="20" y="288" class="hand" font-size="26" fill="#555" stroke="none">P₁</text><text x="20" y="238" class="hand" font-size="26" fill="#2f6b2a" stroke="none">P₂ ?</text>
+    </svg>
+    <div class="q">Q: A heat wave raises demand for AC units. Show the new equilibrium.</div>
+  </div>
+  <div class="side">
+    <h4>Tutor</h4>
+    <div class="msg a">I can see your graph. <span class="ok">D shifted right to D₂</span>, nice, that’s the heat wave.</div>
+    <div class="msg a">Where does D₂ cross S now? Circle it and draw a line to the price axis.</div>
+    <div class="msg u">so price goes up to P₂?</div>
+    <div class="msg a"><span class="ok">Yes.</span> And quantity? Is it higher or lower than before?</div>
+    <h4 style="margin-top:8px">Progress</h4>
+    <div class="step"><i></i>Read the shock</div><div class="step"><i></i>Shift the right curve</div><div class="step"><i class="o"></i>New price &amp; quantity</div>
+    <div class="badge">Reads handwriting from the pen canvas, runs a local model, no internet needed.<br>Judges’ Choice · Cornell Commons Local AI Hackathon</div>
+  </div>
+</div></div>
+</body></html>

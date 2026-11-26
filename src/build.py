@@ -1,10 +1,10 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '44'
+V = '45'
 E = html.escape
 
-NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('campus.html', '3D Campus')]
+NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('design.html', 'Design'), ('campus.html', '3D Campus')]
 SOCIALS = [('LinkedIn', 'https://www.linkedin.com/in/chiara-luey'), ('GitHub', 'https://github.com/chiaraluey'), ('YouTube', 'https://www.youtube.com/@ChiaraLuey')]
 
 THEME_BOOT = "<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>"
@@ -225,6 +225,24 @@ landing = f'''<section class="intro">
 
 </div>'''
 
+
+# ---------- design ----------
+DESIGNS = [
+    ('malia', 'Chiara Malia', 'Brand identity, packaging', 'wide'),
+    ('electric', 'Electric-First', 'Campaign posters', 'wide'),
+    ('adam', 'Adam, AI economics tutor', 'Product UI', 'wide'),
+    ('mof', 'Tailpipe CO₂ to ethanol', 'Research infographic', 'tall'),
+    ('ey', 'Energizing Youth', 'Brand system, social', 'wide'),
+    ('etc', 'Energy Transition Club', 'Recruiting posters', 'wide'),
+]
+design_nav = ''.join(f'<li><a href="#d-{k}"><span>{i+1:02d}</span>{E(n)}</a></li>' for i, (k, n, t, _) in enumerate(DESIGNS))
+design_tiles = ''.join(f'<a id="d-{k}" class="d-tile d-{sz} reveal" href="assets/design/{k}.jpg" data-full="assets/design/{k}.jpg" data-cap="{E(n)}" data-type="{E(t)}"><img src="assets/design/{k}.jpg" alt="{E(n)}: {E(t)}" loading="lazy"></a>' for k, n, t, sz in DESIGNS)
+design = f'''<div class="d-wrap">
+  <aside class="d-side"><h1 class="d-h">Design</h1><ol class="d-nav">{design_nav}</ol></aside>
+  <div class="d-grid">{design_tiles}</div>
+</div>
+<div class="d-cap" id="dCap" aria-hidden="true"></div>'''
+
 PAGES = [
     ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, ''),
     ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
@@ -233,6 +251,7 @@ PAGES = [
     ('press.html', 'Press · Chiara Luey', 'TEDx talk, podcasts and articles.', press, ''),
     ('service.html', 'Service · Chiara Luey', 'Volunteering and honors.', service, ''),
     ('jewelry.html', 'Chiara Malia · Chiara Luey', 'Chiara Malia, a jewelry brand by Chiara Luey.', jewelry, ''),
+    ('design.html', 'Design · Chiara Luey', 'Brand, poster and product design by Chiara Luey.', design, ''),
 ]
 for slug, title, desc, body, scripts, *h in PAGES:
     with open(os.path.join(ROOT, slug), 'w') as f:
