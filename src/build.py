@@ -1,10 +1,10 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '46'
+V = '47'
 E = html.escape
 
-NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('design.html', 'Design'), ('campus.html', '3D Campus')]
+NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects'), ('design.html', 'Design'), ('press.html', 'Press'), ('campus.html', '3D Campus')]
 SOCIALS = [('LinkedIn', 'https://www.linkedin.com/in/chiara-luey'), ('GitHub', 'https://github.com/chiaraluey'), ('YouTube', 'https://www.youtube.com/@ChiaraLuey')]
 
 THEME_BOOT = "<script>(()=>{const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(location.search.includes('embed'))document.documentElement.classList.add('embed')})()</script>"
@@ -74,10 +74,10 @@ def head(title, sub):
 # ---------- home ----------
 INDEX = [
     ('work.html', 'Work', 'Cornell VC, WestLight, Stanford, PlateTale', 'assets/pce-team.jpg'),
-    ('projects.html', 'Projects & Research', 'Research posters, papers and code', 'assets/ac-poster.jpg'),
+    ('projects.html', 'Projects', 'Research, code and Chiara Malia', 'assets/ac-poster.jpg'),
+    ('design.html', 'Design', 'Brand, product and poster work', 'assets/design/nutrition.jpg'),
     ('press.html', 'Press', 'TEDx, podcasts and articles', 'assets/yt-tedx.jpg'),
-    ('service.html', 'Service', 'Energizing Youth, the UN youth group, honors', 'assets/classroom.jpg'),
-    ('jewelry.html', 'Jewelry', 'Chiara Malia, my jewelry brand', 'assets/cm-1.jpg'),
+    ('about.html#service', 'Service & honors', 'Energizing Youth, the UN youth group, awards', 'assets/classroom.jpg'),
 ]
 home = f'''<section class="home">
   <div class="home-text">
@@ -116,7 +116,7 @@ work = head('Work', 'Clean energy, venture and research. Every row links to the 
 <p class="more reveal"><a href="https://www.linkedin.com/in/chiara-luey" target="_blank" rel="noopener">Full history on LinkedIn ↗</a></p>'''
 
 # ---------- projects ----------
-projects = head('Projects &amp; Research', 'Science-fair research, a published paper and things I’ve built. Click one for posters and details.') + '''
+projects = head('Projects', 'Science-fair research, a published paper and things I’ve built. Click one for posters and details.') + '''
 <div class="filters reveal"><button class="f on" data-f="all">All</button><button class="f" data-f="research">Research</button><button class="f" data-f="energy">Energy</button><button class="f" data-f="web">Web</button></div>
 <div class="tiles" id="tiles"></div>
 <p class="more reveal"><a href="https://github.com/chiaraluey" target="_blank" rel="noopener">More on GitHub ↗</a></p>'''
@@ -203,7 +203,7 @@ landing = f'''<section class="intro">
     <p>I study Environmental Engineering at {lk('https://www.cornell.edu', 'Cornell', 'cornell-seal.svg')}. I’m on the {lk('https://cornellvc.com', 'Cornell Venture Capital', 'cvc.svg')} deal team for {lk('https://cognition.ai', 'Cognition AI', 'cognition.svg', True)}, and a member of the {lk('https://www.cornelletc.org', 'Energy Transition Club', 'etc.png')}.</p>
     <p>I’m a Clean Energy Advisor at {lk('work.html#experience', 'WestLight Energy', 'westlight-mark.png', pic='assets/pce-team.jpg')}, where I co-led Electric-First campaigns in 4 school districts, mobilizing 9,000+ students for an estimated 2M+ kg of CO₂ cut a year.</p>
     <p>Before that, I was a research intern in {lk('work.html#experience', 'Stanford Chemistry', 'stanford-s.svg', pic='assets/poster-session.jpg')}, an operations &amp; growth intern at {lk('work.html#experience', 'PlateTale', 'platetale.png')}, an analyst at {lk('https://re-volv.org', 'RE-volv', 'revolv-color.png')} and a market researcher at {lk('https://elytrarobotics.com', 'Elytra Robotics', 'elytra.png')}.</p>
-    <p>I also founded {lk('https://energizingyouth.org', 'Energizing Youth', pic='assets/classroom.jpg')}, which has taught 500+ kids about clean energy, and my jewelry brand {lk('jewelry.html', 'Chiara Malia', pic='assets/cm-1.jpg')}.</p>
+    <p>I also founded {lk('https://energizingyouth.org', 'Energizing Youth', pic='assets/classroom.jpg')}, which has taught 500+ kids about clean energy, and my jewelry brand {lk('projects.html#malia', 'Chiara Malia', pic='assets/cm-1.jpg')}.</p>
   </section>
 
   <section class="h-sec reveal">
@@ -258,17 +258,20 @@ design = f'''<div class="d-wrap">
 </div>
 <div class="d-cap" id="dCap" aria-hidden="true"></div>'''
 
+home += f'<section class="group" id="service"><h2 class="g-t reveal">Service</h2>{rows(SERVICE)}</section><section class="group" id="honors"><h2 class="g-t reveal">Honors</h2><ul class="honors">' + ''.join(f'<li class="reveal"><span class="h-y">{E(y)}</span><span class="h-t">{E(t)}</span><span class="h-o">{E(o)}</span></li>' for y, t, o in HONORS) + '</ul></section>'
+projects += '<section class="group" id="malia"><h2 class="g-t reveal">Chiara Malia, my jewelry brand</h2>' + jewelry.split('</div>', 1)[1] + '</section>'
 PAGES = [
     ('index.html', 'Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering. Published catalyst research, TEDx speaker, Cornell VC Cognition AI deal team.', landing, ''),
     ('about.html', 'About · Chiara Luey', 'Chiara Luey: Cornell Environmental Engineering student working on clean energy and economics.', home, ''),
     ('work.html', 'Work · Chiara Luey', 'Experience at Cornell Venture Capital, WestLight Energy, Stanford and more.', work, ''),
-    ('projects.html', 'Projects & Research · Chiara Luey', 'Research projects, science-fair posters and code.', projects, f'<script src="assets/projects.js?v={V}"></script>'),
+    ('projects.html', 'Projects · Chiara Luey', 'Research projects, code and Chiara Malia jewelry.', projects, f'<script src="assets/projects.js?v={V}"></script>'),
     ('press.html', 'Press · Chiara Luey', 'TEDx talk, podcasts and articles.', press, ''),
-    ('service.html', 'Service · Chiara Luey', 'Volunteering and honors.', service, ''),
-    ('jewelry.html', 'Chiara Malia · Chiara Luey', 'Chiara Malia, a jewelry brand by Chiara Luey.', jewelry, ''),
     ('design.html', 'Design · Chiara Luey', 'Brand, poster and product design by Chiara Luey.', design, ''),
 ]
 for slug, title, desc, body, scripts, *h in PAGES:
     with open(os.path.join(ROOT, slug), 'w') as f:
         f.write(page(slug, title, desc, body, scripts, *h))
+for old, new in [('service.html', 'about.html#service'), ('jewelry.html', 'projects.html#malia')]:
+    with open(os.path.join(ROOT, old), 'w') as f:
+        f.write(f'<!doctype html><meta charset="utf-8"><title>Moved</title><meta http-equiv="refresh" content="0; url={new}"><link rel="canonical" href="{new}"><a href="{new}">Moved here</a>')
 print('built', len(PAGES), 'pages')
