@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,400&family=Cormorant+SC:wght@500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1600px;height:1000px;background:#efe7da;overflow:hidden;position:relative;font-family:'Cormorant Garamond',serif;color:#2b2620}
+.l{position:absolute;left:0;top:0;width:760px;height:1000px;overflow:hidden}
+.l img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:saturate(.85) contrast(1.02)}
+.waves{position:absolute;left:640px;top:0;width:960px;height:1000px}
+.big{position:absolute;left:840px;top:110px;font:300 300px/.8 'Cormorant Garamond';font-style:italic;letter-spacing:-8px;color:#2b2620}
+.sc{font:500 17px 'Cormorant SC';letter-spacing:5px;color:#8a6d3b}
+.k1{position:absolute;left:850px;top:66px}
+.copy{position:absolute;left:850px;top:520px;width:400px;font:400 25px/1.4 'Cormorant Garamond'}
+.copy i{font-style:italic}
+.inset{position:absolute;right:80px;top:470px;width:250px;height:330px;overflow:hidden;outline:1px solid #b89654;outline-offset:10px}
+.inset img{width:100%;height:100%;object-fit:cover}
+.inset2{position:absolute;right:290px;top:780px;width:190px;height:150px;overflow:hidden}
+.inset2 img{width:100%;height:100%;object-fit:cover}
+.fol{position:absolute;bottom:40px;left:850px;font:500 15px 'Cormorant SC';letter-spacing:4px;color:#8a6d3b}
+.fol2{position:absolute;bottom:40px;right:80px;font:500 15px 'Cormorant SC';letter-spacing:4px;color:#8a6d3b}
+.cap{position:absolute;left:36px;bottom:30px;color:#fff;font:italic 300 22px 'Cormorant Garamond';text-shadow:0 1px 8px rgba(0,0,0,.3)}
+</style></head><body>
+<div class="l"><img src="../../assets/cm-5.jpg"></div>
+<svg class="waves" viewBox="0 0 960 1000" fill="none" stroke="#b89654" stroke-width="1.1" id="w"></svg>
+<div class="k1 sc">Chiara Malia · Onda e Marea</div>
+<div class="big">Onda</div>
+<div class="copy"><i>chiara</i>, clear and bright.<br><i>malìa</i>, a charm, a little spell.<br><br>A wave first drawn in the margins of a notebook, then cast in 14k gold-fill and sterling silver. Nineteen pieces. Part of every order goes to ocean conservation and women’s shelters.</div>
+<div class="inset"><img src="../../assets/cm-1.jpg"></div>
+<div class="inset2"><img src="../../assets/cm-3.jpg"></div>
+<div class="cap">On the shoreline, Onda e Marea</div>
+<div class="fol">No. 01 — the wave as it curls over</div>
+<div class="fol2">chiaramalia.com</div>
+<script>
+const s=document.getElementById('w');let d='';
+for(let k=0;k<26;k++){const y0=330+k*9.5,a=34-k*.6;let p=`M0 ${y0}`;
+for(let x=0;x<=960;x+=8){const t=x/960;const y=y0-a*Math.sin(t*Math.PI*2.2+k*.11)-(k<8?(8-k)*6*Math.exp(-Math.pow((t-.42)*7,2)):0);p+=` L${x} ${y.toFixed(1)}`}
+d+=`<path d="${p}" opacity="${(1-k/30).toFixed(2)}"/>`}
+s.innerHTML=d;
+</script>
+</body></html>

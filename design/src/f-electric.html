@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:1600px;background:#f6ef3b;overflow:hidden;position:relative;font-family:'Archivo Narrow',sans-serif;color:#1834e6}
+.grain{position:absolute;inset:0;z-index:9;mix-blend-mode:multiply;opacity:.55;pointer-events:none}
+.ph{position:absolute;left:0;top:430px;width:1200px;height:1170px;overflow:hidden}
+.ph img{position:absolute;mix-blend-mode:multiply}
+.ph .b{left:0;top:-160px;width:1200px}
+.ph .p{left:10px;top:-152px;width:1200px;opacity:.9}
+h1{position:absolute;left:44px;top:34px;font:400 196px/.86 Anton,sans-serif;letter-spacing:-3px;text-transform:uppercase;z-index:3}
+h1 .s{position:relative;display:inline-block}
+h1 .s:after{content:"";position:absolute;left:-14px;right:-14px;top:50%;height:26px;background:#ff488c;transform:rotate(-6deg);mix-blend-mode:multiply}
+.sun{position:absolute;left:800px;top:300px;font:400 130px/1 'Permanent Marker',cursive;color:#ff488c;transform:rotate(-8deg);z-index:4;mix-blend-mode:multiply}
+.meta{position:absolute;right:44px;top:44px;text-align:right;font:700 22px/1.2 'Archivo Narrow';text-transform:uppercase;letter-spacing:1px;z-index:4}
+.foot{position:absolute;left:0;right:0;bottom:0;height:250px;background:#1834e6;color:#f6ef3b;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);padding:34px 44px;gap:30px}
+.foot div{font:400 112px/0.9 Anton;letter-spacing:-1px}
+.foot span{display:block;font:700 22px/1.2 'Archivo Narrow';text-transform:uppercase;letter-spacing:1px;margin-top:14px}
+.tag{position:absolute;left:44px;bottom:290px;z-index:6;background:#f6ef3b;padding:14px 20px 12px;font:700 30px/1.15 'Archivo Narrow';text-transform:uppercase;max-width:520px;border:4px solid #1834e6}
+.stamp{position:absolute;left:70px;top:460px;z-index:6;width:220px;height:220px;border-radius:50%;border:5px solid #ff488c;color:#ff488c;display:grid;place-items:center;text-align:center;font:400 34px/1 Anton;transform:rotate(12deg);mix-blend-mode:multiply}
+</style></head><body>
+<svg class="grain" width="1200" height="1600"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .3  0 0 0 0 .2  0 0 0 .55 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+<div class="meta">Electric-First<br>Peninsula, CA<br>2025—26</div>
+<h1>Our schools<br>run on <span class="s">gas</span>.</h1>
+<div class="sun">sun.</div>
+<div class="ph"><img class="b" src="ht/team-blue.png"><img class="p" src="ht/team-pink.png"></div>
+<div class="tag">Ask your school board to go electric-first for every new building and bus.</div>
+<div class="stamp">PASSED<br>IN 4<br>DISTRICTS</div>
+<div class="foot"><div>9,000+<span>students mobilized</span></div><div>4<span>school districts passed resolutions</span></div><div>2M+ kg<span>CO₂ cut a year</span></div></div>
+</body></html>

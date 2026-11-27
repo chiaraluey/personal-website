@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '47'
+V = '48'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects'), ('design.html', 'Design'), ('press.html', 'Press'), ('campus.html', '3D Campus')]
@@ -75,7 +75,7 @@ def head(title, sub):
 INDEX = [
     ('work.html', 'Work', 'Cornell VC, WestLight, Stanford, PlateTale', 'assets/pce-team.jpg'),
     ('projects.html', 'Projects', 'Research, code and Chiara Malia', 'assets/ac-poster.jpg'),
-    ('design.html', 'Design', 'Brand, product and poster work', 'assets/design/nutrition.jpg'),
+    ('design.html', 'Design', 'Brand, product and poster work', 'assets/design/f-nutrition.jpg'),
     ('press.html', 'Press', 'TEDx, podcasts and articles', 'assets/yt-tedx.jpg'),
     ('about.html#service', 'Service & honors', 'Energizing Youth, the UN youth group, awards', 'assets/classroom.jpg'),
 ]
@@ -228,21 +228,12 @@ landing = f'''<section class="intro">
 
 # ---------- design ----------
 DESIGNS = [
-    ('nutrition', 'Cornell Nutrition', 'UI/UX, product'),
-    ('malia', 'Chiara Malia', 'Brand identity, packaging'),
-    ('electric', 'Electric-First', 'Campaign posters'),
-    ('adam', 'Adam, AI economics tutor', 'Product UI'),
-    ('ey', 'Energizing Youth', 'Brand system, social'),
-    ('mof', 'Tailpipe CO₂ to ethanol', 'Research infographic'),
-    ('etc', 'Energy Transition Club', 'Recruiting posters'),
+    ('malia', 'Chiara Malia', 'Editorial spread'),
+    ('nutrition', 'Cornell Nutrition', 'Poster, product'),
+    ('electric', 'Electric-First', 'Campaign poster'),
+    ('mof', 'Tailpipe CO₂ to ethanol', 'Research plate'),
 ]
-DESIGN_TILES = [
-    ('nutrition', 'nutrition', 'wide'), ('malia', 'malia', 'wide'),
-    ('el1', 'electric', 'half'), ('el2', 'electric', 'half'),
-    ('adam2', 'adam', 'wide'), ('ey', 'ey', 'wide'),
-    ('eyig', 'ey', 'half'), ('mof', 'mof', 'half'),
-    ('etc1', 'etc', 'half'), ('etc2', 'etc', 'half'),
-]
+DESIGN_TILES = [('f-malia', 'malia', 'wide'), ('f-nutrition', 'nutrition', 'half'), ('f-electric', 'electric', 'half'), ('f-mof', 'mof', 'wide')]
 _dmeta = {k: (n, t) for k, n, t in DESIGNS}
 design_nav = ''.join(f'<li><a href="#d-{k}"><span>{i+1:02d}</span>{E(n)}</a></li>' for i, (k, n, t) in enumerate(DESIGNS))
 _seen = set()

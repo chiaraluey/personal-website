@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1600px;height:1000px;background:#0d0b0a;overflow:hidden;position:relative;font-family:'EB Garamond',serif;color:#e8c9a6}
+svg{position:absolute;left:0;top:0}
+.frame{position:absolute;inset:34px;border:1px solid rgba(200,120,70,.45)}
+.plate{position:absolute;left:80px;top:70px;font:500 18px 'EB Garamond';letter-spacing:6px;text-transform:uppercase;color:#c8794a}
+h1{position:absolute;left:80px;top:120px;font:400 68px/1.02 'EB Garamond';letter-spacing:-1px;color:#f1d8bb;width:620px}
+h1 i{color:#d58a58}
+.eq{position:absolute;left:80px;top:368px;font:400 25px 'EB Garamond';color:#e8c9a6;letter-spacing:.5px}
+.fe{position:absolute;left:80px;top:460px}
+.fe b{display:block;font:400 230px/.8 'EB Garamond';color:transparent;-webkit-text-stroke:1.5px #d58a58;letter-spacing:-8px}
+.fe span{display:block;font:italic 400 26px 'EB Garamond';margin-top:18px;color:#e8c9a6}
+.notes{position:absolute;left:80px;bottom:76px;width:520px;font:400 19px/1.5 'EB Garamond';color:#b9a08a}
+.mono{font:400 13px 'IBM Plex Mono';letter-spacing:1px;fill:#c8794a}
+.fig{position:absolute;right:80px;bottom:60px;font:italic 400 19px 'EB Garamond';color:#b9a08a}
+</style></head><body>
+<div class="frame"></div>
+<svg width="1600" height="1000" id="s"></svg>
+<div class="plate">Plate I · Independent research, 2022—26</div>
+<h1>Tailpipe CO₂ into <i>ethanol</i>, over copper.</h1>
+<div class="eq">2 CO₂ + 12 H⁺ + 12 e⁻ → C₂H₅OH + 3 H₂O</div>
+<div class="fe"><b>91%</b><span>Faradaic efficiency toward ethanol</span></div>
+<div class="notes">Simulated catalytic pathways in a copper metal–organic framework, then published with mentors from MIT, Stanford and Washington State. Presented at ICAE (UN, Bangkok), MIT THINK, JSHS and the California Science &amp; Engineering Fair.</div>
+<div class="fig">Fig. 1 — Cu paddlewheel nodes joined by organic linkers (schematic)</div>
+<script>
+const s=document.getElementById('s');let o='';const cx=1120,cy=470,R=118;
+const pr=(x,y,z)=>{const a=.62,b=.38;return[cx+(x-z)*Math.cos(a)*R,cy+(x+z)*Math.sin(b)*R*.9-y*R]};
+const N=[];for(let x=-2;x<=2;x++)for(let y=-1;y<=1;y++)for(let z=-2;z<=2;z++)if(Math.abs(x)+Math.abs(z)<=3)N.push([x,y*1.3,z]);
+const key=p=>p.join(',');const S=new Set(N.map(key));
+const lines=[];N.forEach(p=>{[[1,0,0],[0,1.3,0],[0,0,1]].forEach(d=>{const q=[p[0]+d[0],+(p[1]+d[1]).toFixed(1),p[2]+d[2]];if(S.has(key(q)))lines.push([p,q])})});
+const depth=p=>(p[0]+p[2])/6+.5;
+lines.sort((a,b)=>depth(a[0])-depth(b[0])).forEach(([p,q])=>{const[a,b]=pr(...p),[c,d]=pr(...q);const op=(.25+.55*depth(p)).toFixed(2);
+o+=`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="#c8794a" stroke-width="1.3" opacity="${op}"/>`;
+const mx=(a+c)/2,my=(b+d)/2;o+=`<circle cx="${mx}" cy="${my}" r="5" fill="none" stroke="#c8794a" stroke-width="1" opacity="${op}"/>`});
+N.sort((a,b)=>depth(a)-depth(b)).forEach(p=>{const[x,y]=pr(...p);const op=(.4+.6*depth(p)).toFixed(2);
+o+=`<g opacity="${op}"><rect x="${x-9}" y="${y-9}" width="18" height="18" transform="rotate(45 ${x} ${y})" fill="#0d0b0a" stroke="#e39a62" stroke-width="1.6"/><circle cx="${x}" cy="${y}" r="3.2" fill="#f1c08f"/></g>`});
+// CO2 molecules drifting in, ethanol leaving
+const co2=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})" stroke="#e8c9a6" fill="none" stroke-width="1.3"><circle r="7"/><circle cx="-22" r="6"/><circle cx="22" r="6"/><line x1="-16" x2="-7"/><line x1="7" x2="16"/><line x1="-16" y1="4" x2="-7" y2="4"/><line x1="7" y1="4" x2="16" y2="4"/></g>`;
+o+=co2(790,230,-15)+co2(850,170,20)+co2(770,300,8);
+o+=`<path d="M830 260 C 860 280, 880 300, 930 340" stroke="#e8c9a6" stroke-dasharray="3 6" fill="none" opacity=".6"/>`;
+o+=`<text class="mono" x="760" y="140">CO₂ IN</text>`;
+o+=`<g transform="translate(1420 820)" stroke="#f1c08f" stroke-width="1.4" fill="none"><circle cx="-40" r="7"/><circle cx="0" cy="-14" r="7"/><circle cx="36" cy="2" r="6"/><line x1="-33" y1="-3" x2="-7" y2="-11"/><line x1="7" y1="-11" x2="30" y2="0"/></g>`;
+o+=`<path d="M1300 640 C 1340 700, 1370 750, 1390 790" stroke="#f1c08f" stroke-dasharray="3 6" fill="none" opacity=".6"/>`;
+o+=`<text class="mono" x="1370" y="870">C₂H₅OH OUT</text>`;
+const [lx,ly]=pr(0,1.3,0);o+=`<line x1="${lx+12}" y1="${ly-6}" x2="${lx+170}" y2="${ly-90}" stroke="#b9a08a" stroke-width=".8"/><text class="mono" x="${lx+176}" y="${ly-92}">Cu₂ NODE</text>`;
+s.innerHTML=o;
+</script>
+</body></html>
