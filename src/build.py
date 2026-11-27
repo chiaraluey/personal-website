@@ -1,7 +1,7 @@
 """Generates the static pages. Run: python3 src/build.py"""
 import os, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V = '45'
+V = '46'
 E = html.escape
 
 NAV = [('about.html', 'About'), ('work.html', 'Work'), ('projects.html', 'Projects & Research'), ('press.html', 'Press'), ('service.html', 'Service'), ('jewelry.html', 'Jewelry'), ('design.html', 'Design'), ('campus.html', '3D Campus')]
@@ -228,17 +228,32 @@ landing = f'''<section class="intro">
 
 # ---------- design ----------
 DESIGNS = [
-    ('malia', 'Chiara Malia', 'Brand identity, packaging', 'wide'),
-    ('electric', 'Electric-First', 'Campaign posters', 'wide'),
-    ('adam', 'Adam, AI economics tutor', 'Product UI', 'wide'),
-    ('mof', 'Tailpipe CO₂ to ethanol', 'Research infographic', 'tall'),
-    ('ey', 'Energizing Youth', 'Brand system, social', 'wide'),
-    ('etc', 'Energy Transition Club', 'Recruiting posters', 'wide'),
+    ('nutrition', 'Cornell Nutrition', 'UI/UX, product'),
+    ('malia', 'Chiara Malia', 'Brand identity, packaging'),
+    ('electric', 'Electric-First', 'Campaign posters'),
+    ('adam', 'Adam, AI economics tutor', 'Product UI'),
+    ('ey', 'Energizing Youth', 'Brand system, social'),
+    ('mof', 'Tailpipe CO₂ to ethanol', 'Research infographic'),
+    ('etc', 'Energy Transition Club', 'Recruiting posters'),
 ]
-design_nav = ''.join(f'<li><a href="#d-{k}"><span>{i+1:02d}</span>{E(n)}</a></li>' for i, (k, n, t, _) in enumerate(DESIGNS))
-design_tiles = ''.join(f'<a id="d-{k}" class="d-tile d-{sz} reveal" href="assets/design/{k}.jpg" data-full="assets/design/{k}.jpg" data-cap="{E(n)}" data-type="{E(t)}"><img src="assets/design/{k}.jpg" alt="{E(n)}: {E(t)}" loading="lazy"></a>' for k, n, t, sz in DESIGNS)
+DESIGN_TILES = [
+    ('nutrition', 'nutrition', 'wide'), ('malia', 'malia', 'wide'),
+    ('el1', 'electric', 'half'), ('el2', 'electric', 'half'),
+    ('adam2', 'adam', 'wide'), ('ey', 'ey', 'wide'),
+    ('eyig', 'ey', 'half'), ('mof', 'mof', 'half'),
+    ('etc1', 'etc', 'half'), ('etc2', 'etc', 'half'),
+]
+_dmeta = {k: (n, t) for k, n, t in DESIGNS}
+design_nav = ''.join(f'<li><a href="#d-{k}"><span>{i+1:02d}</span>{E(n)}</a></li>' for i, (k, n, t) in enumerate(DESIGNS))
+_seen = set()
+def _dtile(img, k, sz):
+    n, t = _dmeta[k]
+    idattr = '' if k in _seen else f' id="d-{k}"'
+    _seen.add(k)
+    return f'<a{idattr} class="d-tile d-{sz} reveal" data-p="{k}" href="assets/design/{img}.jpg" data-full="assets/design/{img}.jpg" data-cap="{E(n)}" data-type="{E(t)}"><img src="assets/design/{img}.jpg" alt="{E(n)}: {E(t)}" loading="lazy"></a>'
+design_tiles = ''.join(_dtile(*x) for x in DESIGN_TILES)
 design = f'''<div class="d-wrap">
-  <aside class="d-side"><h1 class="d-h">Design</h1><ol class="d-nav">{design_nav}</ol></aside>
+  <aside class="d-side"><h1 class="d-h">Design</h1><p class="d-sub">Brand, product and poster work for the things I build.</p><ol class="d-nav">{design_nav}</ol></aside>
   <div class="d-grid">{design_tiles}</div>
 </div>
 <div class="d-cap" id="dCap" aria-hidden="true"></div>'''

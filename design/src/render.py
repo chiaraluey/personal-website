@@ -1,6 +1,6 @@
 import asyncio, sys, os
 from playwright.async_api import async_playwright
-SIZES={'malia':(1600,1000),'electric':(1600,1066),'ey':(1600,1000),'adam':(1600,1000),'mof':(1200,1340),'etc':(1600,1066),'nutrition':(1600,1000)}
+SIZES={'malia':(1600,1000),'electric':(1600,1066),'ey':(1600,1000),'adam':(1600,1000),'mof':(1200,1340),'etc':(1600,1066),'nutrition':(1600,1000),'adam2':(1600,1000),'eyig':(1200,1340)}
 async def main(names):
     async with async_playwright() as p:
         b=await p.chromium.connect_over_cdp("http://localhost:29229")
